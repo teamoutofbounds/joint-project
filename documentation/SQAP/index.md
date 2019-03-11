@@ -1,7 +1,7 @@
 # Joint Project Quality Assurance Plan
 
 ## Index
-### [1. Purpose]()
+### [1. Purpose](https://github.com/teamoutofbounds/joint-project/blob/master/documentation/SQAP/Purpose.md)
 ### [2. Reference documents]()
 ### [3. Management]()
 #### 3.1 Organisation
