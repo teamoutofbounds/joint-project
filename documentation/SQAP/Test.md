@@ -38,5 +38,15 @@ Test frameworks to do unit tests:
 • django.test.TestCase (A subclasses from django.test.TestCase, which is a subclass of unittest.TestCase that runs each test inside a Transaction to provide isolation).
 
 
-### 7.1.3. Integration tests
+### 7.3. Integration tests
 Verify how groupings of components work when used together. Integration tests are aware of the required interactions between components, but not necessarily of the internal operations of each component. They may cover simple groupings of components through to the whole website.
+
+7.1.4. System tests
+System tests are the same as integration test, but this time the test is for the whole application.
+To do Integration Testing you need your app to run as if it were in production. You want the HTTP server running and accepting requests. You want it to receive an actual HTTP request, execute and render a view, interact with the view in a real browser, click the button in such browser, see what happens in the browser and then back at your server, check if what you need to have it written in the DB gets written in the DB, and so on.
+
+Test frameworks to do integration tests:
+django.test.LiveServerTestCase
+
+Tools:
+Selenium
