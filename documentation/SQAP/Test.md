@@ -50,3 +50,7 @@ django.test.LiveServerTestCase
 
 Tools:
 Selenium
+
+### 7.5. Regression tests
+Tests that reproduce historic bugs. Each test is initially run to verify that the bug has been fixed, and then re-run to ensure that it has not been reintroduced following later changes to the code.
+Every time a bug appears, after it is addressed, a test must be written to ensure the bug is not going to reappear later on.
