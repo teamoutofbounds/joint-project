@@ -36,3 +36,7 @@ We are using unit test during the production process with two main objectives:
 Test frameworks to do unit tests:
 • unittest (the standard library module).
 • django.test.TestCase (A subclasses from django.test.TestCase, which is a subclass of unittest.TestCase that runs each test inside a Transaction to provide isolation).
+
+
+### 7.1.3. Integration tests
+Verify how groupings of components work when used together. Integration tests are aware of the required interactions between components, but not necessarily of the internal operations of each component. They may cover simple groupings of components through to the whole website.
