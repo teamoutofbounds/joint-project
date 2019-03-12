@@ -24,3 +24,15 @@ All the aspects of the code should be tested, but not any library or functionali
 • unittest.mock: to patch third party libraries in order to more thoroughly test the code.
 • Coverage: Coverage measurement is typically used to gauge the effectiveness of tests. It can show which parts of your code are being exercised by tests, and which are not.
 • Selenium: is a framework to automate testing in a real browser. It allows you to simulate a real user interacting with the site, and provides a great framework for system testing your site (the next step up from integration testing.
+
+
+###  7.2. Unit tests
+
+The unit test must be made on a single component. The component isolation is an inexcusable requirement in this testing stage to guarantee the component behavior correctness.
+We are using unit test during the production process with two main objectives:
+• When we are writing code, we are going to use test to ensure the code works as we expect.
+• When we are refactoring the code, we are going to use test to ensure our changes haven’t affect our application’s behavior unexpectedly.
+
+Test frameworks to do unit tests:
+• unittest (the standard library module).
+• django.test.TestCase (A subclasses from django.test.TestCase, which is a subclass of unittest.TestCase that runs each test inside a Transaction to provide isolation).
