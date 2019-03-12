@@ -76,3 +76,20 @@ Acceptance testing types:
 • Regulation Acceptance Testing (examines whether the software complies with the regulations. This includes governmental and legal regulations).
 • Operational acceptance testing (these test cases ensure there are workflows in place to allow the software or system to be used.
 This should include workflows for backup plans, user training, and various maintenance processes and security checks).
+
+
+### 7.3. References
+
+#### 7.3.1. Guides:
+• Writing and running tests (Django docs)
+• Writing your first Django app, part 5 > Introducing automated testing (Django docs)
+• Testing tools reference (Django docs)
+• Advanced testing topics (Django docs)
+• A Guide to Testing in Django (Toast Driven Blog, 2011)
+• Workshop: Test-Driven Web Development with Django (San Diego Python, 2014)
+• Testing in Django (Part 1) - Best Practices and Examples (RealPython, 2013)
+
+#### 7.3.2. Testing tools:
+• unittest.mock (python docs)
+• Coverage (Coverage.py docs)
+• Selenium (mozilla docs)
