@@ -22,6 +22,8 @@ This section will focus on the methods and techniques that we will apply for the
 5. **SQAP-doc**: This branch is used for the purpose of uploading the changes over the documentation of the project before merging them into the Master branch.
 6. **SQAP-hotfix**: Same use as the normal hotfix except that this branch will be used for documentation only.
 
+To make things easy, there is a **[GitHub Guide](https://github.com/teamoutofbounds/joint-project/blob/SQAP-doc/documentation/guides/Git-branch-checkout-guide.md)** in the repository that explains how one can change from branch to branch with a terminal.
+
 Also, in order to do split the work and maintain consistency inside the project, the commits made on to the SQAP-doc and Dev will have an specific name regarding it's changes. For example: the change on SQAP-doc will have "SQAP-#number:"
 
 The **Google Calendar** app will focus mainly on the many tasks assigned to the team.
