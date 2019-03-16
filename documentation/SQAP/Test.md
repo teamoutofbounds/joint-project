@@ -39,7 +39,8 @@ app/
 
 + [unittest.mock](https://docs.python.org/3.5/library/unittest.mock-examples.html): to patch third party libraries in order to more thoroughly test the code.
 + [Coverage](https://coverage.readthedocs.io/en/latest/): Coverage measurement is typically used to gauge the effectiveness of tests. It can show which parts of your code are being exercised by tests, and which are not.
-+ [Selenium:](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Your_own_automation_environment) is a framework to automate testing in a real browser. It allows you to simulate a real user interacting with the site, and provides a great framework for system testing your site (the next step up from integration testing.
++ [Splinter](https://splinter.readthedocs.io/en/latest/) is an open source tool for testing web applications using Python. It lets you automate browser actions, such as visiting URLs and interacting with their items.
++ [ChromeDriver](http://chromedriver.chromium.org/) - WebDriver for Chrome: WebDriver is an open source tool for automated testing of webapps across many browsers. It provides capabilities for navigating to web pages, user input, JavaScript execution, and more.  ChromeDriver is a standalone server which implements WebDriver's wire protocol for Chromium.
 
 
 ###  7.1.2. Unit tests
@@ -67,10 +68,11 @@ To do Integration Testing you need your app to run as if it were in production. 
 ---
 
 Test frameworks to do integration tests:
-[django.test.LiveServerTestCase](https://docs.djangoproject.com/en/1.9/topics/testing/tools/#liveservertestcase)
++ [django.test.LiveServerTestCase](https://docs.djangoproject.com/en/1.9/topics/testing/tools/#liveservertestcase)
 
-Tools:  
-[Selenium](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Your_own_automation_environment)
+Tools:
++ [Splinter](https://splinter.readthedocs.io/en/latest/)
++ [ChromeDriver](http://chromedriver.chromium.org/) - WebDriver for Chrome
 
 
 ### 7.1.5. Regression tests
@@ -112,4 +114,5 @@ This should include workflows for backup plans, user training, and various maint
 #### 7.3.2. Testing tools:
 + [unittest.mock](https://docs.python.org/3.5/library/unittest.mock-examples.html) (python docs)
 + [Coverage](https://coverage.readthedocs.io/en/latest/) (Coverage.py docs)
-+ [Selenium](https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Your_own_automation_environment) (mozilla docs)
++ [Splinter](https://splinter.readthedocs.io/en/latest/) (Splinter docs)
++ [ChromeDriver](http://chromedriver.chromium.org/) - WebDriver for Chrome (Chromedriver docs)
