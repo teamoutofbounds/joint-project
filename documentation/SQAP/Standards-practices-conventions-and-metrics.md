@@ -2,7 +2,7 @@
 
 ## 5.1 Purpose
 The purpose of this section of the SQAP is to identify the processes, product standards, and metrics used by a part 
-of the team OutOfBounds,called Quality Assurance Team (QAT).
+of the team OutOfBounds, called Quality Assurance Team (QAT).
         
 ## 5.2 Content
  5.2.1 Process Requirements
