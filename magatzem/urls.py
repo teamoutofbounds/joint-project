@@ -5,5 +5,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('exemples/', views.exemple_mock, name='exemple')
+    path('exemples/', views.exemple_mock, name='exemple'),
+    path('entrada_mock/', views.entrada_producte_mock, name='entrada_mock')
 ]
