@@ -89,6 +89,12 @@ class TestContainer(TestCase):
         self.assertEqual(container.producer_id, producer_id)
         self.assertEqual(container.quantity, quantity)
 
+    @parameterized.expand([['01/12/2021', 20211201], ['25/02/2019', 20190225], ['30/01/2019', 20190130]])
+    def test_container_SLA(self, limit, sla):
+        container = Container(product_id='Apples', producer_id='11111111111', limit=limit, quantity=1,
+                              temp_min=1, temp_max=10, hum_min=10, hum_max=90)
+        self.assertEqual(container.SLA, sla)
+
     @parameterized.expand([["Apples", '11111111111', '25/02/2019', 1000, 1, 10, 10, 90],
                           ["Wood", '12345678900', '25/01/2021', 45, 200, 10, 15, 25, 35],
                           ["Pera conference", '28/12/2019', '78787878787', 1, 2, 6, 90, 100 ]])
