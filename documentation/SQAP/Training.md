@@ -1,4 +1,4 @@
-### Training
+### 13. Training
 
 To ensure the follow of this Quality Plan. Each member of the developing process 
 must know and be familiarized to work with a python environment. It will require,
@@ -39,3 +39,5 @@ This document is, and future documents will be written using markdown, the SQAP 
 of this writing style and how to use them. The following guide is going to be used to understand this methodology:
 
 * [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+
+[Back to Index](./index.md)
