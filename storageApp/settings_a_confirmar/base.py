@@ -15,7 +15,9 @@ SECRET_KEY = 'tn-*)7t$-s$tl&yz*tt6edq2=tx&^ghay=4s-tnf9)j^0rbl@h'
 INSTALLED_APPS = [
     'magatzem.apps.MagatzemConfig',
     'oficina.apps.OficinaConfig',
+    'users.apps.UsersConfig',
     'django.contrib.admin',
+    'markdown_deux',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -25,6 +27,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -89,7 +92,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+# Static files will be cached and served more efficiently
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-LOGIN_REDIRECT_URL = '/'  #S'ha de mirar on volem que el redireccioni
+STATIC_HOST = os.environ.get('DJANGO_STATIC_HOST', '')
+STATIC_URL = STATIC_HOST + '/static/'
+
+LOGIN_REDIRECT_URL = 'home'
