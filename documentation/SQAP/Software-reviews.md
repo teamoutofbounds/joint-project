@@ -1,4 +1,4 @@
-### Software Reviews
+### 6. Software Reviews
 
 #### 6.1 Purpose
 The purpose of software reviews are to correct defects on the code as well as improve the development process of the projects. Some of the points of doing software reviews are: 
