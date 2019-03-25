@@ -1,6 +1,6 @@
 ### Tools, techniques and methodologies
 
-#### 9.1-Tools:
+#### 9.1- Tools:
 
 This section specifies which software and general tools the OutOfBounds team is using to support the Joint Project development.
 Fow now, the tools that we are currently utilizing are:
@@ -16,16 +16,9 @@ This section will focus on the methods and techniques that we will apply for the
 
 In order to get all the requirements for the development the Web app, we are using a model called **[Volere model](http://www.volere.co.uk)**. This model contains all the steps that the analyst team needs to follow in order to gather information about how everything should work.
 
-**The GitHub Repository** will be used as a tool for both the code and also the formal documentation (the Google Drive will still be used for temporal documentation and also side projects inside the main project). In order to make it so that 9 people can use efficiently the repository that the project will be allocated in, we have created different branches in which we will base our workflow. There are 6 branches in total (the branches names may vary):
+**The GitHub Repository** will be used as a tool for both the code and also the formal documentation (the Google Drive will still be used for temporal documentation and also side projects inside the main project). For the purpose of better workflow, we shall use this **[Branching Guidelines](/documentation/procedures/Branching-guidelines.md)**.
 
-1. **Master**: the branch that will contain the result of both the code and documentation merges. This branch can only be changed when the team decides to do so in a formal meeting (documented using the meeting template). This will be the branch in which we implement the sprints and also important changes over the project.
-2. **Dev**: This branch will serve as the branch in which everyone will commit their work before being revised and merged into the Master branch. i here, everyone can commit heir code in other to check for errors and such.
-3. **Hotfix**: This branch will be used only when small changes may be applied to the Master branch. If something small needs to be modified in the Master branch, the Hotfix will pull the Master, commit the change and then commit said change to both the Master and the Dev branch (so that that everyone is working with the same information).
-4. **Q&A**: Before merging the Dev branch with the Master, there is an intermediate step that will gather both the documentation dev and the development dev (SQAP-doc and Dev) for better merging with master. 
-5. **SQAP-doc**: This branch is used for the purpose of uploading the changes over the documentation of the project before merging them into the Master branch.
-6. **SQAP-hotfix**: Same use as the normal hotfix except that this branch will be used for documentation only.
-
-To make things easy, there is a **[GitHub Guide](https://github.com/teamoutofbounds/joint-project/blob/SQAP-doc/documentation/guides/Git-branch-checkout-guide.md)** in the repository that explains how one can change from branch to branch with a terminal.
+To make things easy, there is a **[GitHub Guide](.Git-branch-checkout-guide.md)** in the repository that explains how one can change from branch to branch with a terminal.
 
 Also, in order to do split the work and maintain consistency inside the project, the commits made on to the SQAP-doc and Dev will have an specific name regarding it's changes. For example: the change on SQAP-doc will have "SQAP-#number:".
 
@@ -33,3 +26,7 @@ The **Google Calendar** app will focus mainly on the many tasks assigned to the 
 
 The **[Meeting Template](https://docs.google.com/document/d/10VLPs66RGmUK8j3YTSl--1COLsmBzrmviAcgNUuulIU/edit)** will be the document used in every meeting of the group, and it will include when do people join the meeting, when they leave, what was needed to be talked in the meeting, what tasks are now needed to be done before the next meeting and how will do the tasks. The person who is tasked to fill this template is the responsible of the department in which the meeting is being made (if the reunion is for the Quality department, the Quality Manager is tasked to do the report).
 To know what shall be talked in every meeting, we have a [meeting planning](https://docs.google.com/document/d/1tBVWKzTT_s8IMxI1Q6lCXuziMxERX9mY6GQump4wtBQ/edit) in which everyone can propose ideas for the next meeting. The points will be referenced in priority order.
+
+
+
+[Back to Index](./index.md)
