@@ -12,3 +12,5 @@ two folders:
 * __SQAP__: here will be added all the documentation necessary for the developement of the 
             QA.
 * __guides__: here will contain some necessary information for all the team members.
+
+[Back to Index](./index.md)
