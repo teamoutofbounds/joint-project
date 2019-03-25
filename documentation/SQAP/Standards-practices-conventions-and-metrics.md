@@ -17,4 +17,5 @@ of the team OutOfBounds, called Quality Assurance Team (QAT).
  The metrics of the project will be defined as it progesses:
  
  + The number of tests that will have to pass correctly would be about 70-80%
-    
+  
+  [Back to Index](./index.md)
