@@ -8,6 +8,7 @@ Fow now, the tools that we are currently utilizing are:
 1. **Communication tools**: In this section, we are currently using group calls in Discord and keeping each other informed through a group chat in WhatsApp. we are also using the Google Calendar app to remember yourself about the tasks that need to be done.
 2. **Working flow tools**: Here, we are using and have used a shared Drive Folder with shared Google Docs for documentation, a Github Team in which we will have the repositories that will use to make a control over the code, Create.ly for diagrams and Django for the framework in which we’re gonna design our web application. For the meetings, we are using a document template that will have everything that we talk in the meeting written down for future reference.
 3. **Requirement gathering tools**: We will use the Volere model to gather the requirements for the project.
+4. **Deployment tools**: We will use Heroku to deploy the Web App.
 
 
 #### 9.2- Techniques and Methodologies:
