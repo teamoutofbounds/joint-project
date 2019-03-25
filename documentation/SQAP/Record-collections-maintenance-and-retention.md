@@ -2,6 +2,8 @@
 
 ## 12.1. Quality Assurance Tracking Database
 
+This section is not applicable to our project, so it won't be developed.
+
 ## 12.2. Quality Assurance Repository
 
 The QAT will have at its disposal a repository located in the gitHub web page. There 
