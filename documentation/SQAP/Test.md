@@ -53,7 +53,6 @@ We are using unit test during the production process with two main objectives:
 ---
 
 Test frameworks to do unit tests:  
-+ [unittest](https://docs.python.org/3/library/unittest.html#module-unittest) (the standard library module).
 + [django.test.TestCase](https://docs.djangoproject.com/en/2.1/topics/testing/) (A subclasses from django.test.TestCase, which is a subclass of unittest.TestCase that runs each test inside a Transaction to provide isolation).
 
 
@@ -116,3 +115,5 @@ This should include workflows for backup plans, user training, and various maint
 + [Coverage](https://coverage.readthedocs.io/en/latest/) (Coverage.py docs)
 + [Splinter](https://splinter.readthedocs.io/en/latest/) (Splinter docs)
 + [ChromeDriver](http://chromedriver.chromium.org/) - WebDriver for Chrome (Chromedriver docs)
+
+[Back to Index](./index.md)
