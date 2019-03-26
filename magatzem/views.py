@@ -14,6 +14,7 @@ def sala_view(request):
     context = {'room_list': room_list}
     return render(request, 'magatzem/room.html', context)
 
+
 def exemple_mock(request):
     context = {
         'variable': 'Hello World!!',
@@ -23,16 +24,48 @@ def exemple_mock(request):
 
 
 def entrada_producte_mock(request):
-    context = {'productor_id': '20199110001',
-               'producte_id': 'MANZANAS GREENTRANS',
-               'limit': '25/02/2019',
-               'temp_min': 10,
-               'temp_max': 15,
-               'hum_min': 35,
-               'hum_max': 60,
-               'quantitat': 4
-               }
-
+    context = {'productes' : [
+        {'productor_id': '20199110001',
+         'producte_id': 'MANZANAS GREENTRANS',
+         'limit': '25/05/2019',
+         'temp_min': 10,
+         'temp_max': 15,
+         'hum_min': 35,
+         'hum_max': 60,
+         'quantitat': 4},
+        {'productor_id': '20199110001',
+         'producte_id': 'MANZANAS GOLDEN',
+         'limit': '29/06/2019',
+         'temp_min': 10,
+         'temp_max': 15,
+         'hum_min': 35,
+         'hum_max': 60,
+         'quantitat': 10},
+        {'productor_id': '20199110001',
+         'producte_id': 'PERA CONFERENCE',
+         'limit': '08/08/2019',
+         'temp_min': 5,
+         'temp_max': 15,
+         'hum_min': 45,
+         'hum_max': 70,
+         'quantitat': 8},
+        {'productor_id': '20199110001',
+         'producte_id': 'TABLONES CAOBA 7x25',
+         'limit': '25/02/2022',
+         'temp_min': -5,
+         'temp_max': 50,
+         'hum_min': 0,
+         'hum_max': 40,
+         'quantitat': 16},
+        {'productor_id': '20199110001',
+         'producte_id': 'TABLONES EBANO 7x25',
+         'limit': '25/02/2022',
+         'temp_min': -5,
+         'temp_max': 50,
+         'hum_min': 0,
+         'hum_max': 40,
+         'quantitat': 12}]
+    }
     return render(request, 'magatzem/entrada.html', context)
 
 
