@@ -46,7 +46,7 @@ def signup(request): #afegim els usuaris en grups segons el seu registre
             elif type_profile.name == "Ceo":
                 user.groups.add(ceo)
                 user.save()
-            return redirect('exemples')
+            return redirect('home')
     else:
         form = SignUpForm()
     return render(request, 'users/register.html', {'form': form})
