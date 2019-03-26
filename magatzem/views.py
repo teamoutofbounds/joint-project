@@ -1,16 +1,32 @@
 from django.shortcuts import render
-
-
-# Create your views here.
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
+from django.db.models import Q
 
 from magatzem.models.room import Room
+from magatzem.models.task import Task
 
 
 class RoomList(ListView):
     model = Room
     context_object_name = 'room_list'
     template_name = 'magatzem/room-list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Sales'
+
+
+class RoomDetail(DetailView):
+    model = Room
+    template_name = 'magatzem/room-detail.html'
+    context_object_name = 'room'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tasks'] = Task.objects.filter(~Q(task_status=4),
+                                               Q(origin_room=context['room']) | Q(destination_room=context['room']))
+        context['title'] = context['room'].title
+        return context
 
 
 def exemple_mock(request):
