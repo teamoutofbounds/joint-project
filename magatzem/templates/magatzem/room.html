@@ -1,0 +1,15 @@
+{% extends 'magatzem/base.html' %}
+
+{% block content %}
+    {% for room in room_list  %}
+        <h2>Sala: {{ room.pk }}</h2>
+        <h3>Temp min: {{ room.tem_min }}</h3>
+        <h3>Temp max: {{ room.tem_max }}</h3>
+        <h3>Hum min: {{ room.hum_min }}</h3>
+        <h3>Hum max: {{ room.hum_max }}</h3>
+        <h3>Stock actual: {{ room.quantity }}</h3>
+        <h3>Stock maxim: {{ room.limit }}</h3>
+        <h3>Estat: {{ room.room_status }}</h3>
+    {% endfor %}
+
+{% endblock %}

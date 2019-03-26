@@ -7,7 +7,7 @@ from . import views
 urlpatterns = [
     path('gestor/', views.exemple_mock, name='gestor-home'),
     path('operaris/', views.exemple_mock, name='operari-home'),
-    path('gestor/sales/', views.exemple_mock, name='list-room'),
+    path('gestor/sales/', views.sala_view, name='list-room'),
     path('gestor/sales/<int:pk>/', views.exemple_mock, name='detail-room'),
     path('gestor/entrades/new/', views.exemple_mock, name='new-arrival'),
     path('gestor/moviments/new/', views.exemple_mock, name='new-movement'),
