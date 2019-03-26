@@ -1,5 +1,3 @@
-from django.forms import ModelForm, CharField
-from django.forms.widgets import *
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
@@ -13,6 +11,6 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2','user_type')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'user_type')
         exclude = ('user_permissions', 'last_login', 'is_superuser',
                    'is_staff', 'is_active', 'date_joined')

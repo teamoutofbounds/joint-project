@@ -7,10 +7,10 @@ from . import views
 from storageApp import settings
 
 urlpatterns = [
-    url(r'^login/$', auth_views.LoginView.as_view(template_name="magatzem/login.html"),name='login'),
+    url(r'^login/$', auth_views.LoginView.as_view(template_name="users/login.html"), name='login'),
     url(r'^logout/$', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
     path('magatzem/', include('magatzem.urls')),
     path('oficina/', include('oficina.urls')),
-    url(r'^exemples/$', views.exemple_mock, name='exemples'),# proba per login/logout
+    url(r'^exemples/$', views.exemple_mock, name='exemples'),  # prova per login/logout
     url(r'^register/$', views.signup, name='register'),
 ]
