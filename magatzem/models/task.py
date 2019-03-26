@@ -52,7 +52,7 @@ class Task(models.Model):
             raise ValueError()
 
     def __str__(self):
-        return Container.STR_PATTERN.format(self.origin_room, self.destination_room, self.containers)
+        return Task.STR_PATTERN.format(self.origin_room, self.destination_room, self.containers)
 
     def _is_different_origin_destination(self, origin, destination):
         return origin is not destination
