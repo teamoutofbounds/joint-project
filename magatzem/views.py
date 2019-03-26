@@ -13,6 +13,10 @@ class RoomList(ListView):
     context_object_name = 'room_list'
     template_name = 'magatzem/room-list.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Sales'
+
 
 class RoomDetail(DetailView):
     model = Room
@@ -23,6 +27,7 @@ class RoomDetail(DetailView):
         context = super().get_context_data(**kwargs)
         context['tasks'] = Task.objects.filter(~Q(task_status=4),
                                                Q(origin_room=context['room']) | Q(destination_room=context['room']))
+        context['title'] = context['room'].title
         return context
 
 

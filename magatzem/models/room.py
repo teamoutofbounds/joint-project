@@ -15,8 +15,7 @@ class Room(models.Model):
     temp_max = models.PositiveIntegerField()
     hum_min = models.PositiveIntegerField()
     hum_max = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
-    quantity_in_the_room = models.PositiveIntegerField(default=0)
-    quantity_moving = models.SmallIntegerField(default=0)
+    quantity = models.PositiveIntegerField(default=0)
     limit = models.PositiveIntegerField()
     room_status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, default=0, validators=[MaxValueValidator(1)])
 
