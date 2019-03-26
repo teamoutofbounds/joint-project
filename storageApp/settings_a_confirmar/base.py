@@ -16,7 +16,7 @@ INSTALLED_APPS = [
     'magatzem.apps.MagatzemConfig',
     'oficina.apps.OficinaConfig',
     'users.apps.UsersConfig',
-    'simple_history'
+    'simple_history',
     'django.contrib.admin',
     'markdown_deux',
     'django.contrib.auth',

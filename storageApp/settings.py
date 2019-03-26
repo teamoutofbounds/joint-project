@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'magatzem.apps.MagatzemConfig',
     'oficina.apps.OficinaConfig',
-    'simple_history'
+    'simple_history',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
