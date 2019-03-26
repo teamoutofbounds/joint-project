@@ -2,17 +2,15 @@ from django.shortcuts import render
 
 
 # Create your views here.
+from django.views.generic import ListView
+
 from magatzem.models.room import Room
 
 
-def sala_view(request):
-    room_queryset = Room.objects.all()
-    room_list = []
-    for room in room_queryset:
-        room_list.append(room)
-    print(room_list)
-    context = {'room_list': room_list}
-    return render(request, 'magatzem/room.html', context)
+class RoomList(ListView):
+    model = Room
+    context_object_name = 'room_list'
+    template_name = 'magatzem/room-list.html'
 
 def exemple_mock(request):
     context = {
