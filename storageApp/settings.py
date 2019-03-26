@@ -58,7 +58,9 @@ ROOT_URLCONF = 'storageApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -123,4 +125,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/'  #S'ha de mirar on volem que el redireccioni
+LOGIN_REDIRECT_URL = '/exemples/' #S'ha de mirar on volem que el redireccioni
+
+LOGOUT_REDIRECT_URL = '/exemples/' #S'ha de mirar on volem que el redireccioni
