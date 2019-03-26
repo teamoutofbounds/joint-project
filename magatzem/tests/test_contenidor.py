@@ -1,7 +1,6 @@
 from django.test import TestCase
 from parameterized import parameterized
-from .models import Container
-
+from magatzem.models import Container
 
 #       CONTAINERS TESTS
 ###############################################################################################
