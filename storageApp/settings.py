@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'magatzem.apps.MagatzemConfig',
     'oficina.apps.OficinaConfig',
+    'users.apps.UsersConfig',
     'simple_history',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -125,6 +126,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/exemples/' #S'ha de mirar on volem que el redireccioni
+LOGIN_REDIRECT_URL = 'home'
 
-LOGOUT_REDIRECT_URL = '/exemples/' #S'ha de mirar on volem que el redireccioni
+LOGOUT_REDIRECT_URL = 'login'

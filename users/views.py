@@ -17,7 +17,7 @@ def exemple_mock(request):
         'variable': 'Hello World!!',
     }
 
-    return render(request, 'magatzem/base.html', context)
+    return render(request, 'users/base.html', context)
 
 
 def signup(request): #afegim els usuaris en grups segons el seu registre
@@ -49,4 +49,4 @@ def signup(request): #afegim els usuaris en grups segons el seu registre
             return redirect('exemples')
     else:
         form = SignUpForm()
-    return render(request, 'magatzem/register.html', {'form': form})
+    return render(request, 'users/register.html', {'form': form})
