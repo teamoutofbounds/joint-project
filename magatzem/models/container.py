@@ -1,5 +1,6 @@
 import re
 from django.db import models
+from magatzem.models.room import Room
 
 
 class Container(models.Model):
@@ -18,9 +19,10 @@ class Container(models.Model):
     hum_min = models.IntegerField()
     hum_max = models.IntegerField()
     quantity = models.IntegerField()
+    room = models.ForeignKey(Room, on_delete=models.PROTECT)
     SLA = models.IntegerField()
 
-    def __init__(self, product_id, producer_id, limit, quantity, temp_min, temp_max, hum_min, hum_max, *args, **kwargs):
+    def __init__(self, product_id, producer_id, limit, quantity, temp_min, temp_max, hum_min, hum_max, room, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         if self._has_product_id_correct_format(product_id) and \
