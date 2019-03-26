@@ -116,7 +116,7 @@ class TestContainer(TestCase):
 
     @parameterized.expand([["Apples", '11111111111', '25/02/2019', 1000, 1, 10, 10, 90],
                           ["Wood", '12345678900', '25/01/2021', 45, 200, 10, 15, 25, 35],
-                          ["Pera conference", '28/12/2019', '78787878787', 1, 2, 6, 90, 100 ]])
+                          ["Pera conference", '28/12/2019', '78787878787', 1, 2, 6, 90, 100]])
     def container_str(self, product_id, producer_id, limit, quantity, temp_min, temp_max, hum_min, hum_max):
         container = Container(product_id=product_id, producer_id=producer_id, limit=limit, quantity=quantity,
                               temp_min=temp_min, temp_max=temp_max, hum_min=hum_min, hum_max=hum_max, room=self.room)
