@@ -10,7 +10,7 @@ class Room(models.Model):
     )
     STR_PATTERN = "Nom: {}\tEstat: {}\tMaxima capacitat: {}\tOcupat: {}"
 
-    name = models.CharField(max_length=16)
+    name = models.CharField(max_length=16, default='Nova Sala')
     temp_min = models.SmallIntegerField()
     temp_max = models.SmallIntegerField()
     hum_min = models.PositiveSmallIntegerField()

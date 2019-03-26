@@ -9,7 +9,7 @@ from magatzem.models import Container, Room
 
 class TestContainer(TestCase):
 
-    room = Room(temp_min=0, temp_max=100, hum_min=0, hum_max=100, quantity=10, limit=200, room_status=1)
+    room = Room(name='Sala 1', temp_min=0, temp_max=100, hum_min=0, hum_max=100, quantity=10, limit=200, room_status=1)
 
     def setup(self):
         self.room.save()
