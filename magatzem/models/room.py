@@ -10,13 +10,15 @@ class Room(models.Model):
     )
     STR_PATTERN = ""
 
-    temp_min = models.PositiveIntegerField()
-    temp_max = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
+    name = models.CharField(max_length=16)
+    temp_min = models.SmallIntegerField()
+    temp_max = models.PositiveIntegerField()
     hum_min = models.PositiveIntegerField()
     hum_max = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
-    quantity = models.PositiveIntegerField(default=0)
+    quantity_in_the_room = models.PositiveIntegerField(default=0)
+    quantity_moving = models.SmallIntegerField(default=0)
     limit = models.PositiveIntegerField()
-    room_status = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(1)])
+    room_status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, default=0, validators=[MaxValueValidator(1)])
 
     class Meta:
-        ordering = ['room_status']
+        ordering = ['-room_status', 'name']
