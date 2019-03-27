@@ -27,15 +27,12 @@ class Task(models.Model):
                                                  choices=TYPE_CHOICES, default=1)
     task_status = models.PositiveSmallIntegerField(validators=[MaxValueValidator(MAX_STATUS_CHOICES_VALUE)],
                                                    choices=STATUS_CHOICES, default=0)
-    origin_room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    destination_room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    origin_room = models.ForeignKey(Room, related_name='origin', on_delete=models.CASCADE)
+    destination_room = models.ForeignKey(Room, related_name='destination', on_delete=models.CASCADE)
     containers = models.ForeignKey(Container, on_delete=models.CASCADE)
 
     # Contains all the changes of the object
     history = HistoricalRecords()
-
-    class Meta:
-        order_with_respect_to = 'history'
 
     def __init__(self, description, task_type, task_status, origin_room, destination_room, containers, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -52,7 +49,7 @@ class Task(models.Model):
             raise ValueError()
 
     def __str__(self):
-        return Container.STR_PATTERN.format(self.origin_room, self.destination_room, self.containers)
+        return Task.STR_PATTERN.format(self.origin_room, self.destination_room, self.containers)
 
     def _is_different_origin_destination(self, origin, destination):
         return origin is not destination

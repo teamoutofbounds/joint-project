@@ -8,15 +8,19 @@ class Room(models.Model):
         (0, "Tancada"),
         (1, "Oberta"),
     )
-    STR_PATTERN = ""
+    STR_PATTERN = "Nom: {}\tEstat: {}\tMaxima capacitat: {}\tOcupat: {}"
 
-    temp_min = models.PositiveIntegerField()
-    temp_max = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
-    hum_min = models.PositiveIntegerField()
-    hum_max = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
+    name = models.CharField(max_length=16, default='Nova Sala')
+    temp_min = models.SmallIntegerField()
+    temp_max = models.SmallIntegerField()
+    hum_min = models.PositiveSmallIntegerField()
+    hum_max = models.PositiveSmallIntegerField(validators=[MaxValueValidator(100)])
     quantity = models.PositiveIntegerField(default=0)
     limit = models.PositiveIntegerField()
-    room_status = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(1)])
+    room_status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, default=0, validators=[MaxValueValidator(1)])
 
     class Meta:
-        ordering = ['room_status']
+        ordering = ['-room_status', 'name']
+
+    def __str__(self):
+        return Room.STR_PATTERN.format(self.name, self.room_status, self.limit, self.quantity)
