@@ -23,13 +23,12 @@ To make a reference, one of the two standards written below must be followed, ac
 
 #### References by sections:
 
-##### 1. References found in "Purpose":
+##### 1. References found in *"Purpose"*:
 + [Test-Driven Development](https://en.wikipedia.org/wiki/Test-driven_development) (Wikipedia, 2019)
 
+##### 2. References found in *"Test"*:
 
-##### 7. References found in "Test":
-
-###### 7.1. Guides:
+###### 2.1. Guides:
 + [Writing and running tests](https://docs.djangoproject.com/en/1.10/topics/testing/overview/) (Django docs)
 + [Writing your first Django app, part 5 > Introducing automated testing](https://docs.djangoproject.com/en/1.10/intro/tutorial05/) (Django docs)
 + [Testing tools reference](https://docs.djangoproject.com/en/1.10/topics/testing/tools/) (Django docs)
@@ -38,22 +37,11 @@ To make a reference, one of the two standards written below must be followed, ac
 + [Workshop: Test-Driven Web Development with Django](https://test-driven-django-development.readthedocs.io/en/latest/index.html) (San Diego Python, 2014)
 + [Testing in Django (Part 1) - Best Practices and Examples](https://realpython.com/testing-in-django-part-1-best-practices-and-examples/) (RealPython, 2013)
 
-###### 7.2. Testing tools:
+###### 2.2. Testing tools:
 + [unittest.mock](https://docs.python.org/3.5/library/unittest.mock-examples.html) (python docs)
 + [Coverage](https://coverage.readthedocs.io/en/latest/) (Coverage.py docs)
 + [Splinter](https://splinter.readthedocs.io/en/latest/) (Splinter docs)
 + [ChromeDriver](http://chromedriver.chromium.org/) - WebDriver for Chrome (Chromedriver docs)
-
-
-
-##### 3. References found in "":
-
-##### 4. References found in "":
-
-##### 5. References found in "":
-
-
-
 
 [Back to Index](./index.md)
 
