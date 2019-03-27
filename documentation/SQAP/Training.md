@@ -24,9 +24,12 @@ The team members are going to use the below guides:
     [Tutorial series of a complete web 2.0 with CSS, login, user management, etc.](https://www.youtube.com/watch?v=UmljXZIypDc&list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p)
     
     [How to modify Django admin views](https://www.youtube.com/watch?v=g5DTIiFAiSk)
+    
+* [Python3 documentation](https://docs.python.org/3.3/)
 
-* [CSS Documentation](https://getbootstrap.com)
+* [Bootstrap Documentation](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
 
+* [Heroku Documentation](https://devcenter.heroku.com/categories/reference)
 
 
 The team will use github as a version control platform. The team members must read the following guides
