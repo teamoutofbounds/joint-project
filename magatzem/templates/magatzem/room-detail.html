@@ -1,0 +1,30 @@
+{% extends 'magatzem/base.html' %}
+
+{% block content %}
+
+
+    {% for container in containers %}
+
+        <h2>Id_Product: {{ container.product_id }}</h2>
+        <h3>Id_Producer: {{ container.producer_id }}</h3>
+        <h3>Limit : {{ container.limit }} </h3>
+        <h3>Quantity: {{ container.quantity }}</h3>
+        <h3>Temp_min: {{ container.temp_min }}</h3>
+        <h3>Temp_max: {{ container.temp_max }}</h3>
+        <h3>Hum_min: {{ container.hum_min }}</h3>
+        <h3>Hum_max: {{ container.hum_max }}</h3>
+
+    {% end for %}
+
+    <h2>Task: {{ task.pk }} </h2>
+    <h3>Description: {{ task.description }}</h3>
+    <h3>Task_type: {{ task.task_type }}</h3>
+    <h3>Task_status: {{ task.task_status }}</h3>
+    <h3>Task_origin: {{ task.origin_room }}</h3>
+    <h3>Destination_room: {{ task.destination_room }}</h3>
+    <h3>Containers: {{ task.containers }}</h3>
+
+
+
+{% end block %}
+
