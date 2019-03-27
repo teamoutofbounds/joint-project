@@ -15,6 +15,7 @@ class RoomList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Sales'
+        return context
 
 
 class RoomDetail(DetailView):
@@ -27,7 +28,7 @@ class RoomDetail(DetailView):
         context['tasks'] = Task.objects.filter(~Q(task_status=4),
                                                Q(origin_room=context['room']) | Q(destination_room=context['room']))
         context['containers'] = Container.objects.filter(room=context['room']).defer('room')
-        context['title'] = context['room'].title
+        context['title'] = context['room'].name
         return context
 
 
