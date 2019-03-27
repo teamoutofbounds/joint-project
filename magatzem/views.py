@@ -219,15 +219,108 @@ def sala_mock(request):
 
 
 def seleccionar_productes_mock(request):
-    context = {}
+    context = {'productes': [
+        {'productor_id': '20199110001',
+         'producte_id': 'MANZANAS GREENTRANS',
+         'limit': '25/05/2019',
+         'temp_min': 10,
+         'temp_max': 15,
+         'hum_min': 35,
+         'hum_max': 60,
+         'quantitat': 4},
+        {'productor_id': '20199110001',
+         'producte_id': 'MANZANAS GOLDEN',
+         'limit': '29/06/2019',
+         'temp_min': 10,
+         'temp_max': 15,
+         'hum_min': 35,
+         'hum_max': 60,
+         'quantitat': 10},
+        {'productor_id': '20199110001',
+         'producte_id': 'PERA CONFERENCE',
+         'limit': '08/08/2019',
+         'temp_min': 5,
+         'temp_max': 15,
+         'hum_min': 45,
+         'hum_max': 70,
+         'quantitat': 8},
+        {'productor_id': '20199110001',
+         'producte_id': 'TABLONES CAOBA 7x25',
+         'limit': '25/02/2022',
+         'temp_min': -5,
+         'temp_max': 50,
+         'hum_min': 0,
+         'hum_max': 40,
+         'quantitat': 16},
+        {'productor_id': '20199110001',
+         'producte_id': 'TABLONES EBANO 7x25',
+         'limit': '25/02/2022',
+         'temp_min': -5,
+         'temp_max': 50,
+         'hum_min': 0,
+         'hum_max': 40,
+         'quantitat': 12}]
+    }
+    return render(request, 'magatzem/movement.html', context)
 
-    return render(request, 'insertar_ruta al html que utilitza el mock', context)
 
 
 def seleccionar_sala_mock(request):
-    context = {}
+    context = {'productes':
+        {'productor_id': '20199110001',
+         'producte_id': 'MANZANAS GREENTRANS',
+         'limit': '25/05/2019',
+         'temp_min': 10,
+         'temp_max': 15,
+         'hum_min': 35,
+         'hum_max': 60,
+         'quantitat': 4},
+        'room_list': [
+            {
+                'name': 'Sala 1',
+                'temp_min': 0,
+                'temp_max': 5,
+                'hum_min': 15,
+                'hum_max': 35,
+                'quantity': 25,
+                'limit': 50,
+                'room_status': 1
+            },
+            {
+                'name': 'Sala 2',
+                'temp_min': 12,
+                'temp_max': 25,
+                'hum_min': 25,
+                'hum_max': 35,
+                'quantity': 50,
+                'limit': 50,
+                'room_status': 1
+            },
+            {
+                'name': 'Sala 3',
+                'temp_min': -5,
+                'temp_max': 50,
+                'hum_min': 15,
+                'hum_max': 35,
+                'quantity': 10,
+                'limit': 50,
+                'room_status': 1
+            },
+            {
+                'name': 'Sala 4',
+                'temp_min': 0,
+                'temp_max': 0,
+                'hum_min': 0,
+                'hum_max': 0,
+                'quantity': 0,
+                'limit': 50,
+                'room_status': 0
+            }
+        ],
+        'title' : 'seleccio de sala'
+    }
 
-    return render(request, 'insertar_ruta al html que utilitza el mock', context)
+    return render(request, 'magatzem/room-selector.html', context)
 
 
 def rebre_notificacio_mock(request):
