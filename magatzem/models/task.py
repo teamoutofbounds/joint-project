@@ -31,7 +31,7 @@ class Task(models.Model):
     origin_room = models.ForeignKey(Room, related_name='origin', on_delete=models.PROTECT)
     destination_room = models.ForeignKey(Room, related_name='destination', on_delete=models.PROTECT)
     containers = models.ForeignKey(Container, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     # Contains all the changes of the object
     history = HistoricalRecords()
