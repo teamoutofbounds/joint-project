@@ -216,7 +216,7 @@ def sala_mock(request):
         'title': 'Sala 1'
     }
 
-    return render(request, 'insertar_ruta al html que utilitza el mock', context)
+    return render(request, 'magatzem/room-detail.html', context)
 
 
 def seleccionar_productes_mock(request):
