@@ -20,19 +20,19 @@ app/
 &nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;__init__.py   
+&nbsp;&nbsp;&nbsp;&nbsp;\__init__.py   
 &nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;test_models.py    
+&nbsp;&nbsp;&nbsp;&nbsp;test_<model_name>.py    
 &nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;test_forms.py   
+&nbsp;&nbsp;&nbsp;&nbsp;test_<form_name>.py   
 &nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;test_views.py  
+&nbsp;&nbsp;&nbsp;&nbsp;test_<view_name>.py  
 
 
 #### 7.1.1.3.  Tools for testing
