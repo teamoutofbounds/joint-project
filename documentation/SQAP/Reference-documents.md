@@ -23,9 +23,13 @@ To make a reference, one of the two standards written below must be followed, ac
 
 ### References by sections:
 
-#### 1. References found in *"Test"*:
+#### 1.References found in *"Management*:
 
-##### 1.1. Guides:
++ [What is Scrum?](https://www.scrum.org/resources/what-is-scrum) (Scrum resources, November 2017)
+
+#### 2. References found in *"Test"*:
+
+##### 2.1. Guides:
 + [Writing and running tests](https://docs.djangoproject.com/en/1.10/topics/testing/overview/) (Django docs, version 1.10, August 1  2016)
 + [Writing your first Django app, part 5 > Introducing automated testing](https://docs.djangoproject.com/en/1.10/intro/tutorial05/) (Django docs, version 1.10, August 1 2016)
 + [Testing tools reference](https://docs.djangoproject.com/en/1.10/topics/testing/tools/) (Django docs, version 1.10, August 1 2016)
@@ -34,7 +38,7 @@ To make a reference, one of the two standards written below must be followed, ac
 + [Workshop: Test-Driven Web Development with Django](https://test-driven-django-development.readthedocs.io/en/latest/index.html) (San Diego Python, 2014)
 + [Testing in Django (Part 1) - Best Practices and Examples](https://realpython.com/testing-in-django-part-1-best-practices-and-examples/) (RealPython, 2013)
 
-##### 1.2. Testing tools:
+##### 2.2. Testing tools:
 + [unittest.mock](https://docs.python.org/3.5/library/unittest.mock-examples.html) (python docs, version 3.5.7, September 13 2015)
 + [Coverage](https://coverage.readthedocs.io/en/latest/) (Coverage.py docs, version 4.5.3, 2019)
 + [Splinter](https://splinter.readthedocs.io/en/latest/) (Splinter docs, October 21 2018)
