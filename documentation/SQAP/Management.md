@@ -1,5 +1,5 @@
 
-### Management
+### 3.Management
 #### 3.1 Joint Project Organization
 
 ##### 3.1.1 Program Organization Structure
@@ -109,3 +109,8 @@ or Quality Action Requests (QAR).
 
 
 #### 3.3.3 Quality Assurance Estimated Resources
+
+This part of the SQAP does not apply to the first delivery and will be writen
+on the second delivery.
+
+[Back to Index](./index.md)
