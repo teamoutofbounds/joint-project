@@ -18,7 +18,7 @@ SQA personnel will be invited to all code walkthroughs to ensure that peer revie
 Prior to the software delivery, there must be a team meeting verifying that all of the requirements specified in the requirements document has been satisfied. 
 
 #### 6.6 Test Reviews
-This developer team is going to work using a TDD (Test-driven development) methodology. This methodolohy is a software development process that relies on the repetition of a very short development cycle: requirements are turned into very specific test cases, then the software is improved to pass the new tests, only.
+This development team is going to work using a TDD (Test-driven development) methodology. This methodolohy is a software development process that relies on the repetition of a very short development cycle: requirements are turned into very specific test cases, then the software is improved to pass the new tests, only.
 
 The development team will not commit a code requeriment onto the github repository until all the tests have been passed succesfully. This means the code that is uploaded on the repository will always be fully operational and assures us that a push won't break the already working code.
 
