@@ -148,44 +148,44 @@ def sala_mock(request):
             'limit': 50,
             'room_status': 1
         },
-        'tasks': {
-            'description': 'Traslladar',
-            'containers': [
-                {
-                    'productor_id': '20199110001',
-                    'producte_id': 'PERA CONFERENCE',
-                    'limit': '08/08/2019',
-                    'temp_min': 5,
-                    'temp_max': 15,
-                    'hum_min': 45,
-                    'hum_max': 70,
-                    'quantitat': 8
-                }
-            ],
-            'origin_room': {
-                'name': 'Sala 1',
-                'temp_min': 0,
-                'temp_max': 5,
-                'hum_min': 15,
-                'hum_max': 35,
-                'quantity': 25,
-                'limit': 50,
-                'room_status': 1
-            },
-            'destination_room': {
-                'name': 'Sala 3',
-                'temp_min': -5,
-                'temp_max': 50,
-                'hum_min': 15,
-                'hum_max': 35,
-                'quantity': 10,
-                'limit': 50,
-                'room_status': 1
-            },
-            'task_type': 1,
-            'task_status': 1,
-        },
-        'contenidors': [
+        'tasks': [
+            {
+                'description': 'Traslladar',
+                'containers': {
+                        'productor_id': '20199110001',
+                        'producte_id': 'PERA CONFERENCE',
+                        'limit': '08/08/2019',
+                        'temp_min': 5,
+                        'temp_max': 15,
+                        'hum_min': 45,
+                        'hum_max': 70,
+                        'quantitat': 8
+                    },
+                'origin_room': {
+                    'name': 'Sala 1',
+                    'temp_min': 0,
+                    'temp_max': 5,
+                    'hum_min': 15,
+                    'hum_max': 35,
+                    'quantity': 25,
+                    'limit': 50,
+                    'room_status': 1
+                },
+                'destination_room': {
+                    'name': 'Sala 3',
+                    'temp_min': -5,
+                    'temp_max': 50,
+                    'hum_min': 15,
+                    'hum_max': 35,
+                    'quantity': 10,
+                    'limit': 50,
+                    'room_status': 1
+                },
+                'task_type': 1,
+                'task_status': 1,
+            }
+        ],
+        'containers': [
             {'productor_id': '20199110001',
              'producte_id': 'PERA CONFERENCE',
              'limit': '08/08/2019',

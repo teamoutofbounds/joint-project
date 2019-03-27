@@ -16,13 +16,17 @@
 
     {% endfor %}
 
-    <h2>Task: {{ task.pk }} </h2>
-    <h3>Description: {{ task.description }}</h3>
-    <h3>Task_type: {{ task.task_type }}</h3>
-    <h3>Task_status: {{ task.task_status }}</h3>
-    <h3>Task_origin: {{ task.origin_room }}</h3>
-    <h3>Destination_room: {{ task.destination_room }}</h3>
-    <h3>Containers: {{ task.containers }}</h3>
+    {% for task in tasks %}
+
+        <h2>Task: {{ task.pk }} </h2>
+        <h3>Description: {{ task.description }}</h3>
+        <h3>Task_type: {{ task.task_type }}</h3>
+        <h3>Task_status: {{ task.task_status }}</h3>
+        <h3>Task_origin: {{ task.origin_room }}</h3>
+        <h3>Destination_room: {{ task.destination_room }}</h3>
+        <h3>Containers: {{ task.containers }}</h3>
+
+    {% endfor %}
 
 
 
