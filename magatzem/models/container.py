@@ -22,6 +22,7 @@ class Container(models.Model):
     room = models.ForeignKey(Room, on_delete=models.PROTECT)
     SLA = models.IntegerField()
 
+    '''
     def __init__(self, product_id, producer_id, limit, quantity, temp_min, temp_max, hum_min, hum_max, room, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -40,9 +41,25 @@ class Container(models.Model):
             self.temp_max = temp_max
             self.hum_min = hum_min
             self.hum_max = hum_max
+            self.room = room
             self._set_service_level_agreement(limit)
         else:
             raise ValueError()
+        '''
+    @staticmethod
+    def create(product_id, producer_id, limit, quantity, temp_min, temp_max, hum_min, hum_max, room):
+        if Container._has_product_id_correct_format(product_id) and \
+                Container._has_producer_id_correct_format(producer_id) and \
+                Container._has_limit_correct_format(limit) and \
+                Container._is_quantity_allowed(quantity) and \
+                Container._are_temperaures_allowed(temp_min, temp_max) and \
+                Container._are_humidity_allowed(hum_min, hum_max):
+            container = Container(product_id=product_id, producer_id=producer_id, limit=limit,
+                                  quantity=quantity, temp_min=temp_min, temp_max=temp_max,
+                                  hum_min=hum_min, hum_max=hum_max, room=room)
+            return container
+        else:
+            raise ValueError
 
     def __str__(self):
         return Container.STR_PATTERN.format(self.product_id, self.producer_id, self.quantity, self.limit)
@@ -50,22 +67,28 @@ class Container(models.Model):
 #   CHECKING PARAMETERS
 #########################################################################################################
 
+    @staticmethod
     def _has_product_id_correct_format(self, product_id):
         return isinstance(product_id, str) and re.match(r'^(\w ?)+$', product_id)
 
+    @staticmethod
     def _has_producer_id_correct_format(self, producer_id):
         return isinstance(producer_id, str) and re.match(r'^(\d{11})$', producer_id)
 
+    @staticmethod
     def _has_limit_correct_format(self, limit):
         return isinstance(limit, str) and re.match(r'^(\d{2}/\d{2}/\d{4})$', limit)
 
+    @staticmethod
     def _is_quantity_allowed(self, quantity):
         return isinstance(quantity, int) and 0 < quantity < Container.QUANTITY_MAX_VALUE
 
+    @staticmethod
     def _are_temperaures_allowed(self, temp_min, temp_max):
         return isinstance(temp_min, int) and isinstance(temp_max, int) and  \
                Container.TEMP_MIN_VALUE <= temp_min <= temp_max <= Container.TEMP_MAX_VALUE
 
+    @staticmethod
     def _are_humidity_allowed(self, hum_min, hum_max):
         return isinstance(hum_min, int) and isinstance(hum_max, int) and \
                Container.HUM_MIN_VALUE <= hum_min <= hum_max <= Container.HUM_MAX_VALUE
