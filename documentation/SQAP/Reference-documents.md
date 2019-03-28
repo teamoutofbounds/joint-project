@@ -23,12 +23,12 @@ To make a reference, one of the two standards written below must be followed, ac
 
 ### References by sections:
 
-#### 1.References found in *"Management*:
+#### 1.References found in *"Management"*:
 
 + [What is Scrum?](https://www.scrum.org/resources/what-is-scrum) (Scrum resources, November 2017)
 
 
-#### 2.References found in *Standards, Practices, Conventions and Metrics*:
+#### 2.References found in *"Standards, Practices, Conventions and Metrics"*:
  
 ##### 2.1. Standards:
 
