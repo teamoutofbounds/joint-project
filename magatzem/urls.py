@@ -9,7 +9,8 @@ from . import views
 urlpatterns = [
     path('gestor/', views.exemple_mock, name='gestor-home'),
     path('operaris/', views.exemple_mock, name='operari-home'),
-    path('gestor/sales/', RoomList.as_view(), name='list-room'),
+    #path('gestor/sales/', RoomList.as_view(), name='list-room'),
+    path('gestor/sales/', views.llista_sales_mock, name='list-room'),
     path('gestor/sales/<int:pk>/', RoomDetail.as_view(), name='detail-room'),
     path('gestor/entrades/new/', views.exemple_mock, name='new-arrival'),
     path('gestor/moviments/new/', views.exemple_mock, name='new-movement'),
