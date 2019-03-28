@@ -2,14 +2,20 @@
 
 {% block content %}
     {% for room in room_list  %}
-        <h2>Sala: {{ room.pk }}</h2>
-        <h3>Temp min: {{ room.tem_min }}</h3>
-        <h3>Temp max: {{ room.tem_max }}</h3>
-        <h3>Hum min: {{ room.hum_min }}</h3>
-        <h3>Hum max: {{ room.hum_max }}</h3>
-        <h3>Stock actual: {{ room.quantity }}</h3>
-        <h3>Stock maxim: {{ room.limit }}</h3>
-        <h3>Estat: {{ room.room_status }}</h3>
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+            {{ room.name }}
+            </div>
+            <div class="card-body">
+            <p class="card-text">Temp min: {{ room.temp_min }}</p>
+            <p class="card-text">Temp max: {{ room.temp_max }}</p>
+            <p class="card-text">Hum min: {{ room.hum_min }}</p>
+            <p class="card-text">Hum max: {{ room.hum_max }}</p>
+            <p class="card-text">Stock actual: {{ room.quantity }}</p>
+            <p class="card-text">Stock maxim: {{ room.limit }}</p>
+            <p class="card-text">Estat: {{ room.room_status }}</p>
+            <a href="#" class="btn btn-primary">Mostra sala</a>
+            </div>
+        </div>
     {% endfor %}
-
 {% endblock %}
