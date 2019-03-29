@@ -2,12 +2,14 @@
 
 {% block content %}
 
-{}
-{% for task in tasks and lt task.task_status 3 %}
+{% for task in tasks %}
+{% if task.task_status < 3 %}
 
 <div class="alert alert-success" role="alert">
-  <a href="#" class="alert-link">Nova notificacio de tasca!</a>.
+  <a href="#" class="alert-link">Nova notificacio de tasca!</a>
 </div>
+
+{% endif %}
 
 {% endfor %}
 
@@ -27,8 +29,8 @@
          <h4> Sala Origen: {{task.origin_room.name}}</h4>
          <h4>Sala Desti: {{task.destination_room.name}}</h4>
          <h4>Container: </h4>
-         <h5>Producte: {{task.containers.product_id}}</h5>
-         <h5>Cantitat: {{task.containers.quantitat}} </h5>
+          <h5>Producte: {{task.containers.product_id}}</h5>
+          <h5>Cantitat: {{task.containers.quantitat}} </h5>
       </div>
     </div>
   </div>
