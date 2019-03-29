@@ -1,17 +1,15 @@
 {% extends 'magatzem/base.html' %}
 {% block content %}
 <div class="loginout" style="margin-top: 5%;">
-  <div class="col-xs-12 col-md-6 col-lg-5" id="login" align="center">
-    <div class="col-xs-12 col-md-12 col-lg-12">
+  <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
       <h2>Log Out</h2>
-    </div>
-    <div class="col-xs-12 col-md-12 col-lg-12">
       <label>You have been disconnected.</label>
-    </div>
-    <div class="col-xs-8 col-md-8 col-lg-8" id="div_submit">
       <a href="{% url 'login' %}" class= "btn btn-dark btn-lg btn-block">Ok</a>
     </div>
-  </div>
+    <div class="col-sm-4"></div>
+    </div>
 </div>
 
 {% endblock content%}
