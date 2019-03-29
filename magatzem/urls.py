@@ -19,4 +19,5 @@ urlpatterns = [
     path('entrada_mock/', views.entrada_producte_mock, name='entrada_mock'),
     path('llista_sales_mock/', views.llista_sales_mock, name='llista-sales_mock'),
     path('sala_mock/', views.sala_mock, name='sala_mock'),
+    path('operari/pepe-lopez/', views.rebre_notificacio_mock, name='notificacio-mock')
 ]
