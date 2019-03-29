@@ -41,11 +41,9 @@ class RoomHandler:
 			return [more_quantity[0]]
 
 		distribution_list = []
-		i = 0
 		while self.quantity > 0:
-			if self.quantity < distribution_list['left_stock']:
-				distribution_list['new_containers'] = self.quantity - distribution_list['left_stock']
-				distribution_list['left_stock'] -= self.quantity
+			if self.quantity > distribution_list['left_stock']:
+				distribution_list['new_containers'] = distribution_list['left_stock']
 				self.quantity -= distribution_list['new_containers']
 			else:
 				distribution_list['new_containers'] = self.quantity
