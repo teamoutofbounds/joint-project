@@ -2,23 +2,38 @@
 
 {% block content %}
 
-
 {% for task in tasks %}
+{% if task.task_status < 3 %}
 
 <div class="alert alert-success" role="alert">
-  A simple success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+  <a href="#" class="alert-link">Nova notificacio de tasca!</a>
 </div>
+
+{% endif %}
 
 {% endfor %}
 
 {% for task in tasks %}
 
-    <h2>Task: {{ task.pk }} </h2>
-    <h3>Description: {{ task.description }}</h3>
-    <h3>Task_type: {{ task.task_type }}</h3>
-    <h3>Task_origin: {{ task.origin_room }}</h3>
-    <h3>Destination_room: {{ task.destination_room }}</h3>
-    <h3>Containers: {{ task.containers }}</h3>
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <h3>Task: </h3>
+        </button>
+      </h5>
+    </div>
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+         <h4> Description: {{ task.description }}</h4>
+         <h4> Sala Origen: {{task.origin_room.name}}</h4>
+         <h4>Sala Desti: {{task.destination_room.name}}</h4>
+         <h4>Container: </h4>
+          <h5>Producte: {{task.containers.product_id}}</h5>
+          <h5>Cantitat: {{task.containers.quantitat}} </h5>
+      </div>
+    </div>
+  </div>
 
 {% endfor %}
 
