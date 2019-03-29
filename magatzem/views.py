@@ -1,10 +1,28 @@
 from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 
 from magatzem.models.room import Room
 from magatzem.models.task import Task
 from magatzem.models.container import Container
+
+
+class ContainerSelectionList(ListView):
+    model = Room
+    context_object_name = 'container_list'
+    slug_field = "room"
+    slug_url_kwarg = "room"
+    template_name = 'magatzem/select-container.html'
+
+    def get_queryset(self):
+        self.room = get_object_or_404(Container, room=self.kwargs['room'])
+        return Container.objects.filter(room=self.room)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Selecció de Contenidors'
+        return context
 
 
 class RoomList(ListView):
