@@ -267,7 +267,7 @@ def seleccionar_productes_mock(request):
 
 
 def seleccionar_sala_mock(request):
-    context = {'productes':
+    context = {'productes': [
         {'productor_id': '20199110001',
          'producte_id': 'MANZANAS GREENTRANS',
          'limit': '25/05/2019',
@@ -275,7 +275,7 @@ def seleccionar_sala_mock(request):
          'temp_max': 15,
          'hum_min': 35,
          'hum_max': 60,
-         'quantitat': 4},
+         'quantitat': 4} ],
         'room_list': [
             {
                 'name': 'Sala 1',
@@ -366,4 +366,4 @@ def rebre_notificacio_mock(request):
         'title': 'Notificacions'
     }
 
-    return render(request, 'insertar_ruta al html que utilitza el mock', context)
+    return render(request, 'magatzem/notification.html', context)

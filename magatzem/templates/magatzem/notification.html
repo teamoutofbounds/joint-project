@@ -3,7 +3,7 @@
 {% block content %}
 
 
-{% for task in tasks %}
+{% for task in tasks  %}
 
 <div class="alert alert-success" role="alert">
   A simple success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
@@ -13,12 +13,12 @@
 
 {% for task in tasks %}
 
-    <h2>Task: {{ task.pk }} </h2>
-    <h3>Description: {{ task.description }}</h3>
-    <h3>Task_type: {{ task.task_type }}</h3>
-    <h3>Task_origin: {{ task.origin_room }}</h3>
-    <h3>Destination_room: {{ task.destination_room }}</h3>
-    <h3>Containers: {{ task.containers }}</h3>
+    <h3>Task: {{ task.pk }} </h3>
+    <h4>Description: {{ task.description }}</h4>
+    <h4>Task_type: {{ task.task_type }}</h4>
+    <h4>Task_origin: {{ task.origin_room }}</h4>
+    <h4>Destination_room: {{ task.destination_room }}</h4>
+    <h4>Containers: {{ task.containers }}</h4>
 
 {% endfor %}
 
