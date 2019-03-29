@@ -1,46 +1,79 @@
 import re
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from magatzem.models.room import Room
 
 
+def validate_products(value):
+    if not re.match(r'^(\w ?)+$', value):
+        raise ValidationError(
+            gettext_lazy('%(value) no es un nom de producte.'),
+            params={'value': value}
+        )
+
+
+def validate_client(value):
+    if not re.match(r'^(\d{11})$', value):
+        raise ValidationError(
+            gettext_lazy('%(value) no és un identificador de client vàlid.'),
+            params={'value': value}
+        )
+
+
+def validate_limit(value):
+    if not re.match(r'^(\d{2}/\d{2}/\d{4})$', value):
+        raise ValidationError(
+            gettext_lazy('%(value) no és un Level Service Agreement vàlid.'),
+            params={'value': value}
+        )
+
+
 class Container(models.Model):
-    QUANTITY_MAX_VALUE = 1000000000
+    QUANTITY_MAX_VALUE = 999999999
     HUM_MIN_VALUE = 0
     HUM_MAX_VALUE = 100
     TEMP_MIN_VALUE = -999
     TEMP_MAX_VALUE = 999
     STR_PATTERN = "{} [{}] unitats:{} - SLA:{}"
 
-    product_id = models.CharField(max_length=64)
-    producer_id = models.CharField(max_length=64)
-    limit = models.CharField(max_length=10)
-    temp_min = models.IntegerField()
-    temp_max = models.IntegerField()
-    hum_min = models.IntegerField()
-    hum_max = models.IntegerField()
-    quantity = models.IntegerField()
+    product_id = models.CharField(validators=[validate_products], max_length=64)
+    producer_id = models.CharField(validators=[validate_client], max_length=64)
+    limit = models.CharField(validators=[validate_limit], max_length=10)
+    quantity = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(QUANTITY_MAX_VALUE)])
+    temp_min = models.IntegerField(validators=[MinValueValidator(TEMP_MIN_VALUE), MaxValueValidator(TEMP_MAX_VALUE)])
+    temp_max = models.IntegerField(validators=[MinValueValidator(TEMP_MIN_VALUE), MaxValueValidator(TEMP_MAX_VALUE)])
+    hum_min = models.IntegerField(validators=[MinValueValidator(HUM_MIN_VALUE), MaxValueValidator(HUM_MAX_VALUE)])
+    hum_max = models.IntegerField(validators=[MinValueValidator(HUM_MIN_VALUE), MaxValueValidator(HUM_MAX_VALUE)])
     room = models.ForeignKey(Room, on_delete=models.PROTECT)
-    SLA = models.IntegerField()
+    SLA = models.IntegerField(default=0)
 
-    def __init__(self, product_id, producer_id, limit, quantity, temp_min, temp_max, hum_min, hum_max, room, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def clean(self):
+        if self.temp_min > self.temp_max:
+            raise ValidationError(gettext_lazy(
+                'La temperatura mínima d\'un contenedor no pot ser superior a la temperatura màxima.'))
+        if self.hum_min > self.hum_max:
+            raise ValidationError(gettext_lazy(
+                'La humitat mínima d\'un contenedor no pot ser superior a la humitat màxima.'))
 
-        if self._has_product_id_correct_format(product_id) and \
-           self._has_producer_id_correct_format(producer_id) and \
-           self._has_limit_correct_format(limit) and \
-           self._is_quantity_allowed(quantity) and \
-           self._are_temperaures_allowed(temp_min, temp_max) and \
-           self._are_humidity_allowed(hum_min, hum_max):
+    def get_sla(self):
+        if self.SLA == 0:
+            self._set_service_level_agreement()
+        return self.SLA
 
-            self.product_id = product_id
-            self.producer_id = producer_id
-            self.limit = limit
-            self.quantity = quantity
-            self.temp_min = temp_min
-            self.temp_max = temp_max
-            self.hum_min = hum_min
-            self.hum_max = hum_max
-            self._set_service_level_agreement(limit)
+    @staticmethod
+    def create(product_id, producer_id, limit, quantity, temp_min, temp_max, hum_min, hum_max, room):
+        if Container._has_product_id_correct_format(product_id) and \
+                Container._has_producer_id_correct_format(producer_id) and \
+                Container._has_limit_correct_format(limit) and \
+                Container._is_quantity_allowed(quantity) and \
+                Container._are_temperaures_allowed(temp_min, temp_max) and \
+                Container._are_humidity_allowed(hum_min, hum_max):
+            container = Container(product_id=product_id, producer_id=producer_id, limit=limit,
+                                  quantity=quantity, temp_min=temp_min, temp_max=temp_max,
+                                  hum_min=hum_min, hum_max=hum_max, room=room)
+            return container
         else:
             raise ValueError()
 
@@ -50,29 +83,35 @@ class Container(models.Model):
 #   CHECKING PARAMETERS
 #########################################################################################################
 
-    def _has_product_id_correct_format(self, product_id):
+    @staticmethod
+    def _has_product_id_correct_format(product_id):
         return isinstance(product_id, str) and re.match(r'^(\w ?)+$', product_id)
 
-    def _has_producer_id_correct_format(self, producer_id):
+    @staticmethod
+    def _has_producer_id_correct_format(producer_id):
         return isinstance(producer_id, str) and re.match(r'^(\d{11})$', producer_id)
 
-    def _has_limit_correct_format(self, limit):
+    @staticmethod
+    def _has_limit_correct_format(limit):
         return isinstance(limit, str) and re.match(r'^(\d{2}/\d{2}/\d{4})$', limit)
 
-    def _is_quantity_allowed(self, quantity):
-        return isinstance(quantity, int) and 0 < quantity < Container.QUANTITY_MAX_VALUE
+    @staticmethod
+    def _is_quantity_allowed(quantity):
+        return isinstance(quantity, int) and 0 < quantity <= Container.QUANTITY_MAX_VALUE
 
-    def _are_temperaures_allowed(self, temp_min, temp_max):
+    @staticmethod
+    def _are_temperaures_allowed(temp_min, temp_max):
         return isinstance(temp_min, int) and isinstance(temp_max, int) and  \
                Container.TEMP_MIN_VALUE <= temp_min <= temp_max <= Container.TEMP_MAX_VALUE
 
-    def _are_humidity_allowed(self, hum_min, hum_max):
+    @staticmethod
+    def _are_humidity_allowed(hum_min, hum_max):
         return isinstance(hum_min, int) and isinstance(hum_max, int) and \
                Container.HUM_MIN_VALUE <= hum_min <= hum_max <= Container.HUM_MAX_VALUE
 
 ##########################################################################################################
 #
 
-    def _set_service_level_agreement(self, limit):
-        data = limit.split('/')
+    def _set_service_level_agreement(self):
+        data = self.limit.split('/')
         self.SLA = int(data[2] + data[1] + data[0])

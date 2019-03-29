@@ -1,6 +1,7 @@
 import os
+import re
 from django.core.management.base import BaseCommand
-from magatzem.models import Container, Room
+from magatzem.models import Container, Room, Task
 
 
 class Command(BaseCommand):
@@ -10,18 +11,26 @@ class Command(BaseCommand):
 
 def make_database():
     path = os.getcwd()
-    # PRIMER S'HAN DE CREAR LES SALES
-    # *******************************
-    # add_rooms(path + '/data/rooms.data')
-    # add_containers(path + '/data/containers.data')
-    # add_tasks(path + '/data/tasks.data')
+    add_item(add_room, path + '/data/rooms.data')
+    add_item(add_container, path + '/data/containers.data')
+    # add_item(add_tasks, path + '/data/tasks.data')
 
 
-def add_containers(filename):
+def add_item(func, filename):
     with open(filename, 'r') as file:
         for line in file.readlines():
+            if re.match('^*', line):
+                continue
             params = line.split('|')
-            add_container(params)
+            func(params)
+
+
+def add_room(params):
+    room = Room(name=params[1], temp_min=params[2], temp_max=params[3],
+                hum_min=params[4], hum_max=params[5], quantity=params[6],
+                limit=params[7], room_status=params[8])
+    room.id = params[0]
+    room.save()
 
 
 def add_container(params):
@@ -32,3 +41,13 @@ def add_container(params):
                           quantity=params[7], room=room)
     container.save()
 
+
+def add_task(params):
+    # task.data
+    # This file must contain the following fields:
+    # description|task_type|task_status|origin_room|destination_room|product_id|producer_id|limit
+
+    container = Container.objects.get(product_id=params[5], producer_id=params[6], limit=params[7])
+    task = Task(description=params[0], task_type=params[1], task_status=params[2],
+                origin_room=params[3], destination_room=params[4], containers=container)
+    task.save()
