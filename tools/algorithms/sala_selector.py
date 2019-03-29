@@ -15,6 +15,7 @@ class RoomHandler:
 		self.quantity = container['quantity']
 
 	def select_containers(self):
+		self._initialize_sales()
 		room, less_quantity, more_quantity = self._get_exact_container_quantity
 		if room:
 			return [room]
@@ -52,3 +53,7 @@ class RoomHandler:
 			return distribution_list
 		else:
 			return []
+
+	def _initialize_sales():
+		for sala in self.sales:
+			sala['new_containers'] = 0
