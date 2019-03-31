@@ -23,6 +23,10 @@ To make a reference, one of the two standards written below must be followed, ac
 
 ### References by sections:
 
+#### 1.References found in *"Purpose"*:
+    
++ [IEEE Standard for Software Quality Assurance Plans](https://ieeexplore.ieee.org/document/213705) (IEEE 730.1-1989, 1989)
+
 #### 1.References found in *"Management"*:
 
 + [What is Scrum?](https://www.scrum.org/resources/what-is-scrum) (Scrum resources, November 2017)
@@ -32,7 +36,7 @@ To make a reference, one of the two standards written below must be followed, ac
  
 ##### 2.1. Standards:
 
-+ [IEEE Standard for Software Quality Assurance Plans] 
++ [IEEE Standard for Software Quality Assurance Plans](https://ieeexplore.ieee.org/document/213705) (IEEE 730.1-1989, 1989)
 + [Volere: Volere model](http://www.volere.co.uk) (Volere Requirements Resources docs, 2018)
  
 ##### 2.1. Guides:
