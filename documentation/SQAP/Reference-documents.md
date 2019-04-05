@@ -38,6 +38,7 @@ To make a reference, one of the two standards written below must be followed, ac
 
 + [IEEE Standard for Software Quality Assurance Plans](https://ieeexplore.ieee.org/document/213705) (IEEE 730.1-1989, 1989)
 + [Volere: Volere model](http://www.volere.co.uk) (Volere Requirements Resources docs, 2018)
++ [UML standard](https://www.uml.org/) (UML docs, July 2005)
  
 ##### 3.2. Guides:
  
@@ -61,7 +62,6 @@ To make a reference, one of the two standards written below must be followed, ac
 + [ChromeDriver](http://chromedriver.chromium.org/) - WebDriver for Chrome (Chromedriver docs, version 73.0.3683.68, March 7 2019 )
 
 #### 5. References found in *"Tools, techniques and methodologies"*:
-
 + [Test-driven Development: Introduction to Test Driven Development](http://agiledata.org/essays/tdd.html) (Agile data docs, 2003)
 + [Behavior-driven development: BDD Tutorial](https://docs.cucumber.io/guides/bdd-tutorial/) (Cucumber docs)
 
