@@ -81,7 +81,7 @@ described in the sections listed bellow:
 * [6. Software Reviews](./Software-reviews.md)
 * [7. Test](./Test.md)
 * [8. Problem reporting and corrective actions](./Problem-reporting-and-corrective-actions.md)
-* [12. Records Collection, Maintenance and Retention](./Records-collections-maintenance-and-retention.md)
+* [12. Records Collection, Maintenance and Retention](./Record-collections-maintenance-and-retention.md)
 
 #### 3.3 Roles and Responsibilities
 
