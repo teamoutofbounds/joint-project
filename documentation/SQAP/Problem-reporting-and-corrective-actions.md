@@ -4,6 +4,9 @@ When an error is found within the product, it must be brought to the attention o
 
 The use of any corrective actions is within the Product Manager's discretion. 
 
+In addition, for said errors and bugs, we can use GitHub Issues to notify the ongoing problems on the project. Using this method we can save the way in which the error was corrected, so that if said error occurs in the future, we know how to deal with it.
+
 An issue must be created for any bugs the team members come across. In the handling of such, regression tests will be used. See section [7.1.5](./Test.md).
+
 
 [Back to Index](./index.md)
