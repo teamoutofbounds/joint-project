@@ -1,3 +1,9 @@
 ### 8. Problem reporting and corrective actions
 
-When an error is found within the product, it must be brought to the attention of the entire team. Any means of communication may be used, but everyone involved must be informed, including the product owner. If a team member believes that somebody's change to their work has made the product worse, and not better, the matter must be discussed between everyone. If no consensus can be reached, the product owner has the authority to authorize any change to the involved code.  
+When an error is found within the product, it must be brought to the attention of the entire team. Any means of communication may be used, but everyone involved must be informed, including the product owner. Normally, this will be done during the team's biweekly meeting. If a team member believes that somebody's change to their work has made the product worse, and not better, the matter must be discussed between everyone. If no consensus can be reached, the product owner has the authority to authorize any change to the involved code.
+
+The use of any corrective actions is within the Product Manager's discretion. 
+
+An issue must be created for any bugs the team members come across. In the handling of such, regression tests will be used. See section [7.1.5](./Test.md).
+
+[Back to Index](./index.md)

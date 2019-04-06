@@ -6,7 +6,8 @@ The purpose of software reviews are to correct defects on the code as well as im
 * Finding defects or opportunities for improvement. Both the deliverable code as well as test code and data can be examined to find weaknesses. This ensures that the test code is robust and valid and that the design and implementation is consistent across the application. If there needs to be additional changes made, it catches the opportunity closer to the point of entry.
 
 #### 6.2 Formal reviews
-At least one week before each sprint ends, a formal meeting will be made by all the team members to do a code review and explain their work to the other members as well as the reasoning about their implementations. The team will also review every document generated during the process of the sprints and will generate the document adjunted in the annex of this SQAP. 
+At least one week before each sprint ends, a formal meeting will be made by all the team members to do a code review and explain their work to the other members as well as the reasoning about their implementations. The team will use the template ["Code review template"](../templates/code_review.md) that can be found in the templates folder. 
+The team will also review every document generated during the process of the sprints and will generate the document adjunted in the annex of this SQAP. 
 
 #### 6.3 Informal reviews
 Some of the team members are more experienced than others, in order to increase the production in the brief future, the team is going to work via pair-programming. The benefits of this are the fast-learning that the senior developer is going to induce to the less experienced developer, it will also provide a discussion about differents points of view about the implementation of a feature. This discussions can be very rich if both members discuss their ideas and the reasoning behind them. This can lead to find a very optim solution of the implementation.

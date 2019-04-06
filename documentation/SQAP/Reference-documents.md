@@ -23,13 +23,30 @@ To make a reference, one of the two standards written below must be followed, ac
 
 ### References by sections:
 
-#### 1.References found in *"Management*:
+#### 1.References found in *"Purpose"*:
+    
++ [IEEE Standard for Software Quality Assurance Plans](https://ieeexplore.ieee.org/document/213705) (IEEE 730.1-1989, 1989)
+
+#### 2.References found in *"Management"*:
 
 + [What is Scrum?](https://www.scrum.org/resources/what-is-scrum) (Scrum resources, November 2017)
 
-#### 2. References found in *"Test"*:
 
-##### 2.1. Guides:
+#### 3.References found in *"Standards, Practices, Conventions and Metrics"*:
+ 
+##### 3.1. Standards:
+
++ [IEEE Standard for Software Quality Assurance Plans](https://ieeexplore.ieee.org/document/213705) (IEEE 730.1-1989, 1989)
++ [Volere: Volere model](http://www.volere.co.uk) (Volere Requirements Resources docs, 2018)
++ [UML standard](https://www.uml.org/) (UML docs, July 2005)
+ 
+##### 3.2. Guides:
+ 
++ [PEP8:  Style Guide for Python Code](https://www.python.org/dev/peps/pep-0008/) (Python docs, version 8, August 1 2013)
+
+#### 4. References found in *"Test"*:
+
+##### 4.1. Guides:
 + [Writing and running tests](https://docs.djangoproject.com/en/1.10/topics/testing/overview/) (Django docs, version 1.10, August 1  2016)
 + [Writing your first Django app, part 5 > Introducing automated testing](https://docs.djangoproject.com/en/1.10/intro/tutorial05/) (Django docs, version 1.10, August 1 2016)
 + [Testing tools reference](https://docs.djangoproject.com/en/1.10/topics/testing/tools/) (Django docs, version 1.10, August 1 2016)
@@ -38,11 +55,16 @@ To make a reference, one of the two standards written below must be followed, ac
 + [Workshop: Test-Driven Web Development with Django](https://test-driven-django-development.readthedocs.io/en/latest/index.html) (San Diego Python, 2014)
 + [Testing in Django (Part 1) - Best Practices and Examples](https://realpython.com/testing-in-django-part-1-best-practices-and-examples/) (RealPython, 2013)
 
-##### 2.2. Testing tools:
+##### 4.2. Testing tools:
 + [unittest.mock](https://docs.python.org/3.5/library/unittest.mock-examples.html) (python docs, version 3.5.7, September 13 2015)
 + [Coverage](https://coverage.readthedocs.io/en/latest/) (Coverage.py docs, version 4.5.3, 2019)
 + [Splinter](https://splinter.readthedocs.io/en/latest/) (Splinter docs, October 21 2018)
 + [ChromeDriver](http://chromedriver.chromium.org/) - WebDriver for Chrome (Chromedriver docs, version 73.0.3683.68, March 7 2019 )
+
+#### 5. References found in *"Tools, techniques and methodologies"*:
++ [Test-driven Development: Introduction to Test Driven Development](http://agiledata.org/essays/tdd.html) (Agile data docs, 2003)
++ [Behavior-driven development: BDD Tutorial](https://docs.cucumber.io/guides/bdd-tutorial/) (Cucumber docs)
+
 
 
 [Back to Index](./index.md)
