@@ -46,9 +46,11 @@ In addition, low fidelity prototyping, drawn on paper, is used for the first ske
 
 All documentation, including this SQAP, will be developed in markdown and will be available in a hypertext format (for faster and more efficient consultation) through the [github wiki/pages/SQAP](https://github.com/teamoutofbounds/joint-project/wiki/SQAP).
 
-Titles: ## <number>. <Section Name>
-Subtitles: ### <number>. <Number>. <Subsection Name>
-Sub-subtitles: ### <number>. <Number>. <Number>. <Sub-subsection Name>
-Sub-sub-subtitles: #### <number>.<number>. <Number>. <Number>. <Sub-subsection Name>
-Lists: + <item / text>
-Links: [<link name>] (<link>)[Back to Index](./index.md)
++ __Titles:__ ## <number\>. <Section_Name\>  
++ __Subtitles:__ ### <number\>.<Number\>. <Subsection_ Name\>  
++ __Sub-subtitles:__ ### <number\>.<Number\>.<Number\>. <Sub-subsection_Name\>
++ __Sub-sub-subtitles:__ #### <number\>.<number\>.<Number\>.<Number\>. <Sub-sub-subsection_Name\>
++ __Lists:__ + <item / text\>
++ __Links:__ [<link_name\>] (<link\>)  
+
+[Back to Index](./index.md)
