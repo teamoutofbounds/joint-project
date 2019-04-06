@@ -15,15 +15,15 @@ The team members are going to use the below guides:
 
 * Basic Django tutorials and materials
 
-        [Official documentation guide](https://docs.djangoproject.com/en/2.1/)
+    [Official documentation guide](https://docs.djangoproject.com/en/2.1/)
 
-        [Official django tutorial](https://docs.djangoproject.com/en/2.1/intro/tutorial01/) 
+    [Official django tutorial](https://docs.djangoproject.com/en/2.1/intro/tutorial01/) 
 
 * Advanced Django material
 
-        [Tutorial series of a complete web 2.0 with CSS, login, user management, etc.](https://www.youtube.com/watch?v=UmljXZIypDc&list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p)
+    [Tutorial series of a complete web 2.0 with CSS, login, user management, etc.](https://www.youtube.com/watch?v=UmljXZIypDc&list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p)
     
-        [How to modify Django admin views](https://www.youtube.com/watch?v=g5DTIiFAiSk)
+    [How to modify Django admin views](https://www.youtube.com/watch?v=g5DTIiFAiSk)
     
 * [Python3 documentation](https://docs.python.org/3.3/)
 
