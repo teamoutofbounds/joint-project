@@ -47,30 +47,41 @@ deployment and includes system, installation and operational documentation.
 ##### 3.2.2 Maintenance and Development Tasks
 
 | Activity     | Entry        | Exit Criteria |
-|--------------|:------------:| -------------:|
-|              |              |               |
+|:--------------:|:------------:|:-------------:|
+| _Requirement licitation_ | _Beginning of a new Sprint_ | _Meetings held with the Stakeholders_ |
+| _Writing User Stories_ | _Requirement licitation completed_ | _BUC, PUC's and User Stories written and approved_ |
+| _Sprint Planning_ | _Writting User Stories Completed_ | _Tasks obtained from User Stories assigned to each member and Sprint end set to a date_ |
+| _Daily Meeting_ | _Each Monday, Wednesday and Friday during a Sprint_| _20 min after starting the Meeting_|
+| _Sprint Review_ | _Sprint end date day_ | _Stakeholders tell the opinion about all Software developed since the moment_ |
+| _Sprint Retrospective_| _Sprint Review Completed_ | _Scrum Master says the meeting has ended_ |
 
-##### 3.2.3 Program Management Tasks
-
-
-
-##### 3.2.4 Maintenance and Engineering Support Tasks
+##### 3.2.3 Maintenance and Engineering Support Tasks
 
 The maintenance and support tasks are out of the scope of TeamOutOfBounds
 project development and therefore will be not assessed in this document.
 
 
-##### 3.2.5 Development Tasks
+##### 3.2.4 Deployment Tasks
+
+The project follows the principles of Continious Integration (CI), for each\
+Sprint, the activities will be the following:
+
+| Activity     | Entry        | Exit Criteria |
+|:--------------:|:------------:|:-------------:|
+| _Relese review_  | _All Software is pulled to the QA branch and a meeting is appointed_ | _The Product Owner and the Quality Assurance Manager approves the Software State_ |
+| _Release integration_| _Release review is completed_| _QA branch pulls to master branch_|
+|_Deploy check_|_QA branch pulled to master_|_All tests run on production environment_|
 
 
 
-##### 3.2.6 Deployment Tasks
+##### 3.2.5 Quality Assurance Processes
 
-
-
-##### 3.2.7 Quality Assurance Processes
-
-
+The main processes that the project will follow regarding QA will be 
+described in the sections listed bellow:
+* [6. Software Reviews](./Software-reviews.md)
+* [7. Test](./Test.md)
+* [8. Problem reporting and corrective actions](./Problem-reporting-and-corrective-actions.md)
+* [12. Records Collection, Maintenance and Retention](./Records-collections-maintenance-and-retention.md)
 
 #### 3.3 Roles and Responsibilities
 
@@ -85,11 +96,11 @@ with the responsibility to:
 * Ensure conformance to the requirements of the standards.
 * Ensure the metrics and data provided by the Quality Assurance Engineers
 is correct.
-* Notify the Product Manager about the state of the project in terms to 
+* Notify the Product Owner about the state of the project in terms to 
 the conformance to the SQAP.    
 
 
-#### 3.3.2 Quality Assurance Engineers
+##### 3.3.2 Quality Assurance Engineers
 
 Quality assurance Engineers (QAE) are members of the QAT with the responsibility 
 to:
@@ -106,6 +117,32 @@ non conformances and documenting them following the proper template.
 and Program management.
 * Assign, track and verify corrective actions resulting from QA procedures 
 or Quality Action Requests (QAR).
+
+##### 3.3.3 Product Owner
+
+The Product Owner is a member of the DT or GPT and is elected every Sprint. The
+Product Owner is responsible of:
+
+* Assure that all tasks are staffed properly.
+* Document the activities related to Scrum.
+* Distribute the tasks amongst the DT and GPT.
+* Schedule the meetings related to Scrum processes.
+* Represent the interests of the client during the Sprint.
+
+##### 3.3.4 Scrum Master
+
+The Scrum Master is responsible to:
+
+* Assure that every task is being developed according to the plan.
+* Lead the Daily Meetings.
+
+##### 3.3.5 Developer
+
+Developers have the following responsibilities:
+
+* Develop the assigned tasks.
+* Follow the SQAP.
+* Notify the Scrum Master during the Daily Meetings the problems he encounters.
 
 
 #### 3.3.3 Quality Assurance Estimated Resources
