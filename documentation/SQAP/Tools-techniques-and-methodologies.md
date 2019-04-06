@@ -27,6 +27,8 @@ We will use Heroku to deploy the Web App.
 
 This section will focus on the methods and techniques that we will apply for the development of the Joint Project.
 
+For the purpose of putting our ideas of how the App will look or how it will work, we are using **Paper prototyping** (which is a type of Rapid prototyping).
+
 For the development of the Web App, we will use the methodologies of **TDD** ([Test-driven development](http://agiledata.org/essays/tdd.html)) and **BDD** ([Behavior-driven development](https://docs.cucumber.io/guides/bdd-tutorial/)), which say that we shall first write the test, then write the code and then develop and improve the code.
 
 In order to get all the requirements for the development the Web app, we are using a model called **[Volere model](http://www.volere.co.uk)**. This model contains all the steps that the analyst team needs to follow in order to gather information about how everything should work.
