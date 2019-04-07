@@ -60,11 +60,11 @@ To make a reference, one of the two standards written below must be followed, ac
 + [Coverage](https://coverage.readthedocs.io/en/latest/) (Coverage.py docs, version 4.5.3, 2019)
 + [Splinter](https://splinter.readthedocs.io/en/latest/) (Splinter docs, October 21 2018)
 + [ChromeDriver](http://chromedriver.chromium.org/) - WebDriver for Chrome (Chromedriver docs, version 73.0.3683.68, March 7 2019 )
++ [OperaChromiumDriver](https://github.com/operasoftware/operachromiumdriver/releases) - WebDriver for Opera (github, version 2.42, January 31 2019)
++ [GeckoDriver](https://firefox-source-docs.mozilla.org/testing/geckodriver/) - WebDriver for Mozilla (Mozilla Source Tree Docs, version 0.24.0, January 28 2019)
 
 #### 5. References found in *"Tools, techniques and methodologies"*:
 + [Test-driven Development: Introduction to Test Driven Development](http://agiledata.org/essays/tdd.html) (Agile data docs, 2003)
 + [Behavior-driven development: BDD Tutorial](https://docs.cucumber.io/guides/bdd-tutorial/) (Cucumber docs)
-
-
 
 [Back to Index](./index.md)

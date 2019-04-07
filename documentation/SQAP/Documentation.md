@@ -15,7 +15,7 @@ Project documentation is a vital part of project management. It is substantiated
 ### 4.2.1. Software requirements
 
 For the elicitation of the requirements, a checklist is used to verify that both the interviews and the apprenticing cover all the important topics that have been defined previously. It also uses a sheet with a list of questions to conduct the interview or in the case of apprenticing to support the activity.
-To make the summary of the day of apprenticing a template is used.Later the information obtained in the elicitation is coded as Business Use Case (BUC) and Product Use Case (PUC). All gathering requirements materials can be found in [Drive](https://www.google.com/intl/es_ALL/drive/) in folder named "1 - Anàlisi Requeriments".
+To make the summary of the day of apprenticing a template is used.Later the information obtained in the elicitation is coded as Business Use Case (BUC) and Product Use Case (PUC). All gathering requirements materials can be found in [Drive](https://www.google.com/intl/es_ALL/drive/) in folder  *Joint Project > 1 - Anàlisi Requeriments*.
 Finally, the user stories are written following the template of the Volere card.
 
 
@@ -29,12 +29,17 @@ In addition, low fidelity prototyping, drawn on paper, is used for the first ske
 The team is going to do a formal review once per sprint. [Referenced in section 6.2.1](./Software-reviews.md)  
 Informal reviews are also going to be made during the development. [Referenced in section 6.2.2](./Software-reviews.md)  
 The SQA personnel will assess code walkthroughs. [Referenced in section 6.2.3](./Software-reviews.md)  
-There has to be a full verification of the requirements.[Referenced in section 6.2.4](./Software-reviews.md)  
+There has to be a full verification of the requirements. [Referenced in section 6.2.4](./Software-reviews.md)  
 The team is going to work using TDD development. [Further explanation in section 6.2.5](./Software-reviews.md)  
 
 
 ### 4.2.4. Verification and validation results reports
 
++ Sprint review: This meeting is held at the end of the Sprint. In this the <a href="https://github.com/UdL-EPS-ProjectManagement/ProcessModelTheory/blob/master/templates/Sprint_Retrospective_Template.md" target="blank">retrospective review report</a> must be done.
+
++ Test report: Each test must have its test report. The template to make this report can be found in [Drive](https://www.google.com/intl/es_ALL/drive/), in the folder *Joint Project > 2 - Quality Management > Validation-Templates*.
+
++ Final validation report: At the end of each Sprint and before the delivery of the product increment to the customer, a final report will be made to validate that everything is working correctly. The template to make this report can be found in [Drive](https://www.google.com/intl/es_ALL/drive/), in the folder *Joint Project > 2 - Quality Management > Validation-Templates*.
 
 
 ### 4.2.5 User documentation
