@@ -24,3 +24,5 @@ Both voting processes must be approved by 2/3 of the present people in the meeti
 
 **06-03-2018** : Created the First version of the document\
 **07-03-2018** : Approved the First version of the document
+
+[Back to Index](./index.md)
