@@ -23,7 +23,7 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover" style="text-align: center">
-                        <caption style="display: none">Lista de contenidors</caption>
+                        <caption style="display: none">Llista de contenidors</caption>
                         <thead>
                             <tr>
                                 <!-- Main info -->
@@ -63,36 +63,41 @@
         </div>
 
         <div>
-            {% for task in tasks %}
-
             <div class ="card">
 
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h2>{{task.pk}}</h2>
+                <div class="card-header">
+                    <h2>Tasques</h2>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" style="text-align: center">
+                            <caption style="display: none">Llista de tasques</caption>
+                            <thead>
+                                <tr>
+                                    <!-- Main info -->
+                                    <th scope="col"> <b>Descripcio</b> </th>
+                                    <!-- Localitzacio -->
+                                    <th scope="col"> <b>Origen</b> </th>
+                                    <th scope="col"> <b>Destinacio</b> </th>
+                                    <!-- Contenidor -->
+                                    <th scope="col"> <b>Contenidor</b> </th>
+                                    <th scope="col"> <b>Quantitat</b> </th>
+                                </tr>
+                            </thead>
+                            {% for task in tasks %}
+                            <tr>
+                                <td>{{ task.description }}</td>
+                                <td>{{ task.origin_room.name }}</td>
+                                <td>{{ task.destination_room.name }}</td>
+                                <td>{{ task.containers.product_id }}</td>
+                                <td>{{ task.containers.quantity }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
                     </div>
                 </div>
             </div>
-
-            <div class="card-body">
-                <div class="col">
-                    <table class="table table-bordered">
-                        <tr>
-                            <td>Task: {{ task.pk }}</td>
-                            <td>Description: {{ task.description }}</td>
-                            <td>Task_type: {{ task.task_type }}</td>
-                            <td>Task_status: {{ task.task_status }}</td>
-                            <td>Task_origin: {{ task.origin_room }}</td>
-                            <td>Destination_room: {{ task.destination_room }}</td>
-                            <td>Containers: {{ task.containers }}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-            {% endfor %}
         </div>
     </div>
 
@@ -103,20 +108,50 @@
             <!-- Nom i estat -->
             <div class="row">
                 <div class="col-sm-6">
-                    <h4> Estat </h4>
+                    <h5> Estat </h5>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6 d-flex justify-content-center">
                     {% if room.room_status == 0 %}
                         <h4 style="color:red">Tancada </h4>
                     {% else %}
                         <h4 style="color:green">Oberta </h4>
                     {% endif %}
                 </div>
+                <div class="col-sm-6">
+                    <h5> Temp Min </h5>
+                </div>
+                <div class="col-sm-6 d-flex justify-content-center">
+                    {{room.temp_min}}
+                </div>
+                <div class="col-sm-6">
+                    <h5> Temp Max </h5>
+                </div>
+                <div class="col-sm-6 d-flex justify-content-center">
+                    {{room.temp_max}}
+                </div>
+                <div class="col-sm-6">
+                    <h5> Hum Min </h5>
+                </div>
+                <div class="col-sm-6 d-flex justify-content-center">
+                    {{room.hum_min}}
+                </div>
+                <div class="col-sm-6">
+                    <h5> Hum Max </h5>
+                </div>
+                <div class="col-sm-6 d-flex justify-content-center">
+                    {{room.hum_max}}
+                </div>
+                <div class="col-sm-6">
+                    <h5> Capacitat </h5>
+                </div>
+                <div class="col-sm-6 d-flex justify-content-center">
+                    {{room.quantity}} / <b>{{room.limit}}</b>
+                </div>
             </div>
         </div>
 
         <div class="accions">
-
+            <a class="btn btn-primary d-flex justify-content-center" href="" role="button">Traslladar</a>
         </div>
 
     </div>
