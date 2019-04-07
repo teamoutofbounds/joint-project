@@ -26,11 +26,11 @@ In addition, low fidelity prototyping, drawn on paper, is used for the first ske
 
 
 ### 4.2.3. Verification and validation plans
-The team is going to do a formal review once per sprint. [Referenced in section 6.2.1] (./Software-reviews.md)
-Informal reviews are also going to be made during the development. [Referenced in section 6.2.2](./Software-reviews.md)
-The SQA personnel will assess code walkthroughs. [Referenced in section 6.2.3](./Software-reviews.md)
-There has to be a full verification of the requirements.[Referenced in section 6.2.4](./Software-reviews.md)
-The team is going to work using TDD development. [Further explanation in section 6.2.5](./Software-reviews.md)
+The team is going to do a formal review once per sprint. [Referenced in section 6.2.1](./Software-reviews.md)  
+Informal reviews are also going to be made during the development. [Referenced in section 6.2.2](./Software-reviews.md)  
+The SQA personnel will assess code walkthroughs. [Referenced in section 6.2.3](./Software-reviews.md)  
+There has to be a full verification of the requirements.[Referenced in section 6.2.4](./Software-reviews.md)  
+The team is going to work using TDD development. [Further explanation in section 6.2.5](./Software-reviews.md)  
 
 
 ### 4.2.4. Verification and validation results reports
