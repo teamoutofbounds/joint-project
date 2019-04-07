@@ -44,9 +44,7 @@ The team is going to work using TDD development. [Further explanation in section
 
 ### 4.2.5 User documentation
 
-The User documentation will not be described in this first deliverable as\
-the team wants to discuss with the Users and the client which are their needs\
-who does prepare it and which format would be more convinient for them (text, video...).
+The User documentation will not be described in this first deliverable as the team wants to discuss with the Users and the client which are their needs who does prepare it and which format would be more convinient for them (text, video...).
 
 Once everything is discussed, this section will be prepared acordingly.
 
