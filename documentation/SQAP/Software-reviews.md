@@ -8,7 +8,7 @@ The purpose of software reviews are to correct defects on the code as well as im
 #### 6.2 Minimum requirements
 
 ##### 6.2.1 Formal reviews
-At least one week before each sprint ends, a formal meeting will be made by all the team members to do a code review and explain their work to the other members as well as the reasoning about their implementations. The team will use the template ["Code review template"](../templates/code_review.md) that can be found in the templates folder. 
+At least one week before each sprint ends, a formal meeting will be made by all the team members to do a code review and explain their work to the other members as well as the reasoning about their implementations. The team will use the template ["Code review template"](../templates/code_and_design_review.md) that can be found in the templates folder. 
 The team will also review every document generated during the process of the sprints and will generate the document adjunted in the annex of this SQAP. 
 
 ##### 6.2.2 Informal reviews
