@@ -35,7 +35,11 @@ In addition, low fidelity prototyping, drawn on paper, is used for the first ske
 
 ### 4.2.5 User documentation
 
+The User documentation will not be described in this first deliverable as\
+the team wants to discuss with the Users and the client which are their needs\
+who does prepare it and which format would be more convinient for them (text, video...).
 
+Once everything is discussed, this section will be prepared acordingly.
 
 ### 4.2.6. Software configuration management plan (SCMP)
 
