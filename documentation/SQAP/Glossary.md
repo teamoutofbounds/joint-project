@@ -12,10 +12,14 @@
  and IT. BDD helps teams communicate requirements with more precision, discover\
  defects early and produce software that remains maintainable over time.
  
+ * **Continious Integration (CI)** : methodology that allows to link the\
+ requirements to the development and testing. With this methodology  a working\
+ version of the product is allways keept.
+ 
 * **Daily Meeting** : informal meeting between 15 - 20 minutes where developers\
 expose the problems they encounter.
 
-* **Deploy check** :
+* **Deploy check** : Automated process that pushes the code to the live server.
 
 * **Development Team (DT)** : this team is formed by two members and will only  
 be involved in code related activities.
@@ -36,17 +40,24 @@ involved in QA activities.
  software enhancements, configuration changes, and even substitution of\
  electronic components.
  
- * **Release review** : 
+ * **Release review** : meeting held between the Product Owner and the\ 
+ Quality Assurance Manager where they merge development branch and SQAP-doc branch and\ 
+ review the changes being applied.
  
-* **Release integration** :
+* **Release integration** : Process where all code is tested automatically\
+using CI tools.
 
-* **Requirement licitation** :
+* **Requirement licitation** : Phase where the requirement analysts discover\
+the requirements of the project.
  
-* **Sprint Planning** :
+* **Sprint Planning** : Meeting where the DT and GPT distribute the tasks to\
+develop during the Sprint and assign a Product Owner.
  
-* **Sprint Retrospective** :
+* **Sprint Retrospective** : Meeting where the DT and GPT discuss how the\
+Sprint was conducted and search for points of improvement.
   
-* **Sprint Review** : 
+* **Sprint Review** : Meeting held between the Stakeholders involved in the project and\
+the DT and GPT where the software produced during the Sprint is shown.
 
 * **System test**: System testing is testing conducted on a complete integrated\
  system to evaluate the system's compliance with its specified requirements.
@@ -58,7 +69,9 @@ involved in QA activities.
 * **Unit test** : is a software testing method by which individual units \
 of source code.
 
-* **Writing User Stories** : 
+* **Writing User Stories** : Process where the requirement analysts write\
+the BUC's, PUC's and User Stories to properly communticate with the development\
+team and the general purpose team assigned to development activities.
 
 
 [Back to Index](./index.md)

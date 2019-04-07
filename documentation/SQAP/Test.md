@@ -81,6 +81,8 @@ Test frameworks to do integration tests:
 Tools:
 + [Splinter](https://splinter.readthedocs.io/en/latest/)
 + [ChromeDriver](http://chromedriver.chromium.org/) - WebDriver for Chrome
++ [OperaChromiumDriver](https://github.com/operasoftware/operachromiumdriver/releases) - WebDriver for Opera
++ [GeckoDriver](https://firefox-source-docs.mozilla.org/testing/geckodriver/) - WebDriver for Mozilla
 
 
 ### 7.1.5. Regression tests
@@ -124,5 +126,8 @@ This should include workflows for backup plans, user training, and various maint
 + [Coverage](https://coverage.readthedocs.io/en/latest/) (Coverage.py docs)
 + [Splinter](https://splinter.readthedocs.io/en/latest/) (Splinter docs)
 + [ChromeDriver](http://chromedriver.chromium.org/) - WebDriver for Chrome (Chromedriver docs)
++ [OperaChromiumDriver](https://github.com/operasoftware/operachromiumdriver/releases) - WebDriver for Opera (github)
++ [GeckoDriver](https://firefox-source-docs.mozilla.org/testing/geckodriver/) - WebDriver for Mozilla (Mozilla Source Tree Docs )
+
 
 [Back to Index](./index.md)

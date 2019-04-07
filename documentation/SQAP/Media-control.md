@@ -11,7 +11,7 @@ As the teams are working with GitHub, each member of the team has a full
  to the system. However, it is under each developer to chose the security
  measures to apply in order to protect the software. However, to help developers
  secure it's computers and protect the Software there some recomendations
- and guides writen in [this](/guides/Securing-Software.md) guide, 
+ and guides writen in [this guide](/documentation/guides/Securing-Software.md). 
  
 The product developed will be deployed directly to [Heroku's servers](https://www.heroku.com/free)
  and will not be available on a physical device to the customer.
