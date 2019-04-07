@@ -2,49 +2,70 @@
 
 {% block content %}
 
-
-<div class ="row">
+<div class="row>">
     <div class="col-sm-12">
-        {% for container in containers %}
-        <div class="card">
-
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h2> {{container.id}}</h2>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-body">
-                <div class="col">
-                    <table class="table table-bordered">
-                        <tr>
-                            <td>Id_Product: {{ container.product_id }}</td>
-                            <td>Id_Producer: {{ container.producer_id }}</td>
-                            <td>Limit : {{ container.limit }}</td>
-                            <td>Quantity: {{ container.quantity }}</td>
-                            <td>Temp_min: {{ container.temp_min }}</td>
-                            <td>Temp_max: {{ container.temp_max }}</td>
-                            <td>Hum_min: {{ container.hum_min }}</td>
-                            <td>Hum_max: {{ container.hum_max }}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-    {% endfor %}
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Sales</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ room.name }}</li>
+            </ol>
+        </nav>
     </div>
 </div>
 
+<div class ="row">
+    <div class="col-sm-8">
 
+        <div class="card" style="margin-bottom: 3em">
+            <div class="card-header">
+                <h2>Contenidors</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover" style="text-align: center">
+                        <caption style="display: none">Lista de contenidors</caption>
+                        <thead>
+                            <tr>
+                                <!-- Main info -->
+                                <th scope="col"> <b>Nom</b> </th>
+                                <th scope="col"> <b>Productor</b> </th>
+                                <th scope="col"> <b>Quantitat</b> </th>
+                                <!-- Temperatures -->
+                                <th scope="col"> <b>Temp max</b> </th>
+                                <th scope="col"> <b>Temp min</b> </th>
+                                <!-- Humidity -->
+                                <th scope="col"> <b>Hum max</b> </th>
+                                <th scope="col"> <b>Hum min</b> </th>
+                                <!-- Limit date -->
+                                <th scope="col"> <b>Data límit</b> </th>
+                            </tr>
+                        </thead>
 
-<div class="row">
-    <div class="col-sm-12">
-        {% for task in tasks %}
+                        {% for container in containers %}
+                        <tr>
+                            <!-- Main info -->
+                            <td> {{ container.product_id }} </td>
+                            <td> {{ container.producer_id }} </td>
+                            <td> {{ container.quantity }} </td>
+                            <!-- Temperatures -->
+                            <td> {{ container.temp_max }} </td>
+                            <td> {{ container.temp_min }} </td>
+                            <!-- Humidity -->
+                            <td> {{ container.hum_max }} </td>
+                            <td> {{ container.hum_min }} </td>
+                            <!-- Limit date -->
+                            <td> {{ container.limit }} </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
 
-        <div class ="card">
+        <div>
+            {% for task in tasks %}
+
+            <div class ="card">
 
             <div class="card-header">
                 <div class="row">
@@ -71,60 +92,36 @@
             </div>
 
         </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 
-</div>
+    <div class="col-sm-4">
 
-
-<div class="row justify-content-end">
-    <div class ="col-sm-12">
-        {% for room in rooms %}
-
-        <div class="card">
-
-            <div class="card-header">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <p>Condicions de la sala: {{room.name}}</p>
-                    </div>
+        <div class="info-sala">
+            <h3><b>Informació {{ room.name }}</b></h3>
+            <!-- Nom i estat -->
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4> Estat </h4>
+                </div>
+                <div class="col-sm-6">
+                    {% if room.room_status == 0 %}
+                        <h4 style="color:red">Tancada </h4>
+                    {% else %}
+                        <h4 style="color:green">Oberta </h4>
+                    {% endif %}
                 </div>
             </div>
+        </div>
 
-            <div class="card-body">
-
-                <div class="row">
-                    <div class="col-sm-4">
-                        <p class="card-text"> Temp_min:{{ room.temp_min }}</p>
-                        <p class="card-text"> Temp_max:{{ room.temp_max }}</p>
-                    </div>
-                    <div class="col-sm-4">
-                        <p class="card-text"> Hum_min:{{ room.hum_min }} </p>
-                        <p class="card-text"> Hum_max:{{ room.hum_max }} </p>
-                    </div>
-                    <div class="col-sm-4">
-                        <p class="card-text"> Capacitat:{{ room.quantity }} / {{ room.limit }}</p>
-                        <p class="card-text"> Limit:{{ room.limit }}</p>
-                    </div>
-                    <div class="col-sm-4">
-                        {% if room.room_status == 0 %}
-                            <h3 class="float-sm-right" style="color:red">Tancada </h3>
-                        {% else %}
-                            <h3 class="float-sm-right" style="color:green">Oberta </h3>
-                        {% endif %}
-                    </div>
-
-                </div>
-
-            </div>
+        <div class="accions">
 
         </div>
-        {% endfor %}
+
     </div>
 
 </div>
-
-
 
 {% endblock content %}
 
