@@ -21,7 +21,7 @@ Finally, the user stories are written following the template of the Volere card.
 
 ### 4.2.2. Software design
 
-The design of the application is carried out from the [UML](https://www.uml.org/) standard.
+The design of the application is carried out from the [UML](https://www.uml.org/) standard.  
 In addition, low fidelity prototyping, drawn on paper, is used for the first sketches. Once the prototypes of low fidelity were approved, the high fidelity prototypes were made. These are dijital and are made using the [gimp](http://www.gimp.org.es/) tool.
 
 
@@ -45,12 +45,14 @@ Each release of the code will be identified with a annotated tag in the followin
 
 ```bash
 <version>.<sub-version>.<fix>.<date:y/m/d>
-Example: 0.2.0.20190407```
+Example: 0.2.0.20190407
+```
 
 In order to create an annotated tag, the following command will be used on git:
 
 ```bash
-git tag -a <tag-name>```
+git tag -a <tag-name>
+```
 
 The message of the tag must contain at least:
 + A detailed explanation of the changes introduced by the version.
