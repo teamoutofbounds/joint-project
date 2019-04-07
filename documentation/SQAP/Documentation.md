@@ -29,12 +29,13 @@ In addition, low fidelity prototyping, drawn on paper, is used for the first ske
 The team is going to do a formal review once per sprint. [Referenced in section 6.2.1](./Software-reviews.md)  
 Informal reviews are also going to be made during the development. [Referenced in section 6.2.2](./Software-reviews.md)  
 The SQA personnel will assess code walkthroughs. [Referenced in section 6.2.3](./Software-reviews.md)  
-There has to be a full verification of the requirements.[Referenced in section 6.2.4](./Software-reviews.md)  
+There has to be a full verification of the requirements. [Referenced in section 6.2.4](./Software-reviews.md)  
 The team is going to work using TDD development. [Further explanation in section 6.2.5](./Software-reviews.md)  
 
 
 ### 4.2.4. Verification and validation results reports
 
+Sprint review: Esta reunión se realiza al acabar el Sprint. En esta debe realizarse el <a href="https://github.com/UdL-EPS-ProjectManagement/ProcessModelTheory/blob/master/templates/Sprint_Retrospective_Template.md" target="blank">retrospective review report.</a>
 
 
 ### 4.2.5 User documentation
