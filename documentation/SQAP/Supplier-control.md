@@ -2,14 +2,13 @@
 
 Suppliers are responsible for the quality of materials and components provided\
 by their sub-tier suppliers and sub-contractors. TeamOutOfBounds  must impose\
-controls on their sub-tier suppliers that provide quality results and documentation\
-comparable to controls applied to suppliers by Company XX and make the necessary\
-controls on suppliers.  The extent of the controls may vary, depending on the\
-nature and complexity of the product and processes.
+controls on their suppliers that provide quality results and documentation\
+comparable to TeamOutOfBounds results.  The extent of the controls may vary,\
+depending on the nature and complexity of the product and processes.
 
 #### 11.1 Software suppliers
 
-Software suppliers are used in thhe develpment of the project, in order to assure\
+Software suppliers are used in the development of the project, in order to assure\
 they follow and meet the minimum quality requirements for this project, software\
 suppliers must comply with:
 
