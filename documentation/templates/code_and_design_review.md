@@ -30,8 +30,17 @@
 * Do tests exist, and are they comprehensive?
 * Do unit tests actually test that the code is performing the intended functionality?
 * Could any test code be replaced with the use of an existing API?
-
-
+## Design
+* Does the design support both product and project goals?
+* Is the design feasible from a technology, cost, and schedule standpoint?
+* Have known design risks been identified, analyzed, and planned for or mitigated?
+* Are the methodologies, notations, etc. used to create and capture the design appropriate?
+* Does the design add features or functionality, which was not specified by the requirements (i.e., are all parts of the design traceable back to requirements)?
+* Have all goals, tradeoffs, and decisions been described?
+* Does the design improve productivity?
+* Is scalability development into the plan and is maintainable?
+* Does the design follow all standards necessary for the system? (i.e., date standards)
+* When appropriate, are there multiple, consistent, models and/or views that represent the design (i.e., static vs. dynamic)?
 ## References:
 * [Code Review: Template](https://nyu-cds.github.io/effective-code-reviews/03-checklist/) (Nyu-cds docs, 2017)
 
