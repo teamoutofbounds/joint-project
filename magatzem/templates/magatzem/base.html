@@ -15,13 +15,7 @@
     {% endif %}
   </head>
   <body>
-    {% include "magatzem/header.html" %}
-    <!-- Si esta logejat, mostra home, sino missatge que es logeji-->
-    {% if user.username %}
-        <!-- INSERTAR AQUI EL CODI DE LA WEB-->
-    {% else %}
-        <h5>You are not logged in. Please register as a new user or log in with your username and password</h5>
-    {% endif %}
+    {% include "magatzem/header-gestor.html" %}
     <div class="container">
         {% block content %}{% endblock %}
     </div>
