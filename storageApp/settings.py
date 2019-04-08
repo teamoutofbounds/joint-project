@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'oficina.apps.OficinaConfig',
     'users.apps.UsersConfig',
     'simple_history',
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -126,4 +127,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'redirect-login'
+CRISPY_TEMPLATE_PATH = 'bootstrap4'

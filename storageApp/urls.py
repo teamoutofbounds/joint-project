@@ -19,6 +19,5 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', auth_views.LoginView.as_view(template_name='magatzem/base.html'), name='home'),
-    path('', include('users.urls'), name=''),
+    path('', include('users.urls')),
 ]
