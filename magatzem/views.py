@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
-
 from magatzem.models.room import Room
 from magatzem.models.task import Task
 from magatzem.models.container import Container
@@ -47,6 +46,17 @@ class RoomDetail(DetailView):
                                                Q(origin_room=context['room']) | Q(destination_room=context['room']))
         context['containers'] = Container.objects.filter(room=context['room']).defer('room')
         context['title'] = context['room'].name
+        return context
+
+
+class NotificationsListView(ListView):
+    model = Task
+    context_object_name = 'tasks'
+    template_name = 'magatzem/notification.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tasks'] = Task.objects.filter(user=r)
+        context['title'] = 'Notificacions'
         return context
 
 
@@ -386,6 +396,47 @@ def rebre_notificacio_mock(request):
                     ,
                 'task_type': 1,
                 'task_status': 1
+            },
+            {
+                'description': 'Traslladar',
+                'containers':
+                    {
+                        'productor_id': '20199110001',
+                        'producte_id': 'PERA CONFERENCE',
+                        'limit': '08/08/2019',
+                        'temp_min': 5,
+                        'temp_max': 15,
+                        'hum_min': 45,
+                        'hum_max': 70,
+                        'quantitat': 8
+                    }
+                ,
+                'origin_room':
+                    {
+                        'name': 'Sala 1',
+                        'temp_min': 0,
+                        'temp_max': 5,
+                        'hum_min': 15,
+                        'hum_max': 35,
+                        'quantity': 25,
+                        'limit': 50,
+                        'room_status': 1
+                    }
+                ,
+                'destination_room':
+                    {
+                        'name': 'Sala 3',
+                        'temp_min': -5,
+                        'temp_max': 50,
+                        'hum_min': 15,
+                        'hum_max': 35,
+                        'quantity': 10,
+                        'limit': 50,
+                        'room_status': 1
+                    }
+                ,
+                'task_type': 1,
+                'task_status': 3
             }
         ],
         'title': 'Notificacions'
