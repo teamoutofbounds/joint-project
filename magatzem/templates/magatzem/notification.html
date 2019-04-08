@@ -36,8 +36,13 @@
       </div>
     </div>
 
-{% endif %}
 
+{% else %}
+    <br>
+<div class="alert alert-success" role="alert">
+  <a href="#" class="alert-link">Nova notificacio de tasca! Mira la tasca nº{{forloop.counter}}</a>
+</div>
+{% endif %}    
 {% endfor %}
 
 {% endblock content %}
