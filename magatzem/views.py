@@ -51,14 +51,14 @@ class RoomDetail(DetailView):
 
 class NotificationsListView(ListView):
     model = Task
-    context_object_name = 'tasks'
+    context_object_name = 'task_list'
     template_name = 'magatzem/notification.html'
 
     def get_queryset(self):
-        queryset = super(NotificationsListView, self).get_queryset()
-        queryset = queryset.filter(user=self.request.user)
-        return queryset
-
+        if self.request.user.is_authenticated:
+            queryset = super(NotificationsListView, self).get_queryset()
+            queryset = queryset.filter(user=self.request.user)
+            return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -401,7 +401,7 @@ def rebre_notificacio_mock(request):
                     }
                     ,
                 'task_type': 1,
-                'task_status': 1
+                'task_status': 2
             },
             {
                 'description': 'Traslladar',

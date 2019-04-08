@@ -15,7 +15,6 @@
 
 
 {% if task.task_status < 4 %}
-<ul class="list-group">
 <p>
         <li class="list-group-item"><button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseOne{{forloop.counter}}" aria-expanded="false" aria-controls="collapseOne{{forloop.counter}}">
             <h4>Tasca {{forloop.counter}}: </h4>
@@ -30,19 +29,22 @@
           <h5>&nbsp;Producte: {{task.containers.producte_id}}</h5>
           <h5>&nbsp;Cantitat: {{task.containers.quantitat}} </h5>
          </li>
-         <div class="pull-right"><li class="list-group-item"><button class="btn btn-info" type="button">
+          <li class="list-group-item"><button class="btn btn-info" type="button">
              <h4>Completar tasca: </h4>
          </button></li></div>
-      </div>
+
     </div>
 
+{% endif %}
 
-{% else %}
-    <br>
-<div class="alert alert-success" role="alert">
-  <a href="#" class="alert-link">Nova notificacio de tasca! Mira la tasca nº{{forloop.counter}}</a>
-</div>
-{% endif %}    
 {% endfor %}
+
+
+{% if not tasks %}
+    <br>
+<div class="alert alert-secondary" role="alert">
+  <a href="#" class="alert-link">No hi ha noves tasques</a>
+</div>
+{% endif %}
 
 {% endblock content %}
