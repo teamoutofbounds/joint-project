@@ -1,25 +1,30 @@
+from django.http import Http404
+from django.shortcuts import redirect
+'''
 from django.contrib.auth.models import User
-from django.shortcuts import render
-from django.views.generic import CreateView
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
-from django.shortcuts import render, redirect
 from users.forms import SignUpForm
 from django.contrib.auth.models import Group
-
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+'''
 # Create your views here.
 
 
-def exemple_mock(request):
-    context = {
-        'variable': 'Hello World!!',
-    }
+def redirect_view(request):
+    if request.user.groups.filter(name='Gestor').exists():
+        response = redirect('gestor-home')
+    elif request.user.groups.filter(name='Operari').exists():
+        response = redirect('operaris-home')
+    elif request.user.groups.filter(name='Tecnic').exists():
+        response = redirect('tecnics-home')
+    elif request.user.groups.filter(name='Ceo').exists():
+        response = redirect('oficina/ceo/')
+    else:
+        raise Http404
+    return response
 
-    return render(request, 'users/base.html', context)
 
-
+'''
 def signup(request): #afegim els usuaris en grups segons el seu registre
     gestor = Group.objects.get_or_create(name='Gestor')[0]
     operari = Group.objects.get_or_create(name='Operari')[0]
@@ -50,3 +55,4 @@ def signup(request): #afegim els usuaris en grups segons el seu registre
     else:
         form = SignUpForm()
     return render(request, 'users/register.html', {'form': form})
+'''
