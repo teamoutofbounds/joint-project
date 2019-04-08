@@ -66,12 +66,18 @@ class NotificationsListView(ListView):
         return context
 
 
-def exemple_mock(request):
-    context = {
-        'variable': 'Hello World!!',
-    }
+def home_gestor(request):
+    context = {}
+    context['title'] = 'Home-Gestor'
+    return render(request, 'magatzem/home-gestor.html', context)
 
-    return render(request, 'magatzem/exemple.html', context)
+
+def home_operari(request):
+    context = {}
+    context['title'] = 'Home-Operari'
+    return render(request, 'magatzem/notification.html', context)
+
+
 
 
 def entrada_producte_mock(request):

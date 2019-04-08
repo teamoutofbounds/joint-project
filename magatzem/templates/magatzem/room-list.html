@@ -1,38 +1,38 @@
-{% extends 'magatzem/base.html' %}
+{% extends 'magatzem/base-gestor.html' %}
 {% block content %}
 
 <div class="row">
     <div class="col-sm-12">
-            {% for room in room_list  %}
-                <div class="card" style="margin-bottom: 1em">
-                    <div class="card-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h2> {{ room.name }} </h2>
-                            </div>
-                            <div class="col-sm-6">
-                                {% if room.room_status == 0 %}
-                                    <h3 class="float-sm-right" style="color:red">Tancada </h3>
-                                {% else %}
-                                    <h3 class="float-sm-right" style="color:green">Oberta </h3>
-                                {% endif %}
-                            </div>
+        {% for room in room_list  %}
+            <div class="card" style="margin-bottom: 1em">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2> {{ room.name }} </h2>
+                        </div>
+                        <div class="col-sm-6">
+                            {% if room.room_status == 0 %}
+                                <h3 class="float-sm-right" style="color:red">Tancada </h3>
+                            {% else %}
+                                <h3 class="float-sm-right" style="color:green">Oberta </h3>
+                            {% endif %}
                         </div>
                     </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <p class="card-text">Temp: {{ room.temp_max }} ºC</p>
-                                <p class="card-text">Hum: {{ room.hum_max }} %</p>
-                                <p class="card-text">Capacitat: {{ room.quantity }} / {{ room.limit }}</p>
-                            </div>
-                            <div class="col-sm-6">
-                                <a href="#" class="btn-primary btn-lg">Mostra sala</a>
-                            </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p class="card-text">Temp: {{ room.temp_max }} ºC</p>
+                            <p class="card-text">Hum: {{ room.hum_max }} %</p>
+                            <p class="card-text">Capacitat: {{ room.quantity }} / {{ room.limit }}</p>
                         </div>
+                        <div class="col-sm-6">
+                            <a href="#" class="btn-primary btn-lg">Mostra sala</a>
+                        </div>
+                    </div>
                 </div>
-                </div>
-    {% endfor %}
+            </div>
+        {% endfor %}
     </div>
 </div>
 
