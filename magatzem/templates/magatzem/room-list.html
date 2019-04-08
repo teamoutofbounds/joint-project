@@ -18,26 +18,19 @@
                                 {% endif %}
                             </div>
                         </div>
-
-
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-4">
-                                <p class="card-text">Temp min: {{ room.temp_min }}</p>
-                                <p class="card-text">Temp max: {{ room.temp_max }}</p>
-                            </div>
-                            <div class="col-sm-4">
-                                <p class="card-text">Hum min: {{ room.hum_min }}</p>
-                                <p class="card-text">Hum max: {{ room.hum_max }}</p>
-                            </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-6">
+                                <p class="card-text">Temp: {{ room.temp_max }} ºC</p>
+                                <p class="card-text">Hum: {{ room.hum_max }} %</p>
                                 <p class="card-text">Capacitat: {{ room.quantity }} / {{ room.limit }}</p>
                             </div>
+                            <div class="col-sm-6">
+                                <a href="#" class="btn-primary btn-lg">Mostra sala</a>
+                            </div>
                         </div>
-
-                    <a href="#" class="btn btn-primary">Mostra sala</a>
-                    </div>
+                </div>
                 </div>
     {% endfor %}
     </div>
