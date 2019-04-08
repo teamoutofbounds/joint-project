@@ -1,10 +1,30 @@
 <!-- templates/registration/login.html -->
 {% extends 'magatzem/base.html' %}
-{% block content %}
-    <h2>Login</h2>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Login</button>
-    </form>
-{% endblock content %}
+{% load static %}
+
+	{% block content %}
+	    <div class="loginout" style="margin-top: 5%">
+	        <div class="row">
+	            <div class="col-sm"></div>
+	            <div class="col-sm">
+	                <div class="col-xs-12 col-md-12 col-lg-12" align="center" style="padding:5px">
+						<img src="{% static 'users/img/test-logo.png' %}" width="70" height="50" alt="Your logo here">
+	                </div>
+	                <div class="content-section">
+	                    <form method="POST">
+	                    {% csrf_token %}
+	                    <fieldset class="form-group">
+	                        <legend class="border-bottom mb-4 "align="center"> Log In</legend>
+	                        {{ form }}
+	                    </fieldset>
+	                        <div class="form-group">
+	                            <button class="btn btn-outline-dark" style="" type="submit">Login</button>
+	                        </div>
+	                    </form>
+	                </div>
+	            </div>
+	            <div class="col-sm"></div>
+	        </div>
+	    </div>
+
+	{% endblock content %}
