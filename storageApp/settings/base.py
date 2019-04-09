@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'oficina.apps.OficinaConfig',
     'users.apps.UsersConfig',
     'simple_history',
+    'crispy_forms',
     'django.contrib.admin',
     'markdown_deux',
     'django.contrib.auth',
@@ -95,12 +96,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 # Static files will be cached and served more efficiently
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-STATIC_HOST = os.environ.get('DJANGO_STATIC_HOST', '')
-STATIC_URL = STATIC_HOST + '/static/'
+# STATIC_HOST = os.environ.get('DJANGO_STATIC_HOST', '')
+# STATIC_URL = STATIC_HOST + '/static/'
 
-LOGIN_REDIRECT_URL = 'home'
-
-LOGOUT_REDIRECT_URL = 'login'
+LOGIN_REDIRECT_URL = 'redirect-login'
+CRISPY_TEMPLATE_PATH = 'bootstrap4'
