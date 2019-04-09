@@ -117,32 +117,44 @@
                         <h4 style="color:green">Oberta </h4>
                     {% endif %}
                 </div>
+
                 <div class="col-sm-6">
-                    <h5> Temp Min </h5>
+                    <ion-icon src="/_ionicons_svg_md-thermometer.svg"></ion-icon>
+                    <h5><ion-icon name="thermometer"></ion-icon> Temp Min </h5>
                 </div>
                 <div class="col-sm-6 d-flex justify-content-center">
-                    {{room.temp_min}}
+                    <p>{{room.temp_min}} ºC</p>
                 </div>
+
+
                 <div class="col-sm-6">
-                    <h5> Temp Max </h5>
+                    <ion-icon src="/_ionicons_svg_md-thermometer.svg"></ion-icon>
+                    <h5><ion-icon name="thermometer"></ion-icon> Temp Max </h5>
                 </div>
                 <div class="col-sm-6 d-flex justify-content-center">
-                    {{room.temp_max}}
+                    <p>{{room.temp_max}} ºC</p>
                 </div>
+
+
                 <div class="col-sm-6">
-                    <h5> Hum Min </h5>
+                    <icon-icon src="/_ionicons_svg_md-water.svg"></icon-icon>
+                    <h5> <ion-icon name="water"></ion-icon> Hum Min </h5>
                 </div>
                 <div class="col-sm-6 d-flex justify-content-center">
-                    {{room.hum_min}}
+                    <p>{{room.hum_min}} %</p>
                 </div>
+
+
                 <div class="col-sm-6">
-                    <h5> Hum Max </h5>
+                    <icon-icon src="/_ionicons_svg_md-water.svg"></icon-icon>
+                    <h5> <ion-icon name="water"></ion-icon> Hum Max </h5>
                 </div>
                 <div class="col-sm-6 d-flex justify-content-center">
-                    {{room.hum_max}}
+                    <p>{{room.hum_max}} %</p>
                 </div>
                 <div class="col-sm-6">
-                    <h5> Capacitat </h5>
+                    <icon-icon src="/_ionicons_svg_md-cube.svg"></icon-icon>
+                    <h5> <ion-icon name="cube"></ion-icon> Capacitat </h5>
                 </div>
                 <div class="col-sm-6 d-flex justify-content-center">
                     {{room.quantity}} / {{room.limit}}
