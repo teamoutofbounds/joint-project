@@ -18,5 +18,8 @@ urlpatterns = [
     path('llista_sales_mock/', views.llista_sales_mock, name='llista-sales-mock'),
     path('sala_mock/', views.sala_mock, name='sala_mock'),
     path('operari/pepe-lopez/', views.rebre_notificacio_mock, name='notificacio-mock'),
-    path('operari/user/', NotificationsListView.as_view(), name='notificacio')
+    path('operari/user/', NotificationsListView.as_view(), name='notificacio'),
+    path('sel_sala_mock/', views.seleccionar_sala_mock, name='sel-sala-mock'),
+    path('sel_prod_mock/', views.seleccionar_productes_mock, name='sel-prod-mock'),
+
 ]
