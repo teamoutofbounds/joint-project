@@ -1,62 +1,52 @@
 {% extends 'magatzem/base.html' %}
 {% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Product Selector</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
+<h2>Saleccionar productes de Sala {{room.name}} </h2>
 
-    <h2>Saleccionar productes de Sala {{room.name}} </h2>
+<div class="container">
 
-    <div class="container">
+  {% for container in Container.objects.all%}
 
-        {% for container in Container.objects.all%}
-
-            {% if container.room == 5 %}
-
-                <form>
-                    <div class="form-row" style="margin-bottom: 1em">
-                        <div class="col-sm" >
-                            <b>Producte</b>
-                            <p class="card-text" > 9394934 </p>
-                            <p class="card-text" >{{ container.product_id }}</p>
-                        </div>
-                        <div class="col-sm" >
-                            <b>Quantitat disponible</b>
-                            <p class="card-text" > 5 </p>
-                            <p class="card-text" >{{ container.quantity }}</p>
-                        </div>
-                        <div class="col-sm">
-                            <b>Quantitat a moure</b>
-                              <div class="dropdown">
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Seleccionar</button>
-                                <div class="dropdown-menu">
-                                     <button class="dropdown-item" type="button">1</button>
-                                     <button class="dropdown-item" type="button">2</button>
-                                     <button class="dropdown-item" type="button">3</button>
-                                </div>
-                              </div>
-                        </div>
-                        <div class="col-sm">
-                            <b>Condicions</b>
-                            <p class="card-text" > Max temperature: 4º C </p>
-                            <p class="card-text">{{ container.quantity }}</p>
-                        </div>
-                    </div>
-                </form>
-            {% endif %}
-
-        {% endfor %}
-
-
-
-    </div>
-
-    <div class="text-right" >
-        <div class="btn-group-vertical" style="margin-right: 70px" >
-            <button type="button" class="btn btn-success">Continuar</button>
-            <button type="button" class="btn btn-danger">Cancelar</button>
+    {% if container.room == 5 %}
+      <form>
+        <div class="form-row" style="margin-bottom: 1em">
+          <div class="col-sm" >
+            <b>Producte</b>
+            <p class="card-text" > 9394934 </p>
+            <p class="card-text" >{{ container.product_id }}</p>
+          </div>
+          <div class="col-sm" >
+            <b>Quantitat disponible</b>
+            <p class="card-text" > 5 </p>
+            <p class="card-text" >{{ container.quantity }}</p>
+          </div>
+          <div class="col-sm">
+            <b>Quantitat a moure</b>
+            <div class="dropdown">
+              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Seleccionar</button>
+            </div>
+            <div class="dropdown-menu">
+              <button class="dropdown-item" type="button">1</button>
+              <button class="dropdown-item" type="button">2</button>
+              <button class="dropdown-item" type="button">3</button>
+            </div>
+          </div>
+          <div class="col-sm">
+            <b>Condicions</b>
+            <p class="card-text" > Max temperature: 4º C </p>
+            <p class="card-text">{{ container.quantity }}</p>
+          </div>
         </div>
-    </div>
+      </form>
+    {% endif %}
+  {% endfor %}
+</div>
+
+<div class="text-right" >
+  <div class="btn-group-vertical" style="margin-right: 70px" >
+    <button type="button" class="btn btn-success">Continuar</button>
+    <button type="button" class="btn btn-danger">Cancelar</button>
+  </div>
+</div>
+
+{% endblock content %}
