@@ -1,22 +1,21 @@
 {% extends 'magatzem/base-gestor.html' %}
 
+{% block content %}
+<h1>Seleccionar sala</h1>
 
-    <h1>Seleccionar sala</h1>
+{% for producte in productes %}
 
+    Producte: {{ producte.productor_id }}
+    Quantitat a moure: {{ producte.quantitat }}
+    Condicions:
 
-    {% for producte in productes %}
+{% endfor %}
 
-        Producte: {{ producte.productor_id}}
-        Quantitat a moure: {{producte.quantitat}}
-        Condicions: {{}}
+<h2>Sales disponibles</h2>
 
-    {% endfor %}
+<div class="container">
 
-    <h2>Sales disponibles</h2>
-
-    <div class="container">
-
-        {% for room in room_list%}
+    {% for room in room_list%}
 
         <form>
           <div class="form-row">
@@ -33,22 +32,16 @@
               <input type="text" class="form-control" placeholder="{{room.quantity}}">
             </div>
           </div>
-
-
         </form>
 
-        {% endfor %}
+    {% endfor %}
 
 
-    </div>
+</div>
 
-    <div class="text-right">
-
+<div class="text-right">
     <a class="btn btn-warning" href="base.html" role="button">Enrere</a>
     <a class="btn btn-success" href="base.html" role="button">Següent</a>
+</div>
 
-    </div>
-
-
-
-
+{% endblock content%}

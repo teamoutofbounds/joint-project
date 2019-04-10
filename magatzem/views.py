@@ -123,7 +123,7 @@ def entrada_producte_mock(request):
          'hum_max': 40,
          'quantitat': 12}]
     }
-    return render(request, 'magatzem/entrada.html', context)
+    return render(request, 'magatzem/product-entry.html', context)
 
 
 def llista_sales_mock(request):
@@ -302,7 +302,7 @@ def seleccionar_productes_mock(request):
          'hum_max': 40,
          'quantity': 12}]
     }
-    return render(request, 'magatzem/movement.html', context)
+    return render(request, 'magatzem/select-container.html', context)
 
 
 

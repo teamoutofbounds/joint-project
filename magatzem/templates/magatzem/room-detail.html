@@ -3,158 +3,169 @@
 {% block content %}
 
 <div class="row>">
-    <div class="col-sm-12">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'list-room' %}">Sales</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ room.name }}</li>
-            </ol>
-        </nav>
-    </div>
+  <div class="col-sm-12">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'list-room' %}">Sales</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ room.name }}</li>
+      </ol>
+    </nav>
+  </div>
 </div>
 
 <div class ="row">
-    <div class="col-sm-8">
+  <div class="col-sm-8">
 
-        <div class="card" style="margin-bottom: 3em">
-            <div class="card-header">
-                <h2>Contenidors</h2>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover" style="text-align: center">
-                        <caption style="display: none">Llista de contenidors</caption>
-                        <thead>
-                            <tr>
-                                <!-- Main info -->
-                                <th scope="col"> <b>Nom</b> </th>
-                                <th scope="col"> <b>Productor</b> </th>
-                                <th scope="col"> <b>Quantitat</b> </th>
-                                <!-- Temperatures -->
-                                <th scope="col"> <b>Temp max</b> </th>
-                                <th scope="col"> <b>Temp min</b> </th>
-                                <!-- Humidity -->
-                                <th scope="col"> <b>Hum max</b> </th>
-                                <th scope="col"> <b>Hum min</b> </th>
-                                <!-- Limit date -->
-                                <th scope="col"> <b>Data límit</b> </th>
-                            </tr>
-                        </thead>
+    <div class="card" style="margin-bottom: 3em">
+      <div class="card-header">
+        <h2>Contenidors</h2>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover" style="text-align: center">
+            <caption style="display: none">Llista de contenidors</caption>
+            <thead>
+            <tr>
+              <!-- Main info -->
+              <th scope="col"> <b>Nom</b> </th>
+              <th scope="col"> <b>Productor</b> </th>
+              <th scope="col"> <b>Quantitat</b> </th>
+              <!-- Temperatures -->
+              <th scope="col"> <b>Temp max</b> </th>
+              <th scope="col"> <b>Temp min</b> </th>
+              <!-- Humidity -->
+              <th scope="col"> <b>Hum max</b> </th>
+              <th scope="col"> <b>Hum min</b> </th>
+              <!-- Limit date -->
+              <th scope="col"> <b>Data límit</b> </th>
+            </tr>
+            </thead>
 
-                        {% for container in containers %}
-                        <tr>
-                            <!-- Main info -->
-                            <td> {{ container.product_id }} </td>
-                            <td> {{ container.producer_id }} </td>
-                            <td> {{ container.quantity }} </td>
-                            <!-- Temperatures -->
-                            <td> {{ container.temp_max }} </td>
-                            <td> {{ container.temp_min }} </td>
-                            <!-- Humidity -->
-                            <td> {{ container.hum_max }} </td>
-                            <td> {{ container.hum_min }} </td>
-                            <!-- Limit date -->
-                            <td> {{ container.limit }} </td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-            </div>
+            {% for container in containers %}
+            <tr>
+              <!-- Main info -->
+              <td> {{ container.product_id }} </td>
+              <td> {{ container.producer_id }} </td>
+              <td> {{ container.quantity }} </td>
+              <!-- Temperatures -->
+              <td> {{ container.temp_max }} </td>
+              <td> {{ container.temp_min }} </td>
+              <!-- Humidity -->
+              <td> {{ container.hum_max }} </td>
+              <td> {{ container.hum_min }} </td>
+              <!-- Limit date -->
+              <td> {{ container.limit }} </td>
+            </tr>
+            {% endfor %}
+          </table>
         </div>
-
-        <div>
-            <div class ="card">
-
-                <div class="card-header">
-                    <h2>Tasques</h2>
-                </div>
-
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover" style="text-align: center">
-                            <caption style="display: none">Llista de tasques</caption>
-                            <thead>
-                                <tr>
-                                    <!-- Main info -->
-                                    <th scope="col"> <b>Descripció</b> </th>
-                                    <!-- Localitzacio -->
-                                    <th scope="col"> <b>Origen</b> </th>
-                                    <th scope="col"> <b>Destinació</b> </th>
-                                    <!-- Contenidor -->
-                                    <th scope="col"> <b>Contenidor</b> </th>
-                                    <th scope="col"> <b>Quantitat</b> </th>
-                                </tr>
-                            </thead>
-                            {% for task in tasks %}
-                            <tr>
-                                <td>{{ task.description }}</td>
-                                <td>{{ task.origin_room.name }}</td>
-                                <td>{{ task.destination_room.name }}</td>
-                                <td>{{ task.containers.product_id }}</td>
-                                <td>{{ task.containers.quantity }}</td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <div class="col-sm-4">
+    <div>
+      <div class ="card">
 
-        <div class="info-sala">
-            <h3><b>Informació {{ room.name }}</b></h3>
-            <!-- Nom i estat -->
-            <div class="row">
-                <div class="col-sm-6">
-                    <h5> Estat </h5>
-                </div>
-                <div class="col-sm-6 d-flex justify-content-center">
-                    {% if room.room_status == 0 %}
-                        <h4 style="color:red">Tancada </h4>
-                    {% else %}
-                        <h4 style="color:green">Oberta </h4>
-                    {% endif %}
-                </div>
-                <div class="col-sm-6">
-                    <h5> Temp Min </h5>
-                </div>
-                <div class="col-sm-6 d-flex justify-content-center">
-                    {{room.temp_min}}
-                </div>
-                <div class="col-sm-6">
-                    <h5> Temp Max </h5>
-                </div>
-                <div class="col-sm-6 d-flex justify-content-center">
-                    {{room.temp_max}}
-                </div>
-                <div class="col-sm-6">
-                    <h5> Hum Min </h5>
-                </div>
-                <div class="col-sm-6 d-flex justify-content-center">
-                    {{room.hum_min}}
-                </div>
-                <div class="col-sm-6">
-                    <h5> Hum Max </h5>
-                </div>
-                <div class="col-sm-6 d-flex justify-content-center">
-                    {{room.hum_max}}
-                </div>
-                <div class="col-sm-6">
-                    <h5> Capacitat </h5>
-                </div>
-                <div class="col-sm-6 d-flex justify-content-center">
-                    {{room.quantity}} / {{room.limit}}
-                </div>
-            </div>
+        <div class="card-header">
+          <h2>Tasques</h2>
         </div>
 
-        <div class="accions">
-            <a class="btn btn-primary d-flex justify-content-center" href="" role="button">Traslladar</a>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover" style="text-align: center">
+              <caption style="display: none">Llista de tasques</caption>
+              <thead>
+              <tr>
+                <!-- Main info -->
+                <th scope="col"> <b>Descripció</b> </th>
+                <!-- Localitzacio -->
+                <th scope="col"> <b>Origen</b> </th>
+                <th scope="col"> <b>Destinació</b> </th>
+                <!-- Contenidor -->
+                <th scope="col"> <b>Contenidor</b> </th>
+                <th scope="col"> <b>Quantitat</b> </th>
+              </tr>
+              </thead>
+              {% for task in tasks %}
+              <tr>
+                <td>{{ task.description }}</td>
+                <td>{{ task.origin_room.name }}</td>
+                <td>{{ task.destination_room.name }}</td>
+                <td>{{ task.containers.product_id }}</td>
+                <td>{{ task.containers.quantity }}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </div>
         </div>
-
+      </div>
     </div>
+  </div>
+
+  <div class="col-sm-4">
+
+    <div class="info-sala">
+      <h3><b>Informació {{ room.name }}</b></h3>
+      <!-- Nom i estat -->
+      <div class="row">
+        <div class="col-sm-6">
+          <h5> Estat </h5>
+        </div>
+        <div class="col-sm-6 d-flex justify-content-center">
+          {% if room.room_status == 0 %}
+          <h4 style="color:red">Tancada </h4>
+          {% else %}
+          <h4 style="color:green">Oberta </h4>
+          {% endif %}
+        </div>
+
+        <div class="col-sm-6">
+          <ion-icon src="/_ionicons_svg_md-thermometer.svg"></ion-icon>
+          <h5><ion-icon name="thermometer"></ion-icon> Temp Min </h5>
+        </div>
+        <div class="col-sm-6 d-flex justify-content-center">
+          <p>{{room.temp_min}} ºC</p>
+        </div>
+
+
+        <div class="col-sm-6">
+          <ion-icon src="/_ionicons_svg_md-thermometer.svg"></ion-icon>
+          <h5><ion-icon name="thermometer"></ion-icon> Temp Max </h5>
+        </div>
+        <div class="col-sm-6 d-flex justify-content-center">
+          <p>{{room.temp_max}} ºC</p>
+        </div>
+
+
+        <div class="col-sm-6">
+          <icon-icon src="/_ionicons_svg_md-water.svg"></icon-icon>
+          <h5> <ion-icon name="water"></ion-icon> Hum Min </h5>
+        </div>
+        <div class="col-sm-6 d-flex justify-content-center">
+          <p>{{room.hum_min}} %</p>
+        </div>
+
+
+        <div class="col-sm-6">
+          <icon-icon src="/_ionicons_svg_md-water.svg"></icon-icon>
+          <h5> <ion-icon name="water"></ion-icon> Hum Max </h5>
+        </div>
+        <div class="col-sm-6 d-flex justify-content-center">
+          <p>{{room.hum_max}} %</p>
+        </div>
+        <div class="col-sm-6">
+          <icon-icon src="/_ionicons_svg_md-cube.svg"></icon-icon>
+          <h5> <ion-icon name="cube"></ion-icon> Capacitat </h5>
+        </div>
+        <div class="col-sm-6 d-flex justify-content-center">
+          {{room.quantity}} / {{room.limit}}
+        </div>
+      </div>
+    </div>
+
+    <div class="accions">
+      <a class="btn btn-primary d-flex justify-content-center" href="" role="button">Traslladar</a>
+    </div>
+  </div>
 
 </div>
 
