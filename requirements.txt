@@ -1,3 +1,4 @@
+celery
 dj-database-url==0.5.0
 Django==2.1.7
 django-crispy-forms==1.7.2
