@@ -1,0 +1,19 @@
+{% extends 'magatzem/base-gestor.html' %}
+{% block content %}
+
+<div class="row" style="margin-top: 1em">
+  <div class="col-sm-12">
+    <h2>Accions possibles amb backend</h2>
+    <ul>
+      <li><a href="#">Generar arribada</a></li>
+      <li><a href="{% url 'list-room' %}">Generar moviment</a></li>
+    </ul>
+    <h2>Accions possibles a realitzar amb mocks</h2>
+    <ul>
+      <li><a href="{% url 'entrada_mock'%}">Generar arribada</a></li>
+      <li><a href="{% url 'llista-sales-mock' %}">Generar moviment</a></li>
+    </ul>
+  </div>
+</div>
+
+{% endblock content%}
