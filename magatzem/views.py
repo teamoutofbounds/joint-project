@@ -455,3 +455,8 @@ def rebre_notificacio_mock(request):
     }
 
     return render(request, 'magatzem/notification.html', context)
+
+
+def panel_tasks_mock(request):
+    context = {}
+    return render(request, 'magatzem/tasks-list.html', context)
