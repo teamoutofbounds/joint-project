@@ -52,6 +52,39 @@
     color: #28a745;
 }
 
+.btn-icon {
+    width:1.75rem;
+    height:1.75rem;
+    border-width: .15rem;
+    border-radius: 6px;
+    border-color: red;
+    opacity: .65;
+    cursor: pointer; /* Mouse pointer on hover */
+}
+
+.btn-icon:hover {
+    width:1.75rem;
+    height:1.75rem;
+    border-radius: 6px;
+    border-color: red;
+    opacity: 1;
+    cursor: pointer; /* Mouse pointer on hover */
+}
+
+.paper-bin {
+    color:red;
+    opacity: .85;
+    position: absolute;
+    transform: translate(-50%, -10%);
+}
+
+.paper-bin:hover {
+    color:red;
+    opacity: 1;
+    position: absolute;
+    transform: translate(-50%, -10%);
+}
+
 .btn-edit {
     opacity: 0.75;
     width: 6rem;

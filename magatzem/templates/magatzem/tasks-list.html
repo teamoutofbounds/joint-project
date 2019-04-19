@@ -20,7 +20,17 @@
             <div class="card border-primary mb-1 inside-task">
           {% endif %}
             <div class="card-header">
-              <h6 class="task-title">{{ task.description }}</h6>
+              <!--<h6 class="task-title">{{ task.description }}</h6>-->
+
+              <div class="row">
+                <div class="col-md-10">
+                  <h6 class="task-title">{{ task.description }}</h6>
+                </div>
+                <div class="col-md-2">
+                  <a href="#" class= "btn btn-icon"><i class='fas fa-trash-alt paper-bin'"></i></a>
+                </div>
+              </div>
+
             </div>
             <div class="card-body">
               <h6 class="card-subtitle mb-3">ORIGEN: <strong>{{ task.origin_room }}</strong></h6>
