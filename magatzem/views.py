@@ -458,5 +458,38 @@ def rebre_notificacio_mock(request):
 
 
 def panel_tasks_mock(request):
-    context = {}
+    context = {
+        'todo': [
+            {'task_type': 0, 'task_status': 1, 'origin_room': 'Moll de càrrega',
+            'destination_room': 'Sala 3', 'containers': 10},
+            {'task_type': 2, 'task_status': 1, 'origin_room': 'Sala 2',
+            'destination_room': 'Moll de càrrega', 'containers': 5},
+            {'task_type': 1, 'task_status': 1, 'origin_room': 'Sala 3',
+            'destination_room': 'Sala 1', 'containers': 3},
+        ],
+        'doing': [
+            {'task_type': 1, 'task_status': 3, 'origin_room': 'Sala 3',
+             'destination_room': 'Sala 1', 'containers': 22},
+            {'task_type': 1, 'task_status': 3, 'origin_room': 'Sala 3',
+             'destination_room': 'Sala 4', 'containers': 30},
+            {'task_type': 0, 'task_status': 3, 'origin_room': 'Moll de càrrega',
+             'destination_room': 'Sala 3', 'containers': 17},
+            {'task_type': 2, 'task_status': 3, 'origin_room': 'Sala 2',
+             'destination_room': 'Moll de càrrega', 'containers': 8},
+        ],
+        'done': [
+            {'task_type': 0, 'task_status': 4, 'origin_room': 'Moll de càrrega',
+             'destination_room': 'Sala 3', 'containers': 17},
+            {'task_type': 2, 'task_status': 4, 'origin_room': 'Sala 2',
+             'destination_room': 'Moll de càrrega', 'containers': 21},
+        ]
+    }
+    '''
+        task_type 0 Entrada | 1 Intern | 2 Sortida
+        task_status 0 Pendent | 1 Assignada automaticament | 
+                    2 Assignada manualment | 3 Rebuda | 4 Completada
+        origin_room
+        destination_room
+        containers
+    '''
     return render(request, 'magatzem/tasks-list.html', context)

@@ -7,7 +7,29 @@
       <h6 class="heading mt-4 mb-4 text-center"> TASKS TO DO </h6>
 
       <ul class="list-group mt-2">
+        {% for task in todo %}
+          {% if task.origin_room == 'Moll de càrrega' %}
+            <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
+
+          {% elif task.destination_room == 'Moll de càrrega' %}
+            <div class="card border-primary mb-1" style="width: 100%; background: lightgreen;">
+
+          {% else %}
+            <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite;">
+          {% endif %}
+            <div class="card-header">
+              <h5># Task: task title</h5>
+            </div>
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">ORIGEN: {{ task.origin_room }}</h6>
+              <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: {{ task.containers }} containers</h6>
+              <h6 class="card-subtitle mb-2">DESTÍ: {{ task.destination_room }}</h6>
+              <a href="#" class="btn btn-dark">Obrir tasca</a>
+            </div>
+          </div>
+        {% endfor %}
         <!-- BEGIN EXAMPLE CARD-->
+        <!--
         <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
           <div class="card-header">
             <h5># Task: task title</h5>
@@ -19,8 +41,10 @@
             <a href="#" class="btn btn-dark">Obrir tasca</a>
           </div>
         </div>
+        -->
         <!-- END EXAMPLE CARD-->
         <!-- BEGIN EXAMPLE CARD-->
+        <!--
         <div class="card border-primary mb-1" style="width: 100%; background: lightgreen;">
           <div class="card-header">
             <h5># Task: task title</h5>
@@ -32,8 +56,10 @@
             <a href="#" class="btn btn-dark">Obrir tasca</a>
           </div>
         </div>
+        -->
         <!-- END EXAMPLE CARD-->
         <!-- BEGIN EXAMPLE CARD-->
+        <!--
         <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite">
           <div class="card-header">
             <h5># Task: task title</h5>
@@ -45,6 +71,7 @@
             <a href="#" class="btn btn-dark">Obrir tasca</a>
           </div>
         </div>
+        -->
         <!-- END EXAMPLE CARD-->
       </ul>
     </div>
@@ -53,7 +80,29 @@
     <!-- BEGIN SECOND COLUMN -->
     <div class="col-md mr-1" style="background: lightgrey">
       <h6 class="heading mt-4 mb-4 text-center"> TASKS DOING </h6>
+      {% for task in doing %}
+          {% if task.origin_room == 'Moll de càrrega' %}
+            <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
+
+          {% elif task.destination_room == 'Moll de càrrega' %}
+            <div class="card border-primary mb-1" style="width: 100%; background: lightgreen;">
+
+          {% else %}
+            <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite;">
+          {% endif %}
+            <div class="card-header">
+              <h5># Task: task title</h5>
+            </div>
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">ORIGEN: {{ task.origin_room }}</h6>
+              <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: {{ task.containers }} containers</h6>
+              <h6 class="card-subtitle mb-2">DESTÍ: {{ task.destination_room }}</h6>
+              <a href="#" class="btn btn-dark">Obrir tasca</a>
+            </div>
+          </div>
+        {% endfor %}
         <!-- THIS IS ONE EXAMPLE CARD-->
+        <!--
         <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite">
           <div class="card-header">
             <h5># Task: task title</h5>
@@ -65,8 +114,10 @@
             <a href="#" class="btn btn-dark">Obrir tasca</a>
           </div>
         </div>
+        -->
         <!-- END EXAMPLE CARD-->
         <!-- BEGIN EXAMPLE CARD-->
+        <!--
         <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite">
           <div class="card-header">
             <h5># Task: task title</h5>
@@ -78,8 +129,10 @@
             <a href="#" class="btn btn-dark">Obrir tasca</a>
           </div>
         </div>
+        -->
         <!-- END EXAMPLE CARD-->
         <!-- BEGIN EXAMPLE CARD-->
+        <!--
         <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
           <div class="card-header">
             <h5># Task: task title</h5>
@@ -91,8 +144,10 @@
             <a href="#" class="btn btn-dark">Obrir tasca</a>
           </div>
         </div>
+        -->
         <!-- END EXAMPLE CARD-->
         <!-- BEGIN EXAMPLE CARD-->
+        <!--
         <div class="card border-primary mb-1" style="width: 100%; background: lightgreen;">
           <div class="card-header">
             <h5># Task: task title</h5>
@@ -104,13 +159,36 @@
             <a href="#" class="btn btn-dark">Obrir tasca</a>
           </div>
         </div>
+        -->
     </div>
     <!-- END SECOND COLUMN -->
 
     <!-- BEGIN THIRD COLUMN -->
     <div class="col-md mr-1" style="background: lightgrey">
       <h6 class="heading mt-4 mb-4 text-center"> TASKS DONE </h6>
+        {% for task in done %}
+          {% if task.origin_room == 'Moll de càrrega' %}
+            <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
+
+          {% elif task.destination_room == 'Moll de càrrega' %}
+            <div class="card border-primary mb-1" style="width: 100%; background: lightgreen;">
+
+          {% else %}
+            <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite;">
+          {% endif %}
+            <div class="card-header">
+              <h5># Task: task title</h5>
+            </div>
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2">ORIGEN: {{ task.origin_room }}</h6>
+              <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: {{ task.containers }} containers</h6>
+              <h6 class="card-subtitle mb-2">DESTÍ: {{ task.destination_room }}</h6>
+              <a href="#" class="btn btn-dark">Obrir tasca</a>
+            </div>
+          </div>
+        {% endfor %}
        <!-- BEGINEXAMPLE CARD-->
+        <!--
         <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
           <div class="card-header">
             <h5># Task: task title</h5>
@@ -122,8 +200,10 @@
             <a href="#" class="btn btn-dark">Obrir tasca</a>
           </div>
         </div>
+        -->
         <!-- END EXAMPLE CARD-->
         <!-- BEGIN EXAMPLE CARD-->
+        <!--
         <div class="card border-primary mb-1" style="width: 100%; background: lightgreen;">
           <div class="card-header">
             <h5># Task: task title</h5>
@@ -135,6 +215,7 @@
             <a href="#" class="btn btn-dark">Obrir tasca</a>
           </div>
         </div>
+        -->
         <!-- END EXAMPLE CARD-->
     </div>
     <!-- BEGIN THIRD COLUMN -->
