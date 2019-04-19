@@ -1,3 +1,7 @@
+.task-column {
+    background: lightgrey;
+}
+
 .task-panel-title{
     text-transform: uppercase;
     font-weight: 700;
