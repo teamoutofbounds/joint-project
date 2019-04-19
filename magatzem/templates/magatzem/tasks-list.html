@@ -4,7 +4,9 @@
   <div class="row justify-content-md-center mt-2 mb-4">
     <!-- BEGIN FISTS COLUMN -->
     <div class="col-md mr-1" style="background: lightgrey">
-      <h6 class="heading mt-4 mb-4 text-center task-panel-title"> A realitzar </h6>
+      <h6 class="heading mt-2 mb-2 text-center">
+        <span class="badge badge-info task-panel-title py-3" style="width: 100%">A realitzar</span>
+      </h6>
 
       <ul class="list-group mt-2">
         {% for task in todo %}
@@ -46,7 +48,9 @@
 
     <!-- BEGIN SECOND COLUMN -->
     <div class="col-md mr-1" style="background: lightgrey">
-      <h6 class="heading mt-4 mb-4 text-center task-panel-title"> Realitzant </h6>
+      <h6 class="heading mt-2 mb-2 text-center">
+        <span class="badge badge-info task-panel-title py-3" style="width: 100%">Realitzant</span>
+      </h6>
       {% for task in doing %}
           {% if task.origin_room == 'Moll de càrrega' %}
             <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
@@ -81,7 +85,9 @@
 
     <!-- BEGIN THIRD COLUMN -->
     <div class="col-md mr-1" style="background: lightgrey">
-      <h6 class="heading mt-4 mb-4 text-center task-panel-title"> Finalitzada </h6>
+      <h6 class="heading mt-2 mb-2 text-center">
+        <span class="badge badge-info task-panel-title py-3" style="width: 100%">Finalitzada</span>
+      </h6>
         {% for task in done %}
           {% if task.origin_room == 'Moll de càrrega' %}
             <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
