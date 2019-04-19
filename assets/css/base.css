@@ -1,0 +1,28 @@
+ @import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+ body {
+   overflow-x: hidden;
+   font-family: 'Lato', sans-serif;
+ }
+
+html {
+  font-size: 1rem;
+}
+
+@include media-breakpoint-up(sm) {
+  html {
+    font-size: 1.2rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html {
+    font-size: 1.4rem;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 1.6rem;
+  }
+}

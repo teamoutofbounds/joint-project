@@ -4,7 +4,7 @@
   <div class="row justify-content-md-center mt-2 mb-4">
     <!-- BEGIN FISTS COLUMN -->
     <div class="col-md mr-1" style="background: lightgrey">
-      <h6 class="heading mt-4 mb-4 text-center"> TASKS TO DO </h6>
+      <h6 class="heading mt-4 mb-4 text-center task-panel-title"> A realitzar </h6>
 
       <ul class="list-group mt-2">
         {% for task in todo %}
@@ -18,68 +18,35 @@
             <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite;">
           {% endif %}
             <div class="card-header">
-              <h5># Task: task title</h5>
+              <h6 class="task-title"># Task: task title</h6>
             </div>
             <div class="card-body">
-              <h6 class="card-subtitle mb-2">ORIGEN: {{ task.origin_room }}</h6>
-              <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: {{ task.containers }} containers</h6>
-              <h6 class="card-subtitle mb-2">DESTÍ: {{ task.destination_room }}</h6>
-              <a href="#" class="btn btn-dark">Obrir tasca</a>
+              <h6 class="card-subtitle mb-3">ORIGEN: <strong>{{ task.origin_room }}</strong></h6>
+              <h6 class="card-subtitle mb-3 text-muted">QUANTITAT: <strong>{{ task.containers }} containers</strong></h6>
+              <h6 class="card-subtitle mb-3">DESTÍ: <strong>{{ task.destination_room }}</strong></h6>
+
+              <div class="row">
+                <div class="col-md-7">
+                  <a href="#" class="btn btn-dark">Obrir tasca</a>
+                </div>
+                <div class="col-md-5">
+                  {% if task.task_status == 'Pendent' %}
+                    <h6 class="mt-2 task-status-text status-pendent text-truncate">{{ task.task_status }}</h6>
+                  {% else %}
+                    <h6 class="mt-2 task-status-text status-assignada text-truncate">{{ task.task_status }}</h6>
+                  {% endif %}
+                </div>
+              </div>
             </div>
           </div>
         {% endfor %}
-        <!-- BEGIN EXAMPLE CARD-->
-        <!--
-        <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
-          <div class="card-header">
-            <h5># Task: task title</h5>
-          </div>
-          <div class="card-body">
-            <h6 class="card-subtitle mb-2">ORIGEN: Moll de càrrega</h6>
-            <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: # containers</h6>
-            <h6 class="card-subtitle mb-2">DESTÍ: Sala 3</h6>
-            <a href="#" class="btn btn-dark">Obrir tasca</a>
-          </div>
-        </div>
-        -->
-        <!-- END EXAMPLE CARD-->
-        <!-- BEGIN EXAMPLE CARD-->
-        <!--
-        <div class="card border-primary mb-1" style="width: 100%; background: lightgreen;">
-          <div class="card-header">
-            <h5># Task: task title</h5>
-          </div>
-          <div class="card-body">
-            <h6 class="card-subtitle mb-2">ORIGEN: Sala 2</h6>
-            <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: # containers</h6>
-            <h6 class="card-subtitle mb-2">DESTÍ: Moll càrrega</h6>
-            <a href="#" class="btn btn-dark">Obrir tasca</a>
-          </div>
-        </div>
-        -->
-        <!-- END EXAMPLE CARD-->
-        <!-- BEGIN EXAMPLE CARD-->
-        <!--
-        <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite">
-          <div class="card-header">
-            <h5># Task: task title</h5>
-          </div>
-          <div class="card-body">
-            <h6 class="card-subtitle mb-2">ORIGEN: Sala 3</h6>
-            <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: # containers</h6>
-            <h6 class="card-subtitle mb-2">DESTÍ: Sala 1</h6>
-            <a href="#" class="btn btn-dark">Obrir tasca</a>
-          </div>
-        </div>
-        -->
-        <!-- END EXAMPLE CARD-->
       </ul>
     </div>
     <!-- END FISTS COLUMN -->
 
     <!-- BEGIN SECOND COLUMN -->
     <div class="col-md mr-1" style="background: lightgrey">
-      <h6 class="heading mt-4 mb-4 text-center"> TASKS DOING </h6>
+      <h6 class="heading mt-4 mb-4 text-center task-panel-title"> Realitzant </h6>
       {% for task in doing %}
           {% if task.origin_room == 'Moll de càrrega' %}
             <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
@@ -91,81 +58,30 @@
             <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite;">
           {% endif %}
             <div class="card-header">
-              <h5># Task: task title</h5>
+              <h6 class="task-title"># Task: task title</h6>
             </div>
             <div class="card-body">
-              <h6 class="card-subtitle mb-2">ORIGEN: {{ task.origin_room }}</h6>
-              <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: {{ task.containers }} containers</h6>
-              <h6 class="card-subtitle mb-2">DESTÍ: {{ task.destination_room }}</h6>
-              <a href="#" class="btn btn-dark">Obrir tasca</a>
+              <h6 class="card-subtitle mb-3">ORIGEN: <strong>{{ task.origin_room }}</strong></h6>
+              <h6 class="card-subtitle mb-3 text-muted">QUANTITAT: <strong>{{ task.containers }} containers</strong></h6>
+              <h6 class="card-subtitle mb-3">DESTÍ: <strong>{{ task.destination_room }}</strong></h6>
+
+              <div class="row">
+                <div class="col-md-7">
+                  <a href="#" class="btn btn-dark">Obrir tasca</a>
+                </div>
+                <div class="col-md-5">
+                  <h6 class="mt-2 task-status-text status-rebuda text-truncate">{{ task.task_status }}</h6>
+                </div>
+              </div>
             </div>
           </div>
         {% endfor %}
-        <!-- THIS IS ONE EXAMPLE CARD-->
-        <!--
-        <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite">
-          <div class="card-header">
-            <h5># Task: task title</h5>
-          </div>
-          <div class="card-body">
-            <h6 class="card-subtitle mb-2">ORIGEN: Sala 3</h6>
-            <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: # containers</h6>
-            <h6 class="card-subtitle mb-2">DESTÍ: Sala 1</h6>
-            <a href="#" class="btn btn-dark">Obrir tasca</a>
-          </div>
-        </div>
-        -->
-        <!-- END EXAMPLE CARD-->
-        <!-- BEGIN EXAMPLE CARD-->
-        <!--
-        <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite">
-          <div class="card-header">
-            <h5># Task: task title</h5>
-          </div>
-          <div class="card-body">
-            <h6 class="card-subtitle mb-2">ORIGEN: Sala 3</h6>
-            <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: # containers</h6>
-            <h6 class="card-subtitle mb-2">DESTÍ: Sala 4</h6>
-            <a href="#" class="btn btn-dark">Obrir tasca</a>
-          </div>
-        </div>
-        -->
-        <!-- END EXAMPLE CARD-->
-        <!-- BEGIN EXAMPLE CARD-->
-        <!--
-        <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
-          <div class="card-header">
-            <h5># Task: task title</h5>
-          </div>
-          <div class="card-body">
-            <h6 class="card-subtitle mb-2">ORIGEN: Moll de càrrega</h6>
-            <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: # containers</h6>
-            <h6 class="card-subtitle mb-2">DESTÍ: Sala 3</h6>
-            <a href="#" class="btn btn-dark">Obrir tasca</a>
-          </div>
-        </div>
-        -->
-        <!-- END EXAMPLE CARD-->
-        <!-- BEGIN EXAMPLE CARD-->
-        <!--
-        <div class="card border-primary mb-1" style="width: 100%; background: lightgreen;">
-          <div class="card-header">
-            <h5># Task: task title</h5>
-          </div>
-          <div class="card-body">
-            <h6 class="card-subtitle mb-2">ORIGEN: Sala 2</h6>
-            <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: # containers</h6>
-            <h6 class="card-subtitle mb-2">DESTÍ: Moll càrrega</h6>
-            <a href="#" class="btn btn-dark">Obrir tasca</a>
-          </div>
-        </div>
-        -->
     </div>
     <!-- END SECOND COLUMN -->
 
     <!-- BEGIN THIRD COLUMN -->
     <div class="col-md mr-1" style="background: lightgrey">
-      <h6 class="heading mt-4 mb-4 text-center"> TASKS DONE </h6>
+      <h6 class="heading mt-4 mb-4 text-center task-panel-title"> Finalitzada </h6>
         {% for task in done %}
           {% if task.origin_room == 'Moll de càrrega' %}
             <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
@@ -177,46 +93,25 @@
             <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite;">
           {% endif %}
             <div class="card-header">
-              <h5># Task: task title</h5>
+              <h6 class="task-title"># Task: task title</h6>
             </div>
             <div class="card-body">
-              <h6 class="card-subtitle mb-2">ORIGEN: {{ task.origin_room }}</h6>
-              <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: {{ task.containers }} containers</h6>
-              <h6 class="card-subtitle mb-2">DESTÍ: {{ task.destination_room }}</h6>
-              <a href="#" class="btn btn-dark">Obrir tasca</a>
+              <h6 class="card-subtitle mb-3">ORIGEN: <strong>{{ task.origin_room }}</strong></h6>
+              <h6 class="card-subtitle mb-3 text-muted">QUANTITAT: <strong>{{ task.containers }} containers</strong></h6>
+              <h6 class="card-subtitle mb-3">DESTÍ: <strong>{{ task.destination_room }}</strong></h6>
+
+              <div class="row">
+                <div class="col-md-7">
+                  <a href="#" class="btn btn-dark">Obrir tasca</a>
+                </div>
+                <div class="col-md-5">
+                  <h6 class="mt-2 task-status-text status-completada text-truncate">{{ task.task_status }}</h6>
+                </div>
+              </div>
+
             </div>
           </div>
         {% endfor %}
-       <!-- BEGINEXAMPLE CARD-->
-        <!--
-        <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
-          <div class="card-header">
-            <h5># Task: task title</h5>
-          </div>
-          <div class="card-body">
-            <h6 class="card-subtitle mb-2">ORIGEN: Moll de càrrega</h6>
-            <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: # containers</h6>
-            <h6 class="card-subtitle mb-2">DESTÍ: Sala 3</h6>
-            <a href="#" class="btn btn-dark">Obrir tasca</a>
-          </div>
-        </div>
-        -->
-        <!-- END EXAMPLE CARD-->
-        <!-- BEGIN EXAMPLE CARD-->
-        <!--
-        <div class="card border-primary mb-1" style="width: 100%; background: lightgreen;">
-          <div class="card-header">
-            <h5># Task: task title</h5>
-          </div>
-          <div class="card-body">
-            <h6 class="card-subtitle mb-2">ORIGEN: Sala 2</h6>
-            <h6 class="card-subtitle mb-2 text-muted">QUANTITAT: # containers</h6>
-            <h6 class="card-subtitle mb-2">DESTÍ: Moll càrrega</h6>
-            <a href="#" class="btn btn-dark">Obrir tasca</a>
-          </div>
-        </div>
-        -->
-        <!-- END EXAMPLE CARD-->
     </div>
     <!-- BEGIN THIRD COLUMN -->
   </div>
