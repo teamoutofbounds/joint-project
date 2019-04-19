@@ -5,19 +5,19 @@
     <!-- BEGIN FISTS COLUMN -->
     <div class="col-md mr-1" style="background: lightgrey">
       <h6 class="heading mt-2 mb-2 text-center">
-        <span class="badge badge-info task-panel-title py-3" style="width: 100%">A realitzar</span>
+        <span class="badge badge-info task-panel-title py-3">A realitzar</span>
       </h6>
 
       <ul class="list-group mt-2">
         {% for task in todo %}
           {% if task.origin_room == 'Moll de càrrega' %}
-            <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
+            <div class="card border-primary mb-1 in-task">
 
           {% elif task.destination_room == 'Moll de càrrega' %}
-            <div class="card border-primary mb-1" style="width: 100%; background: lightgreen;">
+            <div class="card border-primary mb-1 out-task">
 
           {% else %}
-            <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite;">
+            <div class="card border-primary mb-1 inside-task">
           {% endif %}
             <div class="card-header">
               <h6 class="task-title"># Task: task title</h6>
@@ -49,17 +49,17 @@
     <!-- BEGIN SECOND COLUMN -->
     <div class="col-md mr-1" style="background: lightgrey">
       <h6 class="heading mt-2 mb-2 text-center">
-        <span class="badge badge-info task-panel-title py-3" style="width: 100%">Realitzant</span>
+        <span class="badge badge-info task-panel-title py-3">Realitzant</span>
       </h6>
       {% for task in doing %}
           {% if task.origin_room == 'Moll de càrrega' %}
-            <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
+            <div class="card border-primary mb-1 in-task">
 
           {% elif task.destination_room == 'Moll de càrrega' %}
-            <div class="card border-primary mb-1" style="width: 100%; background: lightgreen;">
+            <div class="card border-primary mb-1 out-task">
 
           {% else %}
-            <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite;">
+            <div class="card border-primary mb-1 inside-task">
           {% endif %}
             <div class="card-header">
               <h6 class="task-title"># Task: task title</h6>
@@ -86,17 +86,17 @@
     <!-- BEGIN THIRD COLUMN -->
     <div class="col-md mr-1" style="background: lightgrey">
       <h6 class="heading mt-2 mb-2 text-center">
-        <span class="badge badge-info task-panel-title py-3" style="width: 100%">Finalitzada</span>
+        <span class="badge badge-info task-panel-title py-3">Finalitzada</span>
       </h6>
         {% for task in done %}
           {% if task.origin_room == 'Moll de càrrega' %}
-            <div class="card border-primary mb-1" style="width: 100%; background: lightskyblue;">
+            <div class="card border-primary mb-1 in-task">
 
           {% elif task.destination_room == 'Moll de càrrega' %}
-            <div class="card border-primary mb-1" style="width: 100%; background: lightgreen;">
+            <div class="card border-primary mb-1 out-task">
 
           {% else %}
-            <div class="card border-primary mb-1" style="width: 100%; background: antiquewhite;">
+            <div class="card border-primary mb-1 inside-task">
           {% endif %}
             <div class="card-header">
               <h6 class="task-title"># Task: task title</h6>
