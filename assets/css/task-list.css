@@ -51,3 +51,14 @@
 .status-rebuda, .status-completada {
     color: #28a745;
 }
+
+.btn-edit {
+    opacity: 0.75;
+    width: 6rem;
+}
+
+.btn-edit:hover {
+    transition: .5s;
+    opacity: 1;
+    width: 8rem;
+}
