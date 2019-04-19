@@ -460,27 +460,27 @@ def rebre_notificacio_mock(request):
 def panel_tasks_mock(request):
     context = {
         'todo': [
-            {'task_type': 0, 'task_status': 'Assignada automaticament', 'origin_room': 'Moll de càrrega',
-            'destination_room': 'Sala 3', 'containers': 10},
-            {'task_type': 2, 'task_status': 'Assignada manualment', 'origin_room': 'Sala 2',
-            'destination_room': 'Moll de càrrega', 'containers': 5},
-            {'task_type': 1, 'task_status': 'Pendent', 'origin_room': 'Sala 3',
-            'destination_room': 'Sala 1', 'containers': 3},
+            {'description': 'Transportar manzanas', 'task_type': 0, 'task_status': 'Assignada automaticament',
+             'origin_room': 'Moll de càrrega', 'destination_room': 'Sala 3', 'containers': 10},
+            {'description': 'Transportar papel baño', 'task_type': 2, 'task_status': 'Assignada manualment', 'origin_room': 'Sala 2',
+             'destination_room': 'Moll de càrrega', 'containers': 5},
+            {'description': 'Transportar cervezas', 'task_type': 1, 'task_status': 'Pendent', 'origin_room': 'Sala 3',
+             'destination_room': 'Sala 1', 'containers': 3},
         ],
         'doing': [
-            {'task_type': 1, 'task_status': 'Rebuda', 'origin_room': 'Sala 3',
+            {'description': 'Transportar aceite', 'task_type': 1, 'task_status': 'Rebuda', 'origin_room': 'Sala 3',
              'destination_room': 'Sala 1', 'containers': 22},
-            {'task_type': 1, 'task_status': 'Rebuda', 'origin_room': 'Sala 3',
+            {'description': 'Transportar merluza', 'task_type': 1, 'task_status': 'Rebuda', 'origin_room': 'Sala 3',
              'destination_room': 'Sala 4', 'containers': 30},
-            {'task_type': 0, 'task_status': 'Rebuda', 'origin_room': 'Moll de càrrega',
+            {'description': 'Transportar gallo (pescado)', 'task_type': 0, 'task_status': 'Rebuda', 'origin_room': 'Moll de càrrega',
              'destination_room': 'Sala 3', 'containers': 17},
-            {'task_type': 2, 'task_status': 'Rebuda', 'origin_room': 'Sala 2',
+            {'description': 'Transportar Fairy', 'task_type': 2, 'task_status': 'Rebuda', 'origin_room': 'Sala 2',
              'destination_room': 'Moll de càrrega', 'containers': 8},
         ],
         'done': [
-            {'task_type': 0, 'task_status': 'Completada', 'origin_room': 'Moll de càrrega',
+            {'description': 'Transportar café', 'task_type': 0, 'task_status': 'Completada', 'origin_room': 'Moll de càrrega',
              'destination_room': 'Sala 3', 'containers': 17},
-            {'task_type': 2, 'task_status': 'Completada', 'origin_room': 'Sala 2',
+            {'description': 'Transportar jamón', 'task_type': 2, 'task_status': 'Completada', 'origin_room': 'Sala 2',
              'destination_room': 'Moll de càrrega', 'containers': 21},
         ]
     }
