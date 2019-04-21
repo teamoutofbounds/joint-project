@@ -1,7 +1,7 @@
 
 .main-row {
     background-size: cover;
-    height: 100vh;
+    height: auto;
 }
 
 .secondary-row {
@@ -46,4 +46,10 @@
 
 .btn-group-vertical button:not(:last-child) {
   border-bottom: none; /* Prevent double borders */
+}
+
+.text-button {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1rem;
 }
