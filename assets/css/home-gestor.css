@@ -1,0 +1,49 @@
+
+.main-row {
+    background-size: cover;
+    height: 100vh;
+}
+
+.secondary-row {
+    height: 7rem;
+}
+
+.btn-group-horizontal button {
+  background-color: #4CAF50; /* Green background */
+  border: 1px solid green; /* Green border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group-horizontal:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.btn-group-horizontal button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #3e8e41;
+}
+
+.btn-group-vertical button {
+    background-color: #4CAF50; /* Green background */
+    border: 1px solid green; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    width: 100%; /* Set a width if needed */
+    height: 9rem;
+    display: block; /* Make the buttons appear below each other */
+}
+
+.btn-group-vertical button:not(:last-child) {
+  border-bottom: none; /* Prevent double borders */
+}

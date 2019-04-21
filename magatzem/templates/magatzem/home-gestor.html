@@ -1,6 +1,9 @@
 {% extends 'magatzem/base-gestor.html' %}
+{% load static from staticfiles %}
+
 {% block content %}
 
+  <!-- OLD STUFF
 <div class="row" style="margin-top: 1em">
   <div class="col-sm-12">
     <h2>Accions possibles amb backend</h2>
@@ -15,5 +18,107 @@
     </ul>
   </div>
 </div>
+  -->
+  <div class="row main-row justify-content-md-center">
+
+    <div class="col-sm-7 bg-light">
+
+      <map name="map-warehouse">
+        <!-- Sala 1 -->
+        <area shape="rect" coords="3, 0, 280, 125"
+              href="#" title="Sala 1" data-toggle="tooltip">
+        <!-- Sala 2 -->
+        <area shape="rect" coords="280, 0, 560, 125"
+              href="#" title="Sala 2">
+        <!-- Sala A -->
+        <area shape="rect" coords="3, 127, 105, 248"
+              href="#" title="Sala A">
+        <!-- Sala B -->
+        <area shape="rect" coords="3, 250, 105, 360"
+              href="#" title="Sala B">
+        <!-- Sala C -->
+        <area shape="rect" coords="3, 362, 105, 495"
+              href="#" title="Sala C">
+
+        <!-- Sala M1-->
+        <area shape="rect" coords="478, 127, 560, 190"
+              href="#" title="M1">
+        <!-- Sala M2-->
+        <area shape="rect" coords="479, 192, 560, 256"
+              href="#" title="M2">
+        <!-- Sala M3-->
+        <area shape="rect" coords="479, 258, 560, 321"
+              href="#" title="M3">
+        <!-- Sala M4-->
+        <area shape="rect" coords="479, 323, 560, 387"
+              href="#" title="M4">
+        <!-- Sala F7-->
+        <area shape="rect" coords="479, 389, 560, 512"
+              href="#" title="F7">
+
+        <!-- Sala F1-->
+        <area shape="rect" coords="348, 182, 410, 235"
+              href="#" title="F1">
+        <!-- Sala F2-->
+        <area shape="rect" coords="348, 237, 410, 289"
+              href="#" title="F2">
+        <!-- Sala F3-->
+        <area shape="rect" coords="348, 291, 410, 345"
+              href="#" title="F3">
+        <!-- Sala F4-->
+        <area shape="rect" coords="348, 347, 410, 399"
+              href="#" title="F4">
+        <!-- Sala F5-->
+        <area shape="rect" coords="348, 401, 410, 454"
+              href="#" title="F5">
+        <!-- Sala F6-->
+        <area shape="rect" coords="348, 456, 410, 509"
+              href="#" title="F6">
+        <!-- Moll càrrega-->
+        <area shape="rect" coords="39, 558, 292, 664"
+              href="#" title="Moll de càrrega">
+      </map>
+
+      <img src="{% static 'images/magatzem.png' %}" class="img-fluid img-thumbnail mx-auto d-block"
+           style="max-width: 80%; height: auto" usemap="#map-warehouse">
+      <!--<div class="row mx-1 secondary-row">-->
+        <!-- Three buttons in a group -->
+        <!--
+        <div class="btn-group btn-group-horizontal" style="width:100%;">
+          <button style="width:50%">SALA 1</button>
+          <button style="width:50%">SALA 2</button>
+        </div>
+      </div>
+
+      <div class="row mx-1 secondary-row">
+        <div class="btn-group btn-group-vertical" style="width: 16.6666%;">
+            <button style="width: 100%">SALA A</button>
+            <button style="width: 100%">SALA B</button>
+            <button style="width: 100%">SALA C</button>
+        </div>
+
+        <div class="btn-group btn-group-vertical" style="width: 16.6666%; margin-left: 40%;">
+            <button style="width: 100%; height: 50%">F 1</button>
+            <button style="width: 100%; height: 50%">F 2</button>
+            <button style="width: 100%; height: 50%">F 3</button>
+            <button style="width: 100%; height: 50%">F 4</button>
+            <button style="width: 100%; height: 100%">F 6</button>
+        </div>
+
+        <div class="btn-group btn-group-vertical ml-auto" style="width: 16.6666%;">
+            <button style="width: 100%; height: 50%">M 1</button>
+            <button style="width: 100%; height: 50%">M 2</button>
+            <button style="width: 100%; height: 50%">M 3</button>
+            <button style="width: 100%; height: 50%">M 4</button>
+            <button style="width: 100%; height: 100%">F 7</button>
+        </div>
+      </div>
+    -->
+    </div>
+
+    <div class="col-sm-4 bg-dark">
+      MENU
+    </div>
+  </div>
 
 {% endblock content%}
