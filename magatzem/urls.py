@@ -21,5 +21,6 @@ urlpatterns = [
     path('operari/user/', NotificationsListView.as_view(), name='notificacio'),
     path('sel_sala_mock/', views.seleccionar_sala_mock, name='sel-sala-mock'),
     path('sel_prod_mock/', views.seleccionar_productes_mock, name='sel-prod-mock'),
+    path('entrada/', views.entrada_producte, name='entrada'),
 
 ]

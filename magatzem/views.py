@@ -10,6 +10,10 @@ from django.contrib.auth.decorators import login_required
 
 
 # Check if logged in Mixin
+from tools.algorithms.sala_selector import RoomHandler
+from tools.api.product_entry import EntryHandler
+
+
 class LoginRequiredMixin(object):
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
@@ -475,3 +479,29 @@ def rebre_notificacio_mock(request):
     }
 
     return render(request, 'magatzem/notification.html', context)
+
+
+def entrada_producte(request):
+    entry_handler = EntryHandler
+    containers = entry_handler.generate_entry()
+
+    hum_min, temp_min = _get_hum_temp_min(containers)
+    rooms = Room.objects.filter(hum__gte=hum_min, temp__gte=temp_min)  #S'ha de canviar els models perque la sala no te max i min
+
+    optimization_handler = RoomHandler(containers, rooms)
+
+    context = optimization_handler.select_containers()
+
+    return render(request, 'magatzem/product-entry.html', context)
+
+
+def _get_hum_temp_min(containers):
+    hum_min = 0
+    temp_min = 0
+    for container in containers:
+        if container.hum_min > hum_min:
+            hum_min = container.hum_min
+        if container.temp_min > temp_min:
+            temp_min = container.temp_min
+    return hum_min, temp_min
+
