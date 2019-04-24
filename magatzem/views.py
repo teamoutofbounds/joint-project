@@ -482,26 +482,15 @@ def rebre_notificacio_mock(request):
 
 
 def entrada_producte(request):
-    entry_handler = EntryHandler
-    containers = entry_handler.generate_entry()
+    entry_handler = EntryHandler()
+    container = entry_handler.generate_entry()
 
-    hum_min, temp_min = _get_hum_temp_min(containers)
+    hum_min = container['hum_min']
+    temp_min = container['temp_min']
     rooms = Room.objects.filter(hum__gte=hum_min, temp__gte=temp_min)  #S'ha de canviar els models perque la sala no te max i min
 
-    optimization_handler = RoomHandler(containers, rooms)
+    optimization_handler = RoomHandler(container, rooms)
 
     context = optimization_handler.select_containers()
 
     return render(request, 'magatzem/product-entry.html', context)
-
-
-def _get_hum_temp_min(containers):
-    hum_min = 0
-    temp_min = 0
-    for container in containers:
-        if container.hum_min > hum_min:
-            hum_min = container.hum_min
-        if container.temp_min > temp_min:
-            temp_min = container.temp_min
-    return hum_min, temp_min
-
