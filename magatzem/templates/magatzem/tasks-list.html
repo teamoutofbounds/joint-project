@@ -1,4 +1,10 @@
 {% extends 'magatzem/base-gestor.html' %}
+{% load static %}
+
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/task-list.css' %}">
+{% endblock header %}
+
 {% block content %}
 
   <div class="row justify-content-md-center mt-2 mb-4">
