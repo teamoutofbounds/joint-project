@@ -1,11 +1,11 @@
 from behave import *
-from magatzem.models import *
+# from magatzem.models import *
 
 use_step_matcher("parse")
 
 #now this is just copied and need to be modified
 
-
+'''
 @when('I view the details for restaurant "{restaurant_name}"')
 def step_impl(context, restaurant_name):
     pass
@@ -41,3 +41,4 @@ def step_impl(context, count):
 def step_impl(context):
     for heading in context.table.headings:
         context.browser.is_text_present(context.table[0][heading])
+'''
