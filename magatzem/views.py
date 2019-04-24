@@ -1,13 +1,26 @@
-from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.db.models import Q
 from magatzem.models.room import Room
 from magatzem.models.task import Task
 from magatzem.models.container import Container
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+# from .tasks import assign_task
 
 
-class ContainerSelectionList(ListView):
+# Check if logged in Mixin
+from tools.algorithms.sala_selector import RoomHandler
+from tools.api.product_entry import EntryHandler
+
+
+class LoginRequiredMixin(object):
+    @method_decorator(login_required())
+    def dispatch(self, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+
+
+class ContainerSelectionList(ListView, LoginRequiredMixin):
     model = Room
     context_object_name = 'container_list'
     slug_field = "room"
@@ -24,7 +37,7 @@ class ContainerSelectionList(ListView):
         return context
 
 
-class RoomList(ListView):
+class RoomList(ListView, LoginRequiredMixin):
     model = Room
     context_object_name = 'room_list'
     template_name = 'magatzem/room-list.html'
@@ -35,7 +48,7 @@ class RoomList(ListView):
         return context
 
 
-class RoomDetail(DetailView):
+class RoomDetail(DetailView, LoginRequiredMixin):
     model = Room
     template_name = 'magatzem/room-detail.html'
     context_object_name = 'room'
@@ -49,21 +62,33 @@ class RoomDetail(DetailView):
         return context
 
 
-class NotificationsListView(ListView):
+class NotificationsListView(ListView, LoginRequiredMixin):
     model = Task
     context_object_name = 'task_list'
     template_name = 'magatzem/notification.html'
 
     def get_queryset(self):
-        if self.request.user.is_authenticated:
-            queryset = super(NotificationsListView, self).get_queryset()
-            queryset = queryset.filter(user=self.request.user)
-            return queryset
+        queryset = Task.objects.filter(Q(user=self.request.user), Q(task_status=1) | Q(task_status=2) |
+                                       Q(task_status=3))
+        if not queryset:
+            queryset = assign_task(self.request.user)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Notificacions'
+        context['title'] = 'Home'
         return context
+
+
+# Delete when Celery is implemented, this is NOT Concurrent
+def assign_task(user):
+    task = Task.objects.filter(task_status=0).first()
+    if task:
+        task.user = user
+        # change status to automatically assigned
+        task.task_status = 1
+        task.save()
+    return task
 
 
 def home_gestor(request):
@@ -76,8 +101,6 @@ def home_operari(request):
     context = {}
     context['title'] = 'Home-Operari'
     return render(request, 'magatzem/notification.html', context)
-
-
 
 
 def entrada_producte_mock(request):
@@ -305,7 +328,6 @@ def seleccionar_productes_mock(request):
     return render(request, 'magatzem/select-container.html', context)
 
 
-
 def seleccionar_sala_mock(request):
     context = {
         'productes':
@@ -493,3 +515,18 @@ def panel_tasks_mock(request):
         containers
     '''
     return render(request, 'magatzem/tasks-list.html', context)
+
+
+def entrada_producte(request):
+    entry_handler = EntryHandler()
+    container = entry_handler.generate_entry()
+
+    hum_min = container['hum_min']
+    temp_min = container['temp_min']
+    rooms = Room.objects.filter(hum__gte=hum_min, temp__gte=temp_min)  #S'ha de canviar els models perque la sala no te max i min
+
+    optimization_handler = RoomHandler(container, rooms)
+
+    context = optimization_handler.select_containers()
+
+    return render(request, 'magatzem/product-entry.html', context)
