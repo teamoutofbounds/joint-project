@@ -1,8 +1,10 @@
 .task-column {
-    background: lightgrey;
+    /*background: lightgrey;*/
+    background: gainsboro;
 }
 
 .task-panel-title{
+    background: #00897B;
     text-transform: uppercase;
     font-weight: 700;
     font-size: 1.2rem;

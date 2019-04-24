@@ -61,6 +61,7 @@
       <h6 class="heading mt-2 mb-2 text-center">
         <span class="badge badge-info task-panel-title py-3">Realitzant</span>
       </h6>
+      <ul class="list-group mt-2">
       {% for task in doing %}
           {% if task.origin_room == 'Moll de càrrega' %}
             <div class="card border-primary mb-1 in-task">
@@ -90,6 +91,7 @@
             </div>
           </div>
         {% endfor %}
+      </ul>
     </div>
     <!-- END SECOND COLUMN -->
 
@@ -98,6 +100,7 @@
       <h6 class="heading mt-2 mb-2 text-center">
         <span class="badge badge-info task-panel-title py-3">Finalitzada</span>
       </h6>
+      <ul class="list-group mt-2">
         {% for task in done %}
           {% if task.origin_room == 'Moll de càrrega' %}
             <div class="card border-primary mb-1 in-task">
@@ -115,7 +118,6 @@
               <h6 class="card-subtitle mb-3">ORIGEN: <strong>{{ task.origin_room }}</strong></h6>
               <h6 class="card-subtitle mb-3 text-muted">QUANTITAT: <strong>{{ task.containers }} containers</strong></h6>
               <h6 class="card-subtitle mb-3">DESTÍ: <strong>{{ task.destination_room }}</strong></h6>
-
               <div class="row">
                 <div class="col-md-7">
                   <a href="#" class="btn btn-dark btn-edit"><i class="far fa-edit mr-2"></i>Editar</a>
@@ -124,10 +126,10 @@
                   <h6 class="mt-2 task-status-text status-completada text-truncate">{{ task.task_status }}</h6>
                 </div>
               </div>
-
             </div>
           </div>
         {% endfor %}
+      </ul>
     </div>
     <!-- BEGIN THIRD COLUMN -->
   </div>

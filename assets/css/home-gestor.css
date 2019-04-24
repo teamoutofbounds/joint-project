@@ -53,3 +53,9 @@
     font-weight: 600;
     font-size: 1rem;
 }
+
+.scroll-panel {
+    width: 100%;
+    max-height: 45vh;
+    overflow-y: scroll;
+}
