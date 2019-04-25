@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
+from django.views.generic.dates import TodayArchiveView
 from django.db.models import Q
 from magatzem.models.room import Room
 from magatzem.models.task import Task
@@ -62,29 +63,34 @@ class NotificationsListView(ListView, LoginRequiredMixin):
     model = Task
     context_object_name = 'task_list'
     template_name = 'magatzem/notification.html'
+    new_task = False
 
     def get_queryset(self):
         queryset = Task.objects.filter(Q(user=self.request.user), Q(task_status=1) | Q(task_status=2) |
                                        Q(task_status=3))
         if not queryset:
-            queryset = assign_task(self.request.user)
+            queryset = Task.assign_task(self.request.user)
+            self.new_task = True
+            # queryset = assign_task(self.request.user)
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['new'] = self.new_task
         context['title'] = 'Home'
         return context
 
 
-# Delete when Celery is implemented, this is NOT Concurrent
-def assign_task(user):
-    task = Task.objects.filter(task_status=0).first()
-    if task:
-        task.user = user
-        # change status to automatically assigned
-        task.task_status = 1
-        task.save()
-    return task
+class TaskPanelOperaris(TodayArchiveView, LoginRequiredMixin):
+    queryset = Task.objects.all()
+    date_field = 'date'
+    context_object_name = 'task_list'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Tasques Operaris'
+        return context
+
 
 def home_gestor(request):
     context = {}
