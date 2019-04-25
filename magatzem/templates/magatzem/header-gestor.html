@@ -1,20 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg header-navbar">
   <a class="navbar-brand" href="{% url 'gestor-home' %}">Storage & Go</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="{% url 'gestor-home' %}">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link active" href="{% url 'gestor-home' %}">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'list-room' %}">Sales</a>
       </li>
       <!-- Delete tabindex and aria when implemented-->
       <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Tasques</a>
+        <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Tasques</a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">

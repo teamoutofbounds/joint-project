@@ -11,6 +11,10 @@ from django.contrib.auth.decorators import login_required
 
 
 # Check if logged in Mixin
+from tools.algorithms.sala_selector import RoomHandler
+from tools.api.product_entry import EntryHandler
+
+
 class LoginRequiredMixin(object):
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
@@ -92,6 +96,7 @@ class TaskPanelOperaris(TodayArchiveView, LoginRequiredMixin):
         return context
 
 
+
 def home_gestor(request):
     context = {}
     context['title'] = 'Home-Gestor'
@@ -102,8 +107,6 @@ def home_operari(request):
     context = {}
     context['title'] = 'Home-Operari'
     return render(request, 'magatzem/notification.html', context)
-
-
 
 
 def entrada_producte_mock(request):
@@ -331,7 +334,6 @@ def seleccionar_productes_mock(request):
     return render(request, 'magatzem/select-container.html', context)
 
 
-
 def seleccionar_sala_mock(request):
     context = {
         'productes':
@@ -481,3 +483,56 @@ def rebre_notificacio_mock(request):
     }
 
     return render(request, 'magatzem/notification.html', context)
+
+
+def panel_tasks_mock(request):
+    context = {
+        'todo': [
+            {'description': 'Transportar manzanas', 'task_type': 0, 'task_status': 'Assignada automaticament',
+             'origin_room': 'Moll de càrrega', 'destination_room': 'Sala 3', 'containers': 10},
+            {'description': 'Transportar papel baño', 'task_type': 2, 'task_status': 'Assignada manualment', 'origin_room': 'Sala 2',
+             'destination_room': 'Moll de càrrega', 'containers': 5},
+            {'description': 'Transportar cervezas', 'task_type': 1, 'task_status': 'Pendent', 'origin_room': 'Sala 3',
+             'destination_room': 'Sala 1', 'containers': 3},
+        ],
+        'doing': [
+            {'description': 'Transportar aceite', 'task_type': 1, 'task_status': 'Rebuda', 'origin_room': 'Sala 3',
+             'destination_room': 'Sala 1', 'containers': 22},
+            {'description': 'Transportar merluza', 'task_type': 1, 'task_status': 'Rebuda', 'origin_room': 'Sala 3',
+             'destination_room': 'Sala 4', 'containers': 30},
+            {'description': 'Transportar gallo (pescado)', 'task_type': 0, 'task_status': 'Rebuda', 'origin_room': 'Moll de càrrega',
+             'destination_room': 'Sala 3', 'containers': 17},
+            {'description': 'Transportar Fairy', 'task_type': 2, 'task_status': 'Rebuda', 'origin_room': 'Sala 2',
+             'destination_room': 'Moll de càrrega', 'containers': 8},
+        ],
+        'done': [
+            {'description': 'Transportar café', 'task_type': 0, 'task_status': 'Completada', 'origin_room': 'Moll de càrrega',
+             'destination_room': 'Sala 3', 'containers': 17},
+            {'description': 'Transportar jamón', 'task_type': 2, 'task_status': 'Completada', 'origin_room': 'Sala 2',
+             'destination_room': 'Moll de càrrega', 'containers': 21},
+        ]
+    }
+    '''
+        task_type 0 Entrada | 1 Intern | 2 Sortida
+        task_status 0 Pendent | 1 Assignada automaticament | 
+                    2 Assignada manualment | 3 Rebuda | 4 Completada
+        origin_room
+        destination_room
+        containers
+    '''
+    return render(request, 'magatzem/tasks-list.html', context)
+
+
+def entrada_producte(request):
+    entry_handler = EntryHandler()
+    container = entry_handler.generate_entry()
+
+    hum_min = container['hum_min']
+    temp_min = container['temp_min']
+    rooms = Room.objects.filter(hum__gte=hum_min, temp__gte=temp_min)  #S'ha de canviar els models perque la sala no te max i min
+
+    optimization_handler = RoomHandler(container, rooms)
+
+    context = optimization_handler.select_containers()
+
+    return render(request, 'magatzem/product-entry.html', context)

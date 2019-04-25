@@ -1,19 +1,117 @@
 {% extends 'magatzem/base-gestor.html' %}
+{% load static from staticfiles %}
+
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/home-gestor.css' %}">
+{% endblock header %}
+
 {% block content %}
 
-<div class="row" style="margin-top: 1em">
-  <div class="col-sm-12">
-    <h2>Accions possibles amb backend</h2>
-    <ul>
-      <li><a href="#">Generar arribada</a></li>
-      <li><a href="{% url 'list-room' %}">Generar moviment</a></li>
-    </ul>
-    <h2>Accions possibles a realitzar amb mocks</h2>
-    <ul>
-      <li><a href="{% url 'entrada_mock'%}">Generar arribada</a></li>
-      <li><a href="{% url 'llista-sales-mock' %}">Generar moviment</a></li>
-    </ul>
+  <div class="row main-row mt-4 justify-content-md-center">
+
+    <div class="col-sm-7 bg-light">
+
+      <map name="map-warehouse">
+        <!-- Sala 1 -->
+        <area shape="rect" coords="3, 0, 280, 125"
+              href="#" title="Sala 1" data-toggle="tooltip">
+        <!-- Sala 2 -->
+        <area shape="rect" coords="280, 0, 560, 125"
+              href="#" title="Sala 2">
+        <!-- Sala A -->
+        <area shape="rect" coords="3, 127, 105, 248"
+              href="#" title="Sala A">
+        <!-- Sala B -->
+        <area shape="rect" coords="3, 250, 105, 360"
+              href="#" title="Sala B">
+        <!-- Sala C -->
+        <area shape="rect" coords="3, 362, 105, 495"
+              href="#" title="Sala C">
+
+        <!-- Sala M1-->
+        <area shape="rect" coords="478, 127, 560, 190"
+              href="#" title="M1">
+        <!-- Sala M2-->
+        <area shape="rect" coords="479, 192, 560, 256"
+              href="#" title="M2">
+        <!-- Sala M3-->
+        <area shape="rect" coords="479, 258, 560, 321"
+              href="#" title="M3">
+        <!-- Sala M4-->
+        <area shape="rect" coords="479, 323, 560, 387"
+              href="#" title="M4">
+        <!-- Sala F7-->
+        <area shape="rect" coords="479, 389, 560, 512"
+              href="#" title="F7">
+
+        <!-- Sala F1-->
+        <area shape="rect" coords="348, 182, 410, 235"
+              href="#" title="F1">
+        <!-- Sala F2-->
+        <area shape="rect" coords="348, 237, 410, 289"
+              href="#" title="F2">
+        <!-- Sala F3-->
+        <area shape="rect" coords="348, 291, 410, 345"
+              href="#" title="F3">
+        <!-- Sala F4-->
+        <area shape="rect" coords="348, 347, 410, 399"
+              href="#" title="F4">
+        <!-- Sala F5-->
+        <area shape="rect" coords="348, 401, 410, 454"
+              href="#" title="F5">
+        <!-- Sala F6-->
+        <area shape="rect" coords="348, 456, 410, 509"
+              href="#" title="F6">
+        <!-- Moll càrrega-->
+        <area shape="rect" coords="39, 558, 292, 664"
+              href="#" title="Moll de càrrega">
+      </map>
+
+      <img src="{% static 'images/magatzem.png' %}" class="img-fluid img-thumbnail mx-auto d-block"
+           style="max-width: 90%; height: auto" usemap="#map-warehouse">
+    </div>
+
+    <div class="col-sm-4 bg-light">
+      <div class="row">
+        <button type="button" class="btn btn-success btn-lg btn-block mx-4 my-4 text-button">Panell de tasques</button>
+
+        <div class="header-content-left">
+          <h5 class="heading mt-2 text-center">Darreres tàsques</h5>
+        </div>
+
+        <div class="scroll-panel mt-2 mb-5">
+
+          <div class="card border-success mb-3">
+            <div class="card-header bg-transparent border-success">Estat tasca</div>
+            <div class="card-body text-success">
+              <h6 class="card-title">Descripció de la tasca</h6>
+            </div>
+          </div>
+
+          <div class="card border-success mb-3">
+            <div class="card-header bg-transparent border-success">Estat tasca</div>
+            <div class="card-body text-success">
+              <h6 class="card-title">Descripció de la tasca</h6>
+            </div>
+          </div>
+
+          <div class="card border-success mb-3">
+            <div class="card-header bg-transparent border-success">Estat tasca</div>
+            <div class="card-body text-success">
+              <h6 class="card-title">Descripció de la tasca</h6>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="row">
+        <button type="button" class="btn btn-info btn-lg btn-block mx-4 text-button">Nova entrada</button>
+        <button type="button" class="btn btn-info btn-lg btn-block mx-4 text-button">Nova sortida</button>
+        <button type="button" class="btn btn-info btn-lg btn-block mx-4 text-button">Avís tècnics</button>
+      </div>
+    </div>
   </div>
-</div>
 
 {% endblock content%}

@@ -1,0 +1,143 @@
+{% extends 'magatzem/base-gestor.html' %}
+{% load static %}
+
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/task-list.css' %}">
+{% endblock header %}
+
+{% block content %}
+
+  <div class="row justify-content-md-center mt-2 mb-4">
+    <!-- BEGIN FISTS COLUMN -->
+    <div class="col-md mr-1 task-column">
+      <h6 class="heading mt-2 mb-2 text-center">
+        <span class="badge badge-info task-panel-title py-3">A realitzar</span>
+      </h6>
+
+      <ul class="list-group mt-2">
+        {% for task in todo %}
+          {% if task.origin_room == 'Moll de càrrega' %}
+            <div class="card border-primary mb-1 in-task">
+
+          {% elif task.destination_room == 'Moll de càrrega' %}
+            <div class="card border-primary mb-1 out-task">
+
+          {% else %}
+            <div class="card border-primary mb-1 inside-task">
+          {% endif %}
+            <div class="card-header">
+              <!--<h6 class="task-title">{{ task.description }}</h6>-->
+
+              <div class="row">
+                <div class="col-md-10">
+                  <h6 class="task-title">{{ task.description }}</h6>
+                </div>
+                <div class="col-md-2">
+                  <a href="#" class= "btn btn-icon"><i class="fas fa-trash-alt paper-bin"></i></a>
+                </div>
+              </div>
+
+            </div>
+            <div class="card-body">
+              <h6 class="card-subtitle mb-3">ORIGEN: <strong>{{ task.origin_room }}</strong></h6>
+              <h6 class="card-subtitle mb-3 text-muted">QUANTITAT: <strong>{{ task.containers }} containers</strong></h6>
+              <h6 class="card-subtitle mb-3">DESTÍ: <strong>{{ task.destination_room }}</strong></h6>
+
+              <div class="row">
+                <div class="col-md-7">
+                  <a href="#" class="btn btn-dark btn-edit"><i class='far fa-edit mr-2'></i>Editar</a>
+                </div>
+                <div class="col-md-5">
+                  {% if task.task_status == 'Pendent' %}
+                    <h6 class="mt-2 task-status-text status-pendent text-truncate">{{ task.task_status }}</h6>
+                  {% else %}
+                    <h6 class="mt-2 task-status-text status-assignada text-truncate">{{ task.task_status }}</h6>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </ul>
+    </div>
+    <!-- END FISTS COLUMN -->
+
+    <!-- BEGIN SECOND COLUMN -->
+    <div class="col-md mr-1 task-column">
+      <h6 class="heading mt-2 mb-2 text-center">
+        <span class="badge badge-info task-panel-title py-3">Realitzant</span>
+      </h6>
+      <ul class="list-group mt-2">
+      {% for task in doing %}
+          {% if task.origin_room == 'Moll de càrrega' %}
+            <div class="card border-primary mb-1 in-task">
+
+          {% elif task.destination_room == 'Moll de càrrega' %}
+            <div class="card border-primary mb-1 out-task">
+
+          {% else %}
+            <div class="card border-primary mb-1 inside-task">
+          {% endif %}
+            <div class="card-header">
+              <h6 class="task-title">{{ task.description }}</h6>
+            </div>
+            <div class="card-body">
+              <h6 class="card-subtitle mb-3">ORIGEN: <strong>{{ task.origin_room }}</strong></h6>
+              <h6 class="card-subtitle mb-3 text-muted">QUANTITAT: <strong>{{ task.containers }} containers</strong></h6>
+              <h6 class="card-subtitle mb-3">DESTÍ: <strong>{{ task.destination_room }}</strong></h6>
+
+              <div class="row">
+                <div class="col-md-7">
+                  <a href="#" class="btn btn-dark btn-edit"><i class="far fa-edit mr-2"></i>Editar</a>
+                </div>
+                <div class="col-md-5">
+                  <h6 class="mt-2 task-status-text status-rebuda text-truncate">{{ task.task_status }}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </ul>
+    </div>
+    <!-- END SECOND COLUMN -->
+
+    <!-- BEGIN THIRD COLUMN -->
+    <div class="col-md mr-1 task-column">
+      <h6 class="heading mt-2 mb-2 text-center">
+        <span class="badge badge-info task-panel-title py-3">Finalitzada</span>
+      </h6>
+      <ul class="list-group mt-2">
+        {% for task in done %}
+          {% if task.origin_room == 'Moll de càrrega' %}
+            <div class="card border-primary mb-1 in-task">
+
+          {% elif task.destination_room == 'Moll de càrrega' %}
+            <div class="card border-primary mb-1 out-task">
+
+          {% else %}
+            <div class="card border-primary mb-1 inside-task">
+          {% endif %}
+            <div class="card-header">
+              <h6 class="task-title">{{ task.description }}</h6>
+            </div>
+            <div class="card-body">
+              <h6 class="card-subtitle mb-3">ORIGEN: <strong>{{ task.origin_room }}</strong></h6>
+              <h6 class="card-subtitle mb-3 text-muted">QUANTITAT: <strong>{{ task.containers }} containers</strong></h6>
+              <h6 class="card-subtitle mb-3">DESTÍ: <strong>{{ task.destination_room }}</strong></h6>
+              <div class="row">
+                <div class="col-md-7">
+                  <a href="#" class="btn btn-dark btn-edit"><i class="far fa-edit mr-2"></i>Editar</a>
+                </div>
+                <div class="col-md-5">
+                  <h6 class="mt-2 task-status-text status-completada text-truncate">{{ task.task_status }}</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </ul>
+    </div>
+    <!-- BEGIN THIRD COLUMN -->
+  </div>
+
+{% endblock content %}
