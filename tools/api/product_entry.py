@@ -1,3 +1,4 @@
+'''
 import base64
 import json
 from pip._vendor import requests
@@ -27,3 +28,4 @@ class EntryHandler:
 		container['hum_min'] = dic['humidMin']
 		container['date'] = dic['sla']
 		return container
+'''

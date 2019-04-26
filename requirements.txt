@@ -1,3 +1,4 @@
+pip
 splinter
 behave
 dj-database-url==0.5.0
