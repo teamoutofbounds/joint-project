@@ -297,7 +297,18 @@ def seleccionar_productes_mock(request):
          'temp_max': 15,
          'hum_min': 35,
          'hum_max': 60,
-         'quantity': 4},
+         'quantity': 4,
+         'room': {
+            'name': 'Sala 1',
+            'temp_min': 0,
+            'temp_max': 5,
+            'hum_min': 15,
+            'hum_max': 35,
+            'quantity': 25,
+            'limit': 50,
+            'room_status': 1
+         }
+        },
         {'producer_id': '20199110001',
          'product_id': 'MANZANAS GOLDEN',
          'limit': '29/06/2019',
