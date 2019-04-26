@@ -1,3 +1,4 @@
+'''
 from django.core import management
 from django.test import TestCase
 from magatzem.models.container import Container
@@ -67,3 +68,4 @@ class OperariAssignTaskTests(TestCase):
         self.assertEquals(result.user, test_conds.user, msg='No ha assignat correctament')
         self.assertEquals(result.task_status, 1, msg='No té mateix status')
         self.assertEquals(result, test_conds.tasks[0], msg='No és la primera tasca')
+'''

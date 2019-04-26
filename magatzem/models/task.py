@@ -43,6 +43,7 @@ class Task(models.Model):
     def __str__(self):
         return Task.STR_PATTERN.format(self.origin_room, self.destination_room, self.containers)
 
+
     @classmethod
     def assign_task(cls, user):
         with transaction.atomic():

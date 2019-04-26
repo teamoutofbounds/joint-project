@@ -9,10 +9,11 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 # from .tasks import assign_task
 
-
+'''
 # Check if logged in Mixin
 from tools.algorithms.sala_selector import RoomHandler
 from tools.api.product_entry import EntryHandler
+'''
 
 
 class LoginRequiredMixin(object):
@@ -75,7 +76,9 @@ class NotificationsListView(ListView, LoginRequiredMixin):
         if not queryset:
             queryset = Task.assign_task(self.request.user)
             self.new_task = True
+
             # queryset = assign_task(self.request.user)
+
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -94,7 +97,6 @@ class TaskPanelOperaris(TodayArchiveView, LoginRequiredMixin):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Tasques Operaris'
         return context
-
 
 
 def home_gestor(request):
@@ -459,7 +461,7 @@ def panel_tasks_mock(request):
     '''
     return render(request, 'magatzem/tasks-list.html', context)
 
-
+'''
 def entrada_producte(request):
     entry_handler = EntryHandler()
     container = entry_handler.generate_entry()
@@ -473,3 +475,4 @@ def entrada_producte(request):
     context = optimization_handler.select_containers()
 
     return render(request, 'magatzem/product-entry.html', context)
+'''
