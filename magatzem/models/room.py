@@ -12,12 +12,9 @@ class Room(models.Model):
     STR_PATTERN = "Nom: {}\tEstat: {}\tMaxima capacitat: {}\tOcupat: {}"
 
     name = models.CharField(max_length=16, default='Nova Sala', verbose_name='Nom')
-    temp_min = models.SmallIntegerField(validators=[MinValueValidator(-100), MaxValueValidator(100)],
-                                        verbose_name='Temperatura mínima (ºC)')
-    temp_max = models.SmallIntegerField(validators=[MinValueValidator(-100), MaxValueValidator(100)],
-                                        verbose_name='Temperatura màxima (ºC)')
-    hum_min = models.PositiveSmallIntegerField(validators=[MaxValueValidator(100)], verbose_name='Humitat mínima (%)')
-    hum_max = models.PositiveSmallIntegerField(validators=[MaxValueValidator(100)], verbose_name='Humitat màxima (%)')
+    temp = models.SmallIntegerField(validators=[MinValueValidator(-273), MaxValueValidator(100)],
+                                    verbose_name='Temperatura (ºC)')
+    hum = models.PositiveSmallIntegerField(validators=[MaxValueValidator(100)], verbose_name='Humitat (%)')
     quantity = models.PositiveIntegerField(default=0, verbose_name='Espai ocupat')
     limit = models.PositiveIntegerField(verbose_name='Capacitat màxima')
     room_status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, default=0, validators=[MaxValueValidator(1)],

@@ -114,42 +114,32 @@ def entrada_producte_mock(request):
         {'productor_id': '20199110001',
          'producte_id': 'MANZANAS GREENTRANS',
          'limit': '25/05/2019',
-         'temp_min': 10,
-         'temp_max': 15,
-         'hum_min': 35,
-         'hum_max': 60,
+         'temp': 10,
+         'hum': 35,
          'quantitat': 4},
         {'productor_id': '20199110001',
          'producte_id': 'MANZANAS GOLDEN',
          'limit': '29/06/2019',
-         'temp_min': 10,
-         'temp_max': 15,
-         'hum_min': 35,
-         'hum_max': 60,
+         'temp': 10,
+         'hum': 35,
          'quantitat': 10},
         {'productor_id': '20199110001',
          'producte_id': 'PERA CONFERENCE',
          'limit': '08/08/2019',
-         'temp_min': 5,
-         'temp_max': 15,
-         'hum_min': 45,
-         'hum_max': 70,
+         'temp': 5,
+         'hum': 45,
          'quantitat': 8},
         {'productor_id': '20199110001',
          'producte_id': 'TABLONES CAOBA 7x25',
          'limit': '25/02/2022',
-         'temp_min': -5,
-         'temp_max': 50,
-         'hum_min': 0,
-         'hum_max': 40,
+         'temp': -5,
+         'hum': 0,
          'quantitat': 16},
         {'productor_id': '20199110001',
          'producte_id': 'TABLONES EBANO 7x25',
          'limit': '25/02/2022',
-         'temp_min': -5,
-         'temp_max': 50,
-         'hum_min': 0,
-         'hum_max': 40,
+         'temp': -5,
+         'hum': 0,
          'quantitat': 12}]
     }
     return render(request, 'magatzem/product-entry.html', context)
@@ -160,40 +150,32 @@ def llista_sales_mock(request):
         'room_list': [
             {
                 'name': 'Sala 1',
-                'temp_min': 0,
-                'temp_max': 5,
-                'hum_min': 15,
-                'hum_max': 35,
+                'temp': 0,
+                'hum': 15,
                 'quantity': 25,
                 'limit': 50,
                 'room_status': 1
             },
             {
                 'name': 'Sala 2',
-                'temp_min': 12,
-                'temp_max': 25,
-                'hum_min': 25,
-                'hum_max': 35,
+                'temp': 12,
+                'hum': 25,
                 'quantity': 50,
                 'limit': 50,
                 'room_status': 1
             },
             {
                 'name': 'Sala 3',
-                'temp_min': -5,
-                'temp_max': 50,
-                'hum_min': 15,
-                'hum_max': 35,
+                'temp': -5,
+                'hum': 15,
                 'quantity': 10,
                 'limit': 50,
                 'room_status': 1
             },
             {
                 'name': 'Sala 4',
-                'temp_min': 0,
-                'temp_max': 0,
-                'hum_min': 0,
-                'hum_max': 0,
+                'temp': 0,
+                'hum': 0,
                 'quantity': 0,
                 'limit': 50,
                 'room_status': 0
@@ -209,10 +191,8 @@ def sala_mock(request):
     context = {
         'room': {
             'name': 'Sala 1',
-            'temp_min': 0,
-            'temp_max': 5,
-            'hum_min': 15,
-            'hum_max': 35,
+            'temp': 0,
+            'hum': 15,
             'quantity': 25,
             'limit': 50,
             'room_status': 1
@@ -224,28 +204,22 @@ def sala_mock(request):
                         'producer_id': '20199110001',
                         'product_id': 'PERA CONFERENCE',
                         'limit': '08/08/2019',
-                        'temp_min': 5,
-                        'temp_max': 15,
-                        'hum_min': 45,
-                        'hum_max': 70,
+                        'temp': 5,
+                        'hum': 45,
                         'quantity': 8
                     },
                 'origin_room': {
                     'name': 'Sala 1',
-                    'temp_min': 0,
-                    'temp_max': 5,
-                    'hum_min': 15,
-                    'hum_max': 35,
+                    'temp': 0,
+                    'hum': 15,
                     'quantity': 25,
                     'limit': 50,
                     'room_status': 1
                 },
                 'destination_room': {
                     'name': 'Sala 3',
-                    'temp_min': -5,
-                    'temp_max': 50,
-                    'hum_min': 15,
-                    'hum_max': 35,
+                    'temp': -5,
+                    'hum': 15,
                     'quantity': 10,
                     'limit': 50,
                     'room_status': 1
@@ -258,28 +232,22 @@ def sala_mock(request):
             {'producer_id': '20199110001',
              'product_id': 'PERA CONFERENCE',
              'limit': '08/08/2019',
-             'temp_min': 5,
-             'temp_max': 15,
-             'hum_min': 45,
-             'hum_max': 70,
+             'temp': 5,
+             'hum': 45,
              'quantity': 8
              },
             {'producer_id': '20199110001',
              'product_id': 'TABLONES CAOBA 7x25',
              'limit': '25/02/2022',
-             'temp_min': -5,
-             'temp_max': 50,
-             'hum_min': 0,
-             'hum_max': 40,
+             'temp': -5,
+             'hum': 0,
              'quantity': 16
              },
             {'producer_id': '20199110001',
              'product_id': 'TABLONES EBANO 7x25',
              'limit': '25/02/2022',
-             'temp_min': -5,
-             'temp_max': 50,
-             'hum_min': 0,
-             'hum_max': 40,
+             'temp': -5,
+             'hum': 0,
              'quantity': 12}
         ],
         'title': 'Sala 1'
@@ -293,53 +261,33 @@ def seleccionar_productes_mock(request):
         {'producer_id': '20199110001',
          'product_id': 'MANZANAS GREENTRANS',
          'limit': '25/05/2019',
-         'temp_min': 10,
-         'temp_max': 15,
-         'hum_min': 35,
-         'hum_max': 60,
+         'temp': 10,
+         'hum': 35,
          'quantity': 4,
-         'room': {
-            'name': 'Sala 1',
-            'temp_min': 0,
-            'temp_max': 5,
-            'hum_min': 15,
-            'hum_max': 35,
-            'quantity': 25,
-            'limit': 50,
-            'room_status': 1
-         }
         },
         {'producer_id': '20199110001',
          'product_id': 'MANZANAS GOLDEN',
          'limit': '29/06/2019',
-         'temp_min': 10,
-         'temp_max': 15,
-         'hum_min': 35,
-         'hum_max': 60,
+         'temp': 10,
+         'hum': 35,
          'quantity': 10},
         {'producer_id': '20199110001',
          'product_id': 'PERA CONFERENCE',
          'limit': '08/08/2019',
-         'temp_min': 5,
-         'temp_max': 15,
-         'hum_min': 45,
-         'hum_max': 70,
+         'temp': 5,
+         'hum': 45,
          'quantity': 8},
         {'producer_id': '20199110001',
          'product_id': 'TABLONES CAOBA 7x25',
          'limit': '25/02/2022',
-         'temp_min': -5,
-         'temp_max': 50,
-         'hum_min': 0,
-         'hum_max': 40,
+         'temp': -5,
+         'hum': 0,
          'quantity': 16},
         {'producer_id': '20199110001',
          'product_id': 'TABLONES EBANO 7x25',
          'limit': '25/02/2022',
-         'temp_min': -5,
-         'temp_max': 50,
-         'hum_min': 0,
-         'hum_max': 40,
+         'temp': -5,
+         'hum': 0,
          'quantity': 12}]
     }
     return render(request, 'magatzem/select-container.html', context)
@@ -351,48 +299,38 @@ def seleccionar_sala_mock(request):
         {'productor_id': '20199110001',
          'producte_id': 'MANZANAS GREENTRANS',
          'limit': '25/05/2019',
-         'temp_min': 10,
-         'temp_max': 15,
-         'hum_min': 35,
-         'hum_max': 60,
+         'temp': 10,
+         'hum': 35,
          'quantitat': 4} ,
         'room_list': [
             {
                 'name': 'Sala 1',
-                'temp_min': 0,
-                'temp_max': 5,
-                'hum_min': 15,
-                'hum_max': 35,
+                'temp': 0,
+                'hum': 15,
                 'quantity': 25,
                 'limit': 50,
                 'room_status': 1
             },
             {
                 'name': 'Sala 2',
-                'temp_min': 12,
-                'temp_max': 25,
-                'hum_min': 25,
-                'hum_max': 35,
+                'temp': 12,
+                'hum': 25,
                 'quantity': 50,
                 'limit': 50,
                 'room_status': 1
             },
             {
                 'name': 'Sala 3',
-                'temp_min': -5,
-                'temp_max': 50,
-                'hum_min': 15,
-                'hum_max': 35,
+                'temp': -5,
+                'hum': 15,
                 'quantity': 10,
                 'limit': 50,
                 'room_status': 1
             },
             {
                 'name': 'Sala 4',
-                'temp_min': 0,
-                'temp_max': 0,
-                'hum_min': 0,
-                'hum_max': 0,
+                'temp': 0,
+                'hum': 0,
                 'quantity': 0,
                 'limit': 50,
                 'room_status': 0
@@ -414,20 +352,16 @@ def rebre_notificacio_mock(request):
                         'productor_id': '20199110001',
                         'producte_id': 'PERA CONFERENCE',
                         'limit': '08/08/2019',
-                        'temp_min': 5,
-                        'temp_max': 15,
-                        'hum_min': 45,
-                        'hum_max': 70,
+                        'temp': 5,
+                        'hum': 45,
                         'quantitat': 8
                     }
                     ,
                 'origin_room':
                     {
                         'name': 'Sala 1',
-                        'temp_min': 0,
-                        'temp_max': 5,
-                        'hum_min': 15,
-                        'hum_max': 35,
+                        'temp': 0,
+                        'hum': 15,
                         'quantity': 25,
                         'limit': 50,
                         'room_status': 1
@@ -436,10 +370,8 @@ def rebre_notificacio_mock(request):
                 'destination_room':
                     {
                         'name': 'Sala 3',
-                        'temp_min': -5,
-                        'temp_max': 50,
-                        'hum_min': 15,
-                        'hum_max': 35,
+                        'temp': -5,
+                        'hum': 15,
                         'quantity': 10,
                         'limit': 50,
                         'room_status': 1
@@ -455,20 +387,16 @@ def rebre_notificacio_mock(request):
                         'productor_id': '20199110001',
                         'producte_id': 'PERA CONFERENCE',
                         'limit': '08/08/2019',
-                        'temp_min': 5,
-                        'temp_max': 15,
-                        'hum_min': 45,
-                        'hum_max': 70,
+                        'temp': 5,
+                        'hum': 45,
                         'quantitat': 8
                     }
                 ,
                 'origin_room':
                     {
                         'name': 'Sala 1',
-                        'temp_min': 0,
-                        'temp_max': 5,
-                        'hum_min': 15,
-                        'hum_max': 35,
+                        'temp': 0,
+                        'hum': 15,
                         'quantity': 25,
                         'limit': 50,
                         'room_status': 1
@@ -477,10 +405,8 @@ def rebre_notificacio_mock(request):
                 'destination_room':
                     {
                         'name': 'Sala 3',
-                        'temp_min': -5,
-                        'temp_max': 50,
-                        'hum_min': 15,
-                        'hum_max': 35,
+                        'temp': -5,
+                        'hum': 15,
                         'quantity': 10,
                         'limit': 50,
                         'room_status': 1
@@ -538,9 +464,9 @@ def entrada_producte(request):
     entry_handler = EntryHandler()
     container = entry_handler.generate_entry()
 
-    hum_min = container['hum_min']
-    temp_min = container['temp_min']
-    rooms = Room.objects.filter(hum__gte=hum_min, temp__gte=temp_min)  #S'ha de canviar els models perque la sala no te max i min
+    hum = container['hum']
+    temp = container['temp']
+    rooms = Room.objects.filter(hum__gte=hum, temp__gte=temp)  #S'ha de canviar els models perque la sala no te max i min
 
     optimization_handler = RoomHandler(container, rooms)
 

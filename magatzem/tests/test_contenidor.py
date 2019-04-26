@@ -1,3 +1,4 @@
+'''
 from django.core import management
 from django.test import TestCase
 from parameterized import parameterized
@@ -11,13 +12,15 @@ from django.core.exceptions import ValidationError
 
 class TestContainer(TestCase):
 
-    room = Room(name='Sala 1', temp_min=0, temp_max=100, hum_min=0, hum_max=100, quantity=10, limit=200, room_status=1)
+    room = Room(name='Sala 1', temp=100, hum=100, quantity=10, limit=200, room_status=1)
 
     def setup(self):
         self.room.save()
 
     def tearDown(self):
         management.call_command('flush', verbosity=0, interactive=False)
+'''
+
 
 #
 ########################################################################################################################
@@ -58,11 +61,12 @@ class TestContainer(TestCase):
     @parameterized.expand([[None], [[]], [{}], [""],
                            ["Quantity"], ["100"], ["123456789"],
                            [-1000], [-2869], [-65768], [-10000000]])
-    def test_min_temp_in_create(self, temp_min):
+    def test_min_temp_in_create(self, temp):
         container = Container()
         with self.assertRaises(ValidationError):
-            container.temp_min = temp_min
-            
+            container.temp = temp
+     
+    AL NOMES TINDRE UNA TEMP, AQUEST NO CAL       
     @parameterized.expand([[None], [[]], [{}], [""],
                            ["Quantity"], ["100"], ["123456789"],
                            [1000], [2869], [65768], [10000000]])
@@ -74,11 +78,12 @@ class TestContainer(TestCase):
     @parameterized.expand([[None], [[]], [{}], [""],
                            ["Quantity"], ["100"], ["123456789"],
                            [-10000], [-49], [-1]])
-    def test_min_hum(self, hum_min):
+    def test_min_hum(self, hum):
         container = Container()
         with self.assertRaises(ValidationError):
-            container.hum_min = hum_min
+            container.hum = hum
 
+    AL NOMES TINDRE UNA HUM, AQUEST NO CAL  
     @parameterized.expand([[None], [[]], [{}], [""],
                            ["Quantity"], ["100"], ["123456789"],
                            [1000], [256], [101]])
@@ -87,6 +92,7 @@ class TestContainer(TestCase):
         with self.assertRaises(ValidationError):
             container.hum_max = hum_max
 
+    AL NOMES TINDRE UNA TEMP, AQUEST NO CAL
     @parameterized.expand([[20, 10], [10, 0], [-5, -22], [100, -1],
                            [1000, 128], [-1, -2], [0, -1]])
     def test_temp_relation(self, temp_min, temp_max):
@@ -95,6 +101,7 @@ class TestContainer(TestCase):
             container.temp_min = temp_min
             container.temp_max = temp_max
 
+    AL NOMES TINDRE UNA HUM, AQUEST NO CAL 
     @parameterized.expand([[100, 90], [20, 10], [10, 0],
                            [6, 5], [2, 1], [1, 0]])
     def test_hum_relation(self, hum_min, hum_max):
@@ -118,19 +125,17 @@ class TestContainer(TestCase):
         container.limit = limit
         self.assertEqual(container.get_sla(), sla)
 
-    @parameterized.expand([["Apples", '11111111111', '25/02/2019', 1000, 1, 10, 10, 90],
-                           ["Wood", '12345678900', '25/01/2021', 45, 200, 10, 15, 25, 35],
-                           ["Pera conference", '28/12/2019', '78787878787', 1, 2, 6, 90, 100]])
-    def container_str(self, product_id, producer_id, limit, quantity, temp_min, temp_max, hum_min, hum_max):
+    @parameterized.expand([["Apples", '11111111111', '25/02/2019', 1000, 10, 90],
+                           ["Wood", '12345678900', '25/01/2021', 45, 200, 15, 35],
+                           ["Pera conference", '28/12/2019', '78787878787', 1, 6, 100]])
+    def container_str(self, product_id, producer_id, limit, quantity, temp, hum_):
         container = Container()
         container.product_id = product_id
         container.producer_id = producer_id
         container.limit = limit
         container.quantity = quantity
-        container.temp_min = temp_min
-        container.temp_max = temp_max
-        container.hum_min = hum_min
-        container.hum_max = hum_max
+        container.temp = temp
+        container.hum = hum
         container.room = self.room
         self.assertEqual(Container.STR_PATTERN.format(product_id, producer_id, quantity), container.__str__())
     '''
@@ -140,12 +145,13 @@ class TestContainer(TestCase):
         This test are for the static method that works like a container constructor 
         and allow us to test the container parameters.
     """
+
+'''
     @parameterized.expand([[None], [123], [{}], [""], ["."],
                           ["#%&#!Root"], [" "], ["  "]])
     def test_id_product_error_in_create(self, product_id):
         with self.assertRaises(ValueError):
-            Container.create(product_id, '11111111111', '25/02/2019', 1, temp_min=1, temp_max=10,
-                             hum_min=10, hum_max=90, room=self.room)
+            Container.create(product_id, '11111111111', '25/02/2019', 1, temp=10, hum=90, room=self.room)
 
     @parameterized.expand([[None], [[]], [{}], [""],
                           ["#%&#!#%&#"], ["Producer1"], ["1234567890"],
@@ -154,14 +160,12 @@ class TestContainer(TestCase):
                           [-11111111111], [123], [0000000000], [12345678901]])
     def test_id_producer_in_create(self, producer_id):
         with self.assertRaises(ValueError):
-            Container.create("Apples", producer_id, '25/02/2019', 1, temp_min=1, temp_max=10,
-                             hum_min=10, hum_max=90, room=self.room)
+            Container.create("Apples", producer_id, '25/02/2019', 1, temp=10, hum=90, room=self.room)
 
     @parameterized.expand(['25/02/19', '25/02', '25-02-2019'])
     def test_limit_in_create(self, limit):
         with self.assertRaises(ValueError):
-            Container.create("Apples", '11111111111', limit, 1, temp_min=1, temp_max=10,
-                             hum_min=10, hum_max=90, room=self.room)
+            Container.create("Apples", '11111111111', limit, 1, temp=10, hum=90, room=self.room)
 
     @parameterized.expand([[None], [[]], [{}], [""],
                           ["Quantity"], ["100"], ["123456789"],
@@ -169,54 +173,50 @@ class TestContainer(TestCase):
                            [1000000000], [98989898989]])
     def test_quantity_in_create(self, quantity):
         with self.assertRaises(ValueError):
-            Container.create("Apples", '11111111111', '25/02/2019', quantity, temp_min=1, temp_max=10,
-                             hum_min=10, hum_max=90, room=self.room)
+            Container.create("Apples", '11111111111', '25/02/2019', quantity, temp=10, hum=90, room=self.room)
 
     @parameterized.expand([[None], [[]], [{}], [""],
                            ["Quantity"], ["100"], ["123456789"],
                            [-1000], [-2869], [-65768], [-10000000]])
-    def test_min_temp_in_create(self, temp_min):
+    def test_temp_in_create(self, temp):
         with self.assertRaises(ValueError):
-            Container.create("Apples", '11111111111', '25/02/2019', 1, temp_min=temp_min, temp_max=10,
-                             hum_min=10, hum_max=90, room=self.room)
+            Container.create("Apples", '11111111111', '25/02/2019', 1, temp=temp,  hum=90, room=self.room)
 
-    @parameterized.expand([[None], [[]], [{}], [""],
-                           ["Quantity"], ["100"], ["123456789"],
-                           [1000], [2869], [65768], [10000000]])
-    def test_max_temp_in_create(self, temp_max):
-        with self.assertRaises(ValueError):
-            Container.create("Apples", '11111111111', '25/02/2019', 1, temp_min=1, temp_max=temp_max,
-                             hum_min=10, hum_max=90, room=self.room)
+   # @parameterized.expand([[None], [[]], [{}], [""],
+   #                        ["Quantity"], ["100"], ["123456789"],
+   #                        [1000], [2869], [65768], [10000000]])
+   # def test_max_temp_in_create(self, temp):
+   #     with self.assertRaises(ValueError):
+   #         Container.create("Apples", '11111111111', '25/02/2019', 1, temp=temp, hum=90, room=self.room)
 
     @parameterized.expand([[None], [[]], [{}], [""],
                            ["Quantity"], ["100"], ["123456789"],
                            [-10000], [-49], [-1]])
-    def test_min_hum_in_create(self, hum_min):
+    def test_hum_in_create(self, hum):
         with self.assertRaises(ValueError):
-            Container.create("Apples", '11111111111', '25/02/2019', 1, temp_min=1, temp_max=10,
-                             hum_min=hum_min, hum_max=90, room=self.room)
+            Container.create("Apples", '11111111111', '25/02/2019', 1, temp=10, hum=hum, room=self.room)
 
-    @parameterized.expand([[None], [[]], [{}], [""],
-                           ["Quantity"], ["100"], ["123456789"],
-                           [1000], [256], [101]])
-    def test_max_hum_in_create(self, hum_max):
-        with self.assertRaises(ValueError):
-            Container.create("Apples", '11111111111', '25/02/2019', 1, temp_min=1, temp_max=10,
-                             hum_min=10, hum_max=hum_max, room=self.room)
+    #@parameterized.expand([[None], [[]], [{}], [""],
+    #                       ["Quantity"], ["100"], ["123456789"],
+    #                       [1000], [256], [101]])
+    #def test_max_hum_in_create(self, hum_max):
+    #    with self.assertRaises(ValueError):
+    #        Container.create("Apples", '11111111111', '25/02/2019', 1, temp_min=1, temp_max=10,
+    #                         hum_min=10, hum_max=hum_max, room=self.room)
 
-    @parameterized.expand([[20, 10], [10, 0], [-5, -22], [100, -1],
-                           [1000, 128], [-1, -2], [0, -1]])
-    def test_temp_relation_in_create(self, temp_min, temp_max):
-        with self.assertRaises(ValueError):
-            Container.create("Apples", '11111111111', '25/02/2019', 1, temp_min=temp_min, temp_max=temp_max,
-                             hum_min=10, hum_max=90, room=self.room)
+    #@parameterized.expand([[20, 10], [10, 0], [-5, -22], [100, -1],
+    #                       [1000, 128], [-1, -2], [0, -1]])
+    #def test_temp_relation_in_create(self, temp_min, temp_max):
+    #    with self.assertRaises(ValueError):
+    #        Container.create("Apples", '11111111111', '25/02/2019', 1, temp_min=temp_min, temp_max=temp_max,
+    #                         hum_min=10, hum_max=90, room=self.room)
 
-    @parameterized.expand([[100, 90], [20, 10], [10, 0],
-                           [6, 5], [2, 1], [1, 0]])
-    def test_hum_relation(self, hum_min, hum_max):
-        with self.assertRaises(ValueError):
-            Container.create("Apples", '11111111111', '25/02/2019', 1, temp_min=1, temp_max=10,
-                             hum_min=hum_min, hum_max=hum_max, room=self.room)
+    #@parameterized.expand([[100, 90], [20, 10], [10, 0],
+    #                       [6, 5], [2, 1], [1, 0]])
+    #def test_hum_relation(self, hum_min, hum_max):
+    #    with self.assertRaises(ValueError):
+    #        Container.create("Apples", '11111111111', '25/02/2019', 1, temp_min=1, temp_max=10,
+    #                         hum_min=hum_min, hum_max=hum_max, room=self.room)
 
     @parameterized.expand([['t', '11111111111', 1],
                            ["Apples", '12312312312', 2],
@@ -226,7 +226,7 @@ class TestContainer(TestCase):
                            ["TABLONES CAOBA", '98979600000', 20678498]])
     def test_container_attrs(self, product_id, producer_id, quantity):
         container = Container.create(product_id=product_id, producer_id=producer_id, limit='25/02/2019',
-                                     quantity=quantity, temp_min=1, temp_max=10, hum_min=10, hum_max=90, room=self.room)
+                                     quantity=quantity, temp=10, hum=90, room=self.room)
         self.assertEqual(container.product_id, product_id)
         self.assertEqual(container.producer_id, producer_id)
         self.assertEqual(container.quantity, quantity)
@@ -234,17 +234,17 @@ class TestContainer(TestCase):
     @parameterized.expand([['01/12/2021', 20211201], ['25/02/2019', 20190225], ['30/01/2019', 20190130]])
     def test_container_SLA(self, limit, sla):
         container = Container.create(product_id='Apples', producer_id='11111111111', limit=limit, quantity=1,
-                                     temp_min=1, temp_max=10, hum_min=10, hum_max=90, room=self.room)
+                                     temp=10, hum=90, room=self.room)
         self.assertEqual(container.get_sla(), sla)
 
     @parameterized.expand([["Apples", '11111111111', '25/02/2019', 1000, 1, 10, 10, 90],
                           ["Wood", '12345678900', '25/01/2021', 45, 200, 10, 15, 25, 35],
                           ["Pera conference", '28/12/2019', '78787878787', 1, 2, 6, 90, 100]])
-    def container_str(self, product_id, producer_id, limit, quantity, temp_min, temp_max, hum_min, hum_max):
+    def container_str(self, product_id, producer_id, limit, quantity, temp, hum):
         container = Container.create(product_id=product_id, producer_id=producer_id, limit=limit,
-                                     quantity=quantity, temp_min=temp_min, temp_max=temp_max,
-                                     hum_min=hum_min, hum_max=hum_max, room=self.room)
+                                     quantity=quantity, temp=temp, hum=hum, room=self.room)
         self.assertEqual(Container.STR_PATTERN.format(product_id, producer_id, quantity), container.__str__())
 
 ######################################################################################################
 #
+'''
