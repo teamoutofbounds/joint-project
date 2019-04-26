@@ -35,11 +35,12 @@ img {
     display: block;
     margin: auto;
     text-align: center;
-    border: 2px solid #00BFA5;
+    border: 2px solid #1565C0;
     padding: 10px 40px;
     width: 80%;
     outline: none;
-    color: #00BFA5;
+    /*color: #00BFA5;*/
+    color: #3f72af;
     font-weight: 700;
     font-size: 18px;
     border-radius: 24px;
@@ -47,24 +48,29 @@ img {
 }
 
 .form-control:focus {
-    /*background: #1DE9B6;*/
-    background: #00BFA5;
+    background: #0D47A1;
     display: block;
     margin: auto;
     text-align: center;
-    border: 2px solid #00BFA5;
+    border: 2px solid #448AFF;
     padding: 10px 40px;
     width: 85%;
     outline: none;
-    color: white;
+    color: #f9f7f7;
     font-weight: 700;
     font-size: 18px;
     border-radius: 24px;
     transition: .25s;
 }
 
+.form-control::placeholder {
+    color: #3f72af;
+    opacity: 0.5;
+}
+
 .form-control:focus::placeholder {
-    color: ghostwhite;
+    color: #dbe2ef;
+    opacity: 0.5;
 }
 
 .submit-btn {
@@ -72,11 +78,11 @@ img {
     display: block;
     margin: 20px auto;
     text-align: center;
-    border: 2px solid #00BFA5;
+    border: 2px solid #1565C0;
     padding: 10px 40px;
     width: 80%;
     outline: none;
-    color: #00BFA5;
+    color: #145374;
     font-size: 18px;
     font-weight: 700;
     border-radius: 24px;
@@ -85,11 +91,11 @@ img {
 }
 
 .submit-btn:hover {
-    background: #00BFA5;
+    background: #0D47A1;
     display: block;
     margin: 20px auto;
     text-align: center;
-    border: 2px solid #00BFA5;
+    border: 2px solid #448AFF;
     padding: 10px 40px;
     width: 90%;
     outline: none;
@@ -103,10 +109,6 @@ img {
     text-align: center;
     font-weight: 600;
     font-size: 14px;
-}
-
-.form-control::placeholder {
-    color: #80CBC4;
 }
 
 
