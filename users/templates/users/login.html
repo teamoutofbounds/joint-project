@@ -7,6 +7,15 @@
 
 {% block header %}
   <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+
+  <style>
+    body {
+      background-image: linear-gradient(rgba(255,255,255,.85), rgba(255,255,255,.85)), url("{% static 'users/img/logistics.jpg' %}");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
+
 {% endblock header %}
 
 {% block role %}
@@ -49,7 +58,7 @@
         {{ hidden_field }}
       {% endfor %}
 
-      <!--Alert for errors-->
+      <!-- ALERT FOR ERRORS -->
       {% if form.non_field_errors %}
         <div class="alert alert-danger" role="alert">
           {% for error in form.non_field_errors %}
@@ -57,8 +66,7 @@
           {% endfor %}
         </div>
       {% endif %}
-      <!-- End alert -->
-
+      <!-- END ALERT -->
 
       {% for field in form.visible_fields %}
         <div class="form-group">
@@ -75,7 +83,11 @@
               {% render_field field class="form-control is-valid" %}
             {% endif %}
           {% else %}
-            {% render_field field class="form-control" %}
+            {% if field.name == 'username' %}
+              {% render_field field class="form-control" placeholder="Usuari" %}
+            {% else %}
+              {% render_field field class="form-control" placeholder="Contrasenya" %}
+            {% endif %}
           {% endif %}
 
           {% if field.help_text %}
