@@ -1,0 +1,146 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background-image: url("/users/static/users/img/logistics.jpg");
+}
+
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    margin:auto;
+    width: 50%;
+    max-width: 400px;
+    background: #B2DFDB;
+    padding: 30px;
+    border: 1px solid rgba(0,0,0,0.2);
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10%;
+    width: 95%;
+}
+
+.form-control {
+    background: none;
+    display: block;
+    margin: auto;
+    text-align: center;
+    border: 2px solid #00BFA5;
+    padding: 10px 40px;
+    /*width: 250px;*/
+    width: 80%;
+    /*min-width: 200px;*/
+    outline: none;
+    color: #00BFA5;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 24px;
+    transition: .25s;
+}
+
+.form-control:focus {
+    background: #1DE9B6;
+    display: block;
+    margin: auto;
+    text-align: center;
+    border: 2px solid #00BFA5;
+    padding: 10px 40px;
+    /*width: 300px;*/
+    width: 85%;
+    outline: none;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 24px;
+    transition: .25s;
+}
+
+.submit-btn {
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #00BFA5;
+    padding: 10px 40px;
+    width: 80%;
+    outline: none;
+    color: #00BFA5;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 24px;
+    transition: .25s;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #00BFA5;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #00BFA5;
+    padding: 10px 40px;
+    width: 90%;
+    /*width: 250px;*/
+    outline: none;
+    color: white;
+    font-weight: 700;
+    border-radius: 24px;
+}
+
+.invalid-feedback {
+    /*margin-left: 40px;*/
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+
+@media (max-width: 768px) {
+    .content {
+        width: 75%;
+    }
+}
+
+@media (max-width: 480px) {
+    .content {
+        width: 80%;
+    }
+
+    .form-control {
+        min-width: 90%;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .form-control:focus {
+        min-width: 95%;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .submit-btn:hover {
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .invalid-feedback {
+        text-align: center;
+        font-weight: 500;
+        font-size: 12px;
+    }
+}

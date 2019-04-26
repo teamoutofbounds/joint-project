@@ -92,8 +92,9 @@ def assign_task(user):
 
 
 def home_gestor(request):
-    context = {}
-    context['title'] = 'Home-Gestor'
+
+    context = {'temperatura': 5, 'humitat': 30, 'capacitat': 55, 'title': 'Home-Gestor'}
+
     return render(request, 'magatzem/home-gestor.html', context)
 
 

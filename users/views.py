@@ -1,5 +1,12 @@
-from django.http import Http404
+from django.contrib.auth import login
+from django.http import Http404, HttpResponseRedirect
+
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import FormView
+
+from users.forms import MyAuthenticationForm
+
 '''
 from django.contrib.auth.models import User
 from users.forms import SignUpForm
@@ -56,3 +63,23 @@ def signup(request): #afegim els usuaris en grups segons el seu registre
         form = SignUpForm()
     return render(request, 'users/register.html', {'form': form})
 '''
+
+
+class LoginView(FormView):
+    form_class = MyAuthenticationForm
+    template_name = "users/login.html"
+
+    # THIS HAS TO BE SELECTED BY ROLE
+    success_url = reverse_lazy("gestor-home")
+
+    '''
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return super(LoginView, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        login(self.request, form.get_user())
+        return super(LoginView, self).form_valid(form)
+    '''
