@@ -22,5 +22,8 @@ urlpatterns = [
     path('sel_sala_mock/', views.seleccionar_sala_mock, name='sel-sala-mock'),
     path('sel_prod_mock/', views.seleccionar_productes_mock, name='sel-prod-mock'),
     path('tasques_mock/', views.panel_tasks_mock, name='tasques-mock'),
-    path('entrada/', views.entrada_producte, name='entrada'),
+
 ]
+'''
+    path('entrada/', views.entrada_producte, name='entrada'),
+'''

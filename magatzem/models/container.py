@@ -34,28 +34,28 @@ class Container(models.Model):
     QUANTITY_MAX_VALUE = 999999999
     HUM_MIN_VALUE = 0
     HUM_MAX_VALUE = 100
-    TEMP_MIN_VALUE = -999
-    TEMP_MAX_VALUE = 999
+    TEMP_MIN_VALUE = -273
+    TEMP_MAX_VALUE = 100
     STR_PATTERN = "{} [{}] unitats:{} - SLA:{}"
 
     product_id = models.CharField(validators=[validate_products], max_length=64)
-    producer_id = models.CharField(validators=[validate_client], max_length=64)
+    producer_id = models.CharField(validators=[validate_client], max_length=11)
     limit = models.CharField(validators=[validate_limit], max_length=10)
     quantity = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(QUANTITY_MAX_VALUE)])
-    temp_min = models.IntegerField(validators=[MinValueValidator(TEMP_MIN_VALUE), MaxValueValidator(TEMP_MAX_VALUE)])
-    temp_max = models.IntegerField(validators=[MinValueValidator(TEMP_MIN_VALUE), MaxValueValidator(TEMP_MAX_VALUE)])
-    hum_min = models.IntegerField(validators=[MinValueValidator(HUM_MIN_VALUE), MaxValueValidator(HUM_MAX_VALUE)])
-    hum_max = models.IntegerField(validators=[MinValueValidator(HUM_MIN_VALUE), MaxValueValidator(HUM_MAX_VALUE)])
+    temp = models.IntegerField(validators=[MinValueValidator(TEMP_MIN_VALUE), MaxValueValidator(TEMP_MAX_VALUE)])
+    hum = models.IntegerField(validators=[MinValueValidator(HUM_MIN_VALUE), MaxValueValidator(HUM_MAX_VALUE)])
     room = models.ForeignKey(Room, on_delete=models.PROTECT)
     SLA = models.IntegerField(default=0)
 
-    def clean(self):
-        if self.temp_min > self.temp_max:
-            raise ValidationError(gettext_lazy(
-                'La temperatura mínima d\'un contenedor no pot ser superior a la temperatura màxima.'))
-        if self.hum_min > self.hum_max:
-            raise ValidationError(gettext_lazy(
-                'La humitat mínima d\'un contenedor no pot ser superior a la humitat màxima.'))
+    # NO SE SI ES NECESSARI
+
+    #def clean(self):
+        #if self.temp_min > self.temp_max:
+            #raise ValidationError(gettext_lazy(
+                #'La temperatura mínima d\'un contenedor no pot ser superior a la temperatura màxima.'))
+        #if self.hum_min > self.hum_max:
+            #raise ValidationError(gettext_lazy(
+                #'La humitat mínima d\'un contenedor no pot ser superior a la humitat màxima.'))
 
     def get_sla(self):
         if self.SLA == 0:
@@ -63,16 +63,15 @@ class Container(models.Model):
         return self.SLA
 
     @staticmethod
-    def create(product_id, producer_id, limit, quantity, temp_min, temp_max, hum_min, hum_max, room):
+    def create(product_id, producer_id, limit, quantity, temp, hum, room):
         if Container._has_product_id_correct_format(product_id) and \
                 Container._has_producer_id_correct_format(producer_id) and \
                 Container._has_limit_correct_format(limit) and \
                 Container._is_quantity_allowed(quantity) and \
-                Container._are_temperaures_allowed(temp_min, temp_max) and \
-                Container._are_humidity_allowed(hum_min, hum_max):
+                Container._are_temperaures_allowed(temp) and \
+                Container._are_humidity_allowed(hum):
             container = Container(product_id=product_id, producer_id=producer_id, limit=limit,
-                                  quantity=quantity, temp_min=temp_min, temp_max=temp_max,
-                                  hum_min=hum_min, hum_max=hum_max, room=room)
+                                  quantity=quantity, temp=temp, hum=hum, room=room)
             return container
         else:
             raise ValueError()
@@ -100,14 +99,14 @@ class Container(models.Model):
         return isinstance(quantity, int) and 0 < quantity <= Container.QUANTITY_MAX_VALUE
 
     @staticmethod
-    def _are_temperaures_allowed(temp_min, temp_max):
-        return isinstance(temp_min, int) and isinstance(temp_max, int) and  \
-               Container.TEMP_MIN_VALUE <= temp_min <= temp_max <= Container.TEMP_MAX_VALUE
+    def _are_temperature_allowed(temp):
+        return isinstance(temp, int) and  \
+               Container.TEMP_MIN_VALUE <= temp <= Container.TEMP_MAX_VALUE
 
     @staticmethod
-    def _are_humidity_allowed(hum_min, hum_max):
-        return isinstance(hum_min, int) and isinstance(hum_max, int) and \
-               Container.HUM_MIN_VALUE <= hum_min <= hum_max <= Container.HUM_MAX_VALUE
+    def _are_humidity_allowed(hum):
+        return isinstance(hum, int)  and \
+               Container.HUM_MIN_VALUE <= hum <= Container.HUM_MAX_VALUE
 
 ##########################################################################################################
 #
