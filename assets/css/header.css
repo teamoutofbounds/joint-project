@@ -2,7 +2,7 @@
     text-transform: uppercase;
     font-weight: 700;
     font-size: .9rem;
-    background: #004D40!important;
+    background: #0D47A1!important;
 }
 
 .navbar-brand {
@@ -13,13 +13,13 @@
 }
 
 .nav-link {
-    color: white;
+    color: #82B1FF;
     letter-spacing: .1rem;
     padding-top: .8rem;
     margin-right: .5rem;
 }
 
 .navbar-brand:hover, .nav-link:hover, .active {
-    color: aquamarine;
+    color: white;
     -webkit-transform: scale(1.05);
 }
