@@ -23,8 +23,10 @@ class Room(models.Model):
     # Contains all the changes of the object
     history = HistoricalRecords()
 
+    '''
     class Meta:
         ordering = ['-room_status', 'name']
+    '''
 
     def __str__(self):
         return Room.STR_PATTERN.format(self.name, self.room_status, self.limit, self.quantity)

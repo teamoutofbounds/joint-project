@@ -108,7 +108,11 @@ class HomeGestor(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Home Gestor'
-        print(context)
+
+        context['capacities'] = {}
+        for item in context['object_list']:
+            context['capacities'][item.name] = item.quantity * 100 / item.limit
+
         return context
 
 

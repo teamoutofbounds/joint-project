@@ -39,8 +39,9 @@ def add_container(params):
     # room = Room.objects.get(params[-1])
     room = Room.objects.get(id=params[-1])
     container = Container(product_id=params[0], producer_id=params[1], limit=params[2],
-                          temp=params[3], hum=params[4],
-                          quantity=params[5], room=room)
+                          temp_min=params[3], temp_max=params[4],
+                          hum_min=params[5], hum_max=params[6],
+                          quantity=params[7], room=room)
     container.save()
 
 
