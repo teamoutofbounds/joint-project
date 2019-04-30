@@ -27,13 +27,15 @@ class InitializeTest(object):
         self.tasks = tasks
 
     def _create_rooms(self):
-        origin = Room.objects.create(name='origin', temp=50, hum=80, quantity=5, limit=200)
-        destination = Room.objects.create(name='destination', temp=50, hum=80, quantity=5, limit=200)
+        origin = Room.objects.create(name='origin', tamp_min=-15, temp_max=50, hum_min=0, hum_max=80,
+                                     quantity=5, limit=200)
+        destination = Room.objects.create(name='destination', tamp_min=-15, temp_max=50, hum_min=0, hum_max=80,
+                                          quantity=5, limit=200)
         return origin, destination
 
     def _create_container(self):
-        container = Container.objects.create(product_id=1, producer_id=123, limit='01/12/2019', quantity=5,
-                                             temp=10, hum=50, room=self.origin)
+        container = Container.objects.create(product_id=1, producer_id=123, limit='01/12/2019', quantity=5, temp_min=0,
+                                             temp_max=10, hum_min=15, hum_max=50, room=self.origin)
         return container
 
     def _create_user(self):
