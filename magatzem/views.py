@@ -99,6 +99,18 @@ class TaskPanelOperaris(TodayArchiveView, LoginRequiredMixin):
         return context
 
 
+class HomeGestor(ListView):
+    model = Room
+    context_object_name = 'rooms'
+    template_name = 'magatzem/home-gestor.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Home Gestor'
+        print(context)
+        return context
+
+
 def home_gestor(request):
 
     context = {'temperatura': 5, 'humitat': 30, 'capacitat': 55, 'title': 'Home-Gestor'}

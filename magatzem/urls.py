@@ -3,11 +3,12 @@
 
 from django.urls import path, include
 
-from magatzem.views import RoomList, RoomDetail, NotificationsListView
+from magatzem.views import RoomList, RoomDetail, NotificationsListView, HomeGestor
 from . import views
 
 urlpatterns = [
-    path('gestor/', views.home_gestor, name='gestor-home'),
+    # path('gestor/', views.home_gestor, name='gestor-home'),
+    path('gestor/', HomeGestor.as_view(), name='gestor-home'),
     path('operaris/', views.home_operari, name='operaris-home'),
     path('gestor/sales/', RoomList.as_view(), name='list-room'),
     path('gestor/sales/<int:pk>/', RoomDetail.as_view(), name='detail-room'),

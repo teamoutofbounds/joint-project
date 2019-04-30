@@ -11,28 +11,31 @@
 
     <div class="col-sm-7 bg-light">
 
+      <img id="map" src="{% static 'images/magatzem.png' %}" class="img-fluid img-thumbnail mx-auto d-block"
+           style="max-width: 90%; height: auto;" usemap="#map-warehouse">
+
       <map name="map-warehouse">
         <!-- Sala 1 -->
         <area shape="rect" coords="3, 0, 280, 125"
               href="#" title="SALA 1
 --------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
+Temperatura:  {{ rooms.0.temp }}º
+Humitat:      {{ rooms.0.hum }}%
+Capacitat:    {{ rooms.0.quantity }}%" data-toggle="tooltip"/>
         <!-- Sala 2 -->
         <area shape="rect" coords="280, 0, 560, 125"
               href="#" title="SALA 2
 --------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
+Temperatura:  {{ rooms.1.temp }}º
+Humitat:      {{ rooms.1.hum }}%
+Capacitat:    {{ rooms.1.quantity }}%" data-toggle="tooltip">
         <!-- Sala A -->
         <area shape="rect" coords="3, 127, 105, 248"
               href="#" title="SALA A
 --------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
+Temperatura:  {{ rooms.2.temp }}º
+Humitat:      {{ rooms.2.hum }}%
+Capacitat:    {{ rooms.2.quantity }}%" data-toggle="tooltip">
         <!-- Sala B -->
         <area shape="rect" coords="3, 250, 105, 360"
               href="#" title="SALA B
@@ -134,9 +137,6 @@ Temperatura:  {{ temperatura }}º
 Humitat:      {{ humitat }}%
 Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
       </map>
-
-      <img src="{% static 'images/magatzem.png' %}" class="img-fluid img-thumbnail mx-auto d-block"
-           style="max-width: 90%; height: auto" usemap="#map-warehouse">
     </div>
 
     <div class="col-sm-4 bg-light">

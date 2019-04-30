@@ -28,9 +28,9 @@ def add_item(func, filename):
 
 
 def add_room(params):
-    room = Room(name=params[1], temp=params[3],
-                hum=params[5], quantity=params[6],
-                limit=params[7], room_status=params[8])
+    room = Room(name=params[1], temp=params[2],
+                hum=params[3], quantity=params[4],
+                limit=params[5], room_status=params[6])
     room.id = params[0]
     room.save()
 
@@ -39,8 +39,8 @@ def add_container(params):
     # room = Room.objects.get(params[-1])
     room = Room.objects.get(id=params[-1])
     container = Container(product_id=params[0], producer_id=params[1], limit=params[2],
-                          temp=params[4], hum_max=params[6],
-                          quantity=params[7], room=room)
+                          temp=params[3], hum=params[4],
+                          quantity=params[5], room=room)
     container.save()
 
 
