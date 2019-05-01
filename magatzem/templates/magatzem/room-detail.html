@@ -31,9 +31,11 @@
               <th scope="col"> <b>Productor</b> </th>
               <th scope="col"> <b>Quantitat</b> </th>
               <!-- Temperatures -->
-              <th scope="col"> <b>Temp</b> </th>
+              <th scope="col"> <b>Temp Min</b> </th>
+              <th scope="col"> <b>Temp Max</b> </th>
               <!-- Humidity -->
-              <th scope="col"> <b>Hum</b> </th>
+              <th scope="col"> <b>Hum Min</b> </th>
+              <th scope="col"> <b>Hum Max</b> </th>
               <!-- Limit date -->
               <th scope="col"> <b>Data límit</b> </th>
             </tr>
@@ -46,9 +48,11 @@
               <td> {{ container.producer_id }} </td>
               <td> {{ container.quantity }} </td>
               <!-- Temperatures -->
-              <td> {{ container.temp }} </td>
+              <td> {{ container.temp_min }} </td>
+              <td> {{ container.temp_max }} </td>
               <!-- Humidity -->
-              <td> {{ container.hum }} </td>
+              <td> {{ container.hum_min }} </td>
+              <td> {{ container.hum_max }} </td>
               <!-- Limit date -->
               <td> {{ container.limit }} </td>
             </tr>

@@ -9,14 +9,14 @@ def step_impl(context, username, password):
 
 @given('I login as user "{username}" with password "{password}"')
 def step_impl(context, username, password):
-    context.browser.visit(context.get_url('/login'))
+    context.browser.visit(context.get_url('/users/'))
     form = context.browser.find_by_tag('form').first
     context.browser.fill('username', username)
     context.browser.fill('password', password)
     form.find_by_value('login').first.click()
     assert context.browser.is_text_present('User: ' + username)
 
-@given('I\'m not logged in')
+@then('I am not logged in')
 def step_impl(context):
     context.browser.visit(context.get_url('logout')+'?next=/magatzem/')
     assert context.browser.is_text_present('login')

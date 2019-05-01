@@ -7,15 +7,14 @@ from magatzem.models.task import Task
 from magatzem.models.container import Container
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-# from .tasks import assign_task
 
-'''
-# Check if logged in Mixin
+# from .tasks import assign_task
 from tools.algorithms.sala_selector import RoomHandler
 from tools.api.product_entry import EntryHandler
-'''
+from datetime import date
 
 
+# Check if logged in Mixin
 class LoginRequiredMixin(object):
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
@@ -77,8 +76,6 @@ class NotificationsListView(ListView, LoginRequiredMixin):
             queryset = Task.assign_task(self.request.user)
             self.new_task = True
 
-            # queryset = assign_task(self.request.user)
-
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -91,19 +88,49 @@ class NotificationsListView(ListView, LoginRequiredMixin):
 class TaskPanelOperaris(TodayArchiveView, LoginRequiredMixin):
     queryset = Task.objects.all()
     date_field = 'date'
-    context_object_name = 'task_list'
+    # context_object_name = 'task_list'
+    template_name = 'magatzem/tasks-list.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        tasks = super().get_context_data(**kwargs)
+        context = {'todo': [], 'doing': [], 'done': []}
+        for task in tasks['object_list']:
+            if task.task_status == 0 or task.task_status == 1 or task.task_status == 2:
+                context['todo'].append(task)  # pendent assignacio
+            elif task.task_status == 3:
+                context['doing'].append(task)
+            else:
+                context['done'].append(task)
         context['title'] = 'Tasques Operaris'
         return context
 
 
-def home_gestor(request):
+class HomeGestor(ListView):
+    model = Room
+    context_object_name = 'rooms'
+    template_name = 'magatzem/home-gestor.html'
 
-    context = {'temperatura': 5, 'humitat': 30, 'capacitat': 55, 'title': 'Home-Gestor'}
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Home Gestor'
+        # get last tasks
+        context['last_tasks'] = self.get_last_tasks()
+        # get room capacity
+        context['capacities'] = {}
+        for item in context['object_list']:
+            context['capacities'][item.name] = item.quantity * 100 / item.limit
 
-    return render(request, 'magatzem/home-gestor.html', context)
+        return context
+
+    def get_last_tasks(self):
+        tasks = Task.objects.order_by('-date').filter(date=date.today())
+        return tasks
+
+
+def home_ceo(request):
+    context = {}
+    context['title'] = 'Home-CEO'
+    return render(request, 'magatzem/home-ceo.html', context)
 
 
 def home_operari(request):
@@ -112,37 +139,55 @@ def home_operari(request):
     return render(request, 'magatzem/notification.html', context)
 
 
+def entrada_producte(request):
+    entry_handler = EntryHandler()
+    context = {}
+    context['title'] = 'Entrada Productes'
+    context['containers'] = entry_handler.generate_entry()
+    return render(request, 'magatzem/product-entry.html', context)
+
+
 def entrada_producte_mock(request):
-    context = {'productes' : [
+    context = {'productes': [
         {'productor_id': '20199110001',
          'producte_id': 'MANZANAS GREENTRANS',
          'limit': '25/05/2019',
-         'temp': 10,
-         'hum': 35,
+         'temp_min': 10,
+         'temp_max': 15,
+         'hum_min': 35,
+         'hum_max': 60,
          'quantitat': 4},
         {'productor_id': '20199110001',
          'producte_id': 'MANZANAS GOLDEN',
          'limit': '29/06/2019',
-         'temp': 10,
-         'hum': 35,
+         'temp_min': 10,
+         'temp_max': 15,
+         'hum_min': 35,
+         'hum_max': 60,
          'quantitat': 10},
         {'productor_id': '20199110001',
          'producte_id': 'PERA CONFERENCE',
          'limit': '08/08/2019',
-         'temp': 5,
-         'hum': 45,
+         'temp_min': 5,
+         'temp_max': 15,
+         'hum_min': 45,
+         'hum_max': 70,
          'quantitat': 8},
         {'productor_id': '20199110001',
          'producte_id': 'TABLONES CAOBA 7x25',
          'limit': '25/02/2022',
-         'temp': -5,
-         'hum': 0,
+         'temp_min': -5,
+         'temp_max': 50,
+         'hum_min': 0,
+         'hum_max': 40,
          'quantitat': 16},
         {'productor_id': '20199110001',
          'producte_id': 'TABLONES EBANO 7x25',
          'limit': '25/02/2022',
-         'temp': -5,
-         'hum': 0,
+         'temp_min': -5,
+         'temp_max': 50,
+         'hum_min': 0,
+         'hum_max': 40,
          'quantitat': 12}]
     }
     return render(request, 'magatzem/product-entry.html', context)
@@ -153,24 +198,24 @@ def llista_sales_mock(request):
         'room_list': [
             {
                 'name': 'Sala 1',
-                'temp': 0,
-                'hum': 15,
+                'temp': 5,
+                'hum': 35,
                 'quantity': 25,
                 'limit': 50,
                 'room_status': 1
             },
             {
                 'name': 'Sala 2',
-                'temp': 12,
-                'hum': 25,
+                'temp': 25,
+                'hum': 35,
                 'quantity': 50,
                 'limit': 50,
                 'room_status': 1
             },
             {
                 'name': 'Sala 3',
-                'temp': -5,
-                'hum': 15,
+                'temp': 50,
+                'hum': 35,
                 'quantity': 10,
                 'limit': 50,
                 'room_status': 1
@@ -194,8 +239,8 @@ def sala_mock(request):
     context = {
         'room': {
             'name': 'Sala 1',
-            'temp': 0,
-            'hum': 15,
+            'temp': 5,
+            'hum': 35,
             'quantity': 25,
             'limit': 50,
             'room_status': 1
@@ -204,25 +249,27 @@ def sala_mock(request):
             {
                 'description': 'Traslladar',
                 'containers': {
-                        'producer_id': '20199110001',
-                        'product_id': 'PERA CONFERENCE',
-                        'limit': '08/08/2019',
-                        'temp': 5,
-                        'hum': 45,
-                        'quantity': 8
-                    },
+                    'producer_id': '20199110001',
+                    'product_id': 'PERA CONFERENCE',
+                    'limit': '08/08/2019',
+                    'temp_min': 5,
+                    'temp_max': 15,
+                    'hum_min': 45,
+                    'hum_max': 70,
+                    'quantity': 8
+                },
                 'origin_room': {
                     'name': 'Sala 1',
-                    'temp': 0,
-                    'hum': 15,
+                    'temp': 5,
+                    'hum': 35,
                     'quantity': 25,
                     'limit': 50,
                     'room_status': 1
                 },
                 'destination_room': {
                     'name': 'Sala 3',
-                    'temp': -5,
-                    'hum': 15,
+                    'temp': 50,
+                    'hum': 35,
                     'quantity': 10,
                     'limit': 50,
                     'room_status': 1
@@ -235,22 +282,28 @@ def sala_mock(request):
             {'producer_id': '20199110001',
              'product_id': 'PERA CONFERENCE',
              'limit': '08/08/2019',
-             'temp': 5,
-             'hum': 45,
+             'temp_min': 5,
+             'temp_max': 15,
+             'hum_min': 45,
+             'hum_max': 70,
              'quantity': 8
              },
             {'producer_id': '20199110001',
              'product_id': 'TABLONES CAOBA 7x25',
              'limit': '25/02/2022',
-             'temp': -5,
-             'hum': 0,
+             'temp_min': -5,
+             'temp_max': 50,
+             'hum_min': 0,
+             'hum_max': 40,
              'quantity': 16
              },
             {'producer_id': '20199110001',
              'product_id': 'TABLONES EBANO 7x25',
              'limit': '25/02/2022',
-             'temp': -5,
-             'hum': 0,
+             'temp_min': -5,
+             'temp_max': 50,
+             'hum_min': 0,
+             'hum_max': 40,
              'quantity': 12}
         ],
         'title': 'Sala 1'
@@ -264,33 +317,51 @@ def seleccionar_productes_mock(request):
         {'producer_id': '20199110001',
          'product_id': 'MANZANAS GREENTRANS',
          'limit': '25/05/2019',
-         'temp': 10,
-         'hum': 35,
+         'temp_min': 10,
+         'temp_max': 15,
+         'hum_min': 35,
+         'hum_max': 60,
          'quantity': 4,
-        },
+         'room': {
+             'name': 'Sala 1',
+             'temp': 5,
+             'hum': 35,
+             'quantity': 25,
+             'limit': 50,
+             'room_status': 1
+         }
+         },
         {'producer_id': '20199110001',
          'product_id': 'MANZANAS GOLDEN',
          'limit': '29/06/2019',
-         'temp': 10,
-         'hum': 35,
+         'temp_min': 10,
+         'temp_max': 15,
+         'hum_min': 35,
+         'hum_max': 60,
          'quantity': 10},
         {'producer_id': '20199110001',
          'product_id': 'PERA CONFERENCE',
          'limit': '08/08/2019',
-         'temp': 5,
-         'hum': 45,
+         'temp_min': 5,
+         'temp_max': 15,
+         'hum_min': 45,
+         'hum_max': 70,
          'quantity': 8},
         {'producer_id': '20199110001',
          'product_id': 'TABLONES CAOBA 7x25',
          'limit': '25/02/2022',
-         'temp': -5,
-         'hum': 0,
+         'temp_min': -5,
+         'temp_max': 50,
+         'hum_min': 0,
+         'hum_max': 40,
          'quantity': 16},
         {'producer_id': '20199110001',
          'product_id': 'TABLONES EBANO 7x25',
          'limit': '25/02/2022',
-         'temp': -5,
-         'hum': 0,
+         'temp_min': -5,
+         'temp_max': 50,
+         'hum_min': 0,
+         'hum_max': 40,
          'quantity': 12}]
     }
     return render(request, 'magatzem/select-container.html', context)
@@ -299,33 +370,35 @@ def seleccionar_productes_mock(request):
 def seleccionar_sala_mock(request):
     context = {
         'productes':
-        {'productor_id': '20199110001',
-         'producte_id': 'MANZANAS GREENTRANS',
-         'limit': '25/05/2019',
-         'temp': 10,
-         'hum': 35,
-         'quantitat': 4} ,
+            {'productor_id': '20199110001',
+             'producte_id': 'MANZANAS GREENTRANS',
+             'limit': '25/05/2019',
+             'temp_min': 10,
+             'temp_max': 15,
+             'hum_min': 35,
+             'hum_max': 60,
+             'quantitat': 4},
         'room_list': [
             {
                 'name': 'Sala 1',
-                'temp': 0,
-                'hum': 15,
+                'temp': 5,
+                'hum': 35,
                 'quantity': 25,
                 'limit': 50,
                 'room_status': 1
             },
             {
                 'name': 'Sala 2',
-                'temp': 12,
-                'hum': 25,
+                'temp': 25,
+                'hum': 35,
                 'quantity': 50,
                 'limit': 50,
                 'room_status': 1
             },
             {
                 'name': 'Sala 3',
-                'temp': -5,
-                'hum': 15,
+                'temp': 50,
+                'hum': 35,
                 'quantity': 10,
                 'limit': 50,
                 'room_status': 1
@@ -339,7 +412,7 @@ def seleccionar_sala_mock(request):
                 'room_status': 0
             }
         ],
-        'title' : 'seleccio de sala'
+        'title': 'seleccio de sala'
     }
 
     return render(request, 'magatzem/room-selector.html', context)
@@ -355,31 +428,33 @@ def rebre_notificacio_mock(request):
                         'productor_id': '20199110001',
                         'producte_id': 'PERA CONFERENCE',
                         'limit': '08/08/2019',
-                        'temp': 5,
-                        'hum': 45,
+                        'temp_min': 5,
+                        'temp_max': 15,
+                        'hum_min': 45,
+                        'hum_max': 70,
                         'quantitat': 8
                     }
-                    ,
+                ,
                 'origin_room':
                     {
                         'name': 'Sala 1',
-                        'temp': 0,
-                        'hum': 15,
+                        'temp': 5,
+                        'hum': 35,
                         'quantity': 25,
                         'limit': 50,
                         'room_status': 1
                     }
-                    ,
+                ,
                 'destination_room':
                     {
                         'name': 'Sala 3',
-                        'temp': -5,
-                        'hum': 15,
+                        'temp': 50,
+                        'hum': 35,
                         'quantity': 10,
                         'limit': 50,
                         'room_status': 1
                     }
-                    ,
+                ,
                 'task_type': 1,
                 'task_status': 2
             },
@@ -390,16 +465,18 @@ def rebre_notificacio_mock(request):
                         'productor_id': '20199110001',
                         'producte_id': 'PERA CONFERENCE',
                         'limit': '08/08/2019',
-                        'temp': 5,
-                        'hum': 45,
+                        'temp_min': 5,
+                        'temp_max': 15,
+                        'hum_min': 45,
+                        'hum_max': 70,
                         'quantitat': 8
                     }
                 ,
                 'origin_room':
                     {
                         'name': 'Sala 1',
-                        'temp': 0,
-                        'hum': 15,
+                        'temp': 5,
+                        'hum': 35,
                         'quantity': 25,
                         'limit': 50,
                         'room_status': 1
@@ -408,8 +485,8 @@ def rebre_notificacio_mock(request):
                 'destination_room':
                     {
                         'name': 'Sala 3',
-                        'temp': -5,
-                        'hum': 15,
+                        'temp': 50,
+                        'hum': 35,
                         'quantity': 10,
                         'limit': 50,
                         'room_status': 1
@@ -430,7 +507,8 @@ def panel_tasks_mock(request):
         'todo': [
             {'description': 'Transportar manzanas', 'task_type': 0, 'task_status': 'Assignada automaticament',
              'origin_room': 'Moll de càrrega', 'destination_room': 'Sala 3', 'containers': 10},
-            {'description': 'Transportar papel baño', 'task_type': 2, 'task_status': 'Assignada manualment', 'origin_room': 'Sala 2',
+            {'description': 'Transportar papel baño', 'task_type': 2, 'task_status': 'Assignada manualment',
+             'origin_room': 'Sala 2',
              'destination_room': 'Moll de càrrega', 'containers': 5},
             {'description': 'Transportar cervezas', 'task_type': 1, 'task_status': 'Pendent', 'origin_room': 'Sala 3',
              'destination_room': 'Sala 1', 'containers': 3},
@@ -440,13 +518,15 @@ def panel_tasks_mock(request):
              'destination_room': 'Sala 1', 'containers': 22},
             {'description': 'Transportar merluza', 'task_type': 1, 'task_status': 'Rebuda', 'origin_room': 'Sala 3',
              'destination_room': 'Sala 4', 'containers': 30},
-            {'description': 'Transportar gallo (pescado)', 'task_type': 0, 'task_status': 'Rebuda', 'origin_room': 'Moll de càrrega',
+            {'description': 'Transportar gallo (pescado)', 'task_type': 0, 'task_status': 'Rebuda',
+             'origin_room': 'Moll de càrrega',
              'destination_room': 'Sala 3', 'containers': 17},
             {'description': 'Transportar Fairy', 'task_type': 2, 'task_status': 'Rebuda', 'origin_room': 'Sala 2',
              'destination_room': 'Moll de càrrega', 'containers': 8},
         ],
         'done': [
-            {'description': 'Transportar café', 'task_type': 0, 'task_status': 'Completada', 'origin_room': 'Moll de càrrega',
+            {'description': 'Transportar café', 'task_type': 0, 'task_status': 'Completada',
+             'origin_room': 'Moll de càrrega',
              'destination_room': 'Sala 3', 'containers': 17},
             {'description': 'Transportar jamón', 'task_type': 2, 'task_status': 'Completada', 'origin_room': 'Sala 2',
              'destination_room': 'Moll de càrrega', 'containers': 21},
@@ -454,26 +534,10 @@ def panel_tasks_mock(request):
     }
     '''
         task_type 0 Entrada | 1 Intern | 2 Sortida
-        task_status 0 Pendent | 1 Assignada automaticament | 
+        task_status 0 Pendent | 1 Assignada automaticament |
                     2 Assignada manualment | 3 Rebuda | 4 Completada
         origin_room
         destination_room
         containers
     '''
     return render(request, 'magatzem/tasks-list.html', context)
-
-'''
-def entrada_producte(request):
-    entry_handler = EntryHandler()
-    container = entry_handler.generate_entry()
-
-    hum = container['hum']
-    temp = container['temp']
-    rooms = Room.objects.filter(hum__gte=hum, temp__gte=temp)  #S'ha de canviar els models perque la sala no te max i min
-
-    optimization_handler = RoomHandler(container, rooms)
-
-    context = optimization_handler.select_containers()
-
-    return render(request, 'magatzem/product-entry.html', context)
-'''

@@ -9,140 +9,12 @@
 
   <div class="row main-row mt-4 justify-content-md-center">
 
-    <div class="col-sm-7 bg-light">
-
-      <map name="map-warehouse">
-        <!-- Sala 1 -->
-        <area shape="rect" coords="3, 0, 280, 125"
-              href="#" title="SALA 1
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Sala 2 -->
-        <area shape="rect" coords="280, 0, 560, 125"
-              href="#" title="SALA 2
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Sala A -->
-        <area shape="rect" coords="3, 127, 105, 248"
-              href="#" title="SALA A
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Sala B -->
-        <area shape="rect" coords="3, 250, 105, 360"
-              href="#" title="SALA B
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Sala C -->
-        <area shape="rect" coords="3, 362, 105, 495"
-              href="#" title="SALA C
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-
-        <!-- Sala M1-->
-        <area shape="rect" coords="478, 127, 560, 190"
-              href="#" title="M1
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Sala M2-->
-        <area shape="rect" coords="479, 192, 560, 256"
-              href="#" title="M2
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Sala M3-->
-        <area shape="rect" coords="479, 258, 560, 321"
-              href="#" title="M3
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Sala M4-->
-        <area shape="rect" coords="479, 323, 560, 387"
-              href="#" title="M4
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Sala F7-->
-        <area shape="rect" coords="479, 389, 560, 512"
-              href="#" title="F7
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-
-        <!-- Sala F1-->
-        <area shape="rect" coords="348, 182, 410, 235"
-              href="#" title="F1
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Sala F2-->
-        <area shape="rect" coords="348, 237, 410, 289"
-              href="#" title="F2
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Sala F3-->
-        <area shape="rect" coords="348, 291, 410, 345"
-              href="#" title="F3
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Sala F4-->
-        <area shape="rect" coords="348, 347, 410, 399"
-              href="#" title="F4
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Sala F5-->
-        <area shape="rect" coords="348, 401, 410, 454"
-              href="#" title="F5
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Sala F6-->
-        <area shape="rect" coords="348, 456, 410, 509"
-              href="#" title="F6
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-        <!-- Moll càrrega-->
-        <area shape="rect" coords="39, 558, 292, 664"
-              href="#" title="Moll de càrrega
---------------------------------
-Temperatura:  {{ temperatura }}º
-Humitat:      {{ humitat }}%
-Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
-      </map>
-
-      <img src="{% static 'images/magatzem.png' %}" class="img-fluid img-thumbnail mx-auto d-block"
-           style="max-width: 90%; height: auto" usemap="#map-warehouse">
-    </div>
+    {% include 'magatzem/mapa.html' %}
 
     <div class="col-sm-4 bg-light">
       <div class="row">
-        <button type="button" class="btn btn-lg btn-block mt-3 text-button">Tasques Operaris</button>
-        <button type="button" class="btn btn-lg btn-block mt-2 mb-4 text-button">Tasques Tècnics</button>
+        <a class="btn btn-lg btn-block mt-3 text-button" href="{% url 'panel-operaris' %}">Tasques Operaris</a>
+        <a class="btn btn-lg btn-block mt-2 mb-4 text-button" href="#">Tasques Tècnics</a>
 
         <div class="header-content-left">
           <h5 class="heading mt-2 text-center">Darreres tàsques</h5>
@@ -176,9 +48,9 @@ Capacitat:    {{ capacitat }}%" data-toggle="tooltip">
       </div>
 
       <div class="row">
-        <button type="button" class="btn btn-lg btn-block text-button">Nova entrada</button>
-        <button type="button" class="btn btn-lg btn-block text-button">Nova sortida</button>
-        <button type="button" class="btn btn-lg btn-block mb-4 text-button">Avís tècnics</button>
+        <a class="btn btn-lg btn-block text-button" href="#">Nova entrada</a>
+        <a class="btn btn-lg btn-block text-button" href="#">Nova sortida</a>
+        <a class="btn btn-lg btn-block mb-4 text-button" href="#">Avís tècnics</a>
       </div>
     </div>
   </div>

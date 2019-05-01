@@ -18,6 +18,12 @@
     font-size: 1rem;
  }
 
+.title-product {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
 .task-status-text {
     font-weight: 700;
     font-size: 1.2rem;
