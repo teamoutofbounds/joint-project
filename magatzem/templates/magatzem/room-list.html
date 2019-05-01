@@ -1,21 +1,19 @@
 {% extends 'magatzem/base-gestor.html' %}
 {% block content %}
 
-
   <div class="card-columns mt-3">
-
     {% for room in room_list  %}
     <div class="card" style="margin-bottom: 1em">
       <div class="card-header">
         <div class="row">
           <div class="col-sm-6">
-            <h2> {{ room.name }} </h2>
+            <h2> {{ room.get_name }} </h2>
           </div>
           <div class="col-sm-6">
             {% if room.room_status == 0 %}
-            <h3 class="float-sm-right" style="color:red">Tancada </h3>
+              <h3 class="float-sm-right" style="color:red">Tancada </h3>
             {% else %}
-            <h3 class="float-sm-right" style="color:green">Oberta </h3>
+              <h3 class="float-sm-right" style="color:green">Oberta </h3>
             {% endif %}
           </div>
         </div>
