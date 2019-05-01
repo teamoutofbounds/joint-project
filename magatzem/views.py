@@ -9,14 +9,11 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 # from .tasks import assign_task
-
-'''
-# Check if logged in Mixin
 from tools.algorithms.sala_selector import RoomHandler
 from tools.api.product_entry import EntryHandler
-'''
 
 
+# Check if logged in Mixin
 class LoginRequiredMixin(object):
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
@@ -117,6 +114,23 @@ def home_operari(request):
     context = {}
     context['title'] = 'Home-Operari'
     return render(request, 'magatzem/notification.html', context)
+
+
+def entrada_producte(request):
+    entry_handler = EntryHandler()
+    container = entry_handler.generate_entry()
+
+    hum_min = container['hum_min']
+    temp_min = container['temp_min']
+    hum_max = container['hum_max']
+    temp_max = container['temp_max']
+    rooms = Room.objects.filter(Q(hum__gte=hum_min), Q(temp__gte=temp_min), Q(temp__lte=temp_max), Q(hum__lte=hum_max))  #S'ha de canviar els models perque la sala no te max i min
+
+    optimization_handler = RoomHandler(container, rooms)
+
+    context = optimization_handler.select_containers()
+
+    return render(request, 'magatzem/product-entry.html', context)
 
 
 def entrada_producte_mock(request):
@@ -515,18 +529,4 @@ def panel_tasks_mock(request):
     return render(request, 'magatzem/tasks-list.html', context)
 
 
-'''
-def entrada_producte(request):
-    entry_handler = EntryHandler()
-    container = entry_handler.generate_entry()
 
-    hum_min = container['hum_min']
-    temp_min = container['temp_min']
-    rooms = Room.objects.filter(hum__gte=hum_min, temp__gte=temp_min)  #S'ha de canviar els models perque la sala no te max i min
-
-    optimization_handler = RoomHandler(container, rooms)
-
-    context = optimization_handler.select_containers()
-
-    return render(request, 'magatzem/product-entry.html', context)
-'''
