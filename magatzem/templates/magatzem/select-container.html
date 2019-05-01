@@ -5,47 +5,34 @@
 <br>
 <div class="container">
   <form>
-  {% for container in productes %}
-    {% if container.quantity > 0 %}
+
       <div style="overflow-x:auto">
-      <table class="table-bordered table-striped" width="100%" cellspacing="8" cellpadding="0" border="0">
+      <table class="table-bordered" width="100%" cellspacing="8" cellpadding="0" border="0">
        <tr>
-         <th width="20%"> <h5>Producte</h5>  </th>
-         <th width="20%"> <h5>Quantitat actual </h5> </th>
-         <th width="20%"> <h5>Quantitat a modificar </h5> </th>
-         <th width="20%"> <h5>Rang de Temperatura </h5> </th>
-         <th width="20%"> <h5>Rang d'Humitat </h5> </th>
+         <th width="25%"><div align="center"> <h5><b> Producte </b></h5></div>  </th>
+         <th width="15%"><div align="center"> <h5><b> Quantitat actual </b></h5></div> </th>
+         <th width="20%"><div align="center"> <h5><b> Modificació </b></h5></div> </th>
+         <th width="10%"><div align="center"> <h5><b> Temp Max </b></h5></div> </th>
+         <th width="10%"><div align="center"> <h5><b> Temp Min </b></h5></div> </th>
+         <th width="10%"><div align="center"> <h5><b> Hum Max </b></h5></div> </th>
+         <th width="10%"><div align="center"> <h5><b> Hum Min </b></h5></div> </th>
        </tr>
+        {% for container in productes %}
+        {% if container.quantity > 0 %}
        <tr>
-         <td> {{ container.product_id }}</td>
+         <td> <div align="center">{{ container.product_id }}</div></td>
          <td> <div align="right"> {{ container.quantity }} &nbsp;</div></td>
          <td> <input type="number" class="form-control" id="inputQuantity" placeholder="0"> </td>
-         <td>
-           <div class="container">
-             <div class="row">
-               &nbsp;Temperatura Màxima: {{ container.temp_max }}ºC
-             </div>
-             <div class="row">
-               &nbsp;Temperatura Mínima: {{ container.temp_min }}ºC
-             </div>
-           </div>
-         </td>
-         <td>
-           <div class="container">
-             <div class="row">
-               &nbsp;Humitat Màxima: {{ container.hum_max }}ºC
-             </div>
-             <div class="row">
-               &nbsp;Humitat Mínima: {{ container.hum_min }}ºC
-             </div>
-           </div>
-         </td>
+         <td> <div align="right"> {{ container.temp_max }}ºC&nbsp;</div></td>
+         <td> <div align="right"> {{ container.temp_min }}ºC&nbsp;</div></td>
+         <td> <div align="right"> {{ container.hum_max }}ºC&nbsp;</div></td>
+         <td> <div align="right"> {{ container.hum_min }}ºC&nbsp;</div></td>
        </tr>
+        {% endif %}
+        {% endfor %}
       </table>
       </div>
       <br>
-    {% endif %}
-  {% endfor %}
   </form>
 </div>
 
