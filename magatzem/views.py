@@ -78,8 +78,6 @@ class NotificationsListView(ListView, LoginRequiredMixin):
             queryset = Task.assign_task(self.request.user)
             self.new_task = True
 
-            # queryset = assign_task(self.request.user)
-
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -95,7 +93,11 @@ class TaskPanelOperaris(TodayArchiveView, LoginRequiredMixin):
     context_object_name = 'task_list'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = {}
+        tasks = super().get_context_data(**kwargs)
+        context['todo'] = tasks.filter(task_status=0)  # pendent assignacio
+        context['doing'] = tasks.filter(Q(task_status=1) | Q(task_status=2) | Q(task_status=3))
+        context['done'] = tasks.filter(task_status=4)
         context['title'] = 'Tasques Operaris'
         return context
 
