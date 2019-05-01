@@ -23,7 +23,7 @@ Feature: Access Room
       | sala2    | 10      | 30       | 10         | 50       | 0            |
     And There is a container "container" assigned to that room
       | product_id | producer_id | limit | temp_min | temp_max  | hum_min  | hum_max | room      |
-      | 1          | 2           | 50    | 5        | 50        | 10       | 40      | room_name |
+      | 1          | 2           | 50    | 20       | 70        | 10       | 40      | room_name |
     When I access to the data of room "room_name"
     Then All the data of room "room_name" is NOT correct for container "container"
 
