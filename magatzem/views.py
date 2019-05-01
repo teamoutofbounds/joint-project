@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 # from .tasks import assign_task
 from tools.algorithms.sala_selector import RoomHandler
 from tools.api.product_entry import EntryHandler
+from datetime import date
 
 
 # Check if logged in Mixin
@@ -112,12 +113,18 @@ class HomeGestor(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Home Gestor'
-
+        # get last tasks
+        context['last_tasks'] = self.get_last_tasks()
+        # get room capacity
         context['capacities'] = {}
         for item in context['object_list']:
             context['capacities'][item.name] = item.quantity * 100 / item.limit
 
         return context
+
+    def get_last_tasks(self):
+        tasks = Task.objects.order_by('-date').filter(date=date.today())
+        return tasks
 
 
 def home_gestor(request):
