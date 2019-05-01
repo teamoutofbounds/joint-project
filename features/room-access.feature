@@ -19,8 +19,8 @@ Feature: Access Room
   Scenario: I access a room where there is a container that doesnt¡'t fit the room
     Given Exists a user "username" with password "password"
     And Exists a room named "room_name"
-      | name     | temp    | hum      | quantity   | limit    | room_status  |
-      | sala2    | 10      | 30       | 10         | 50       | 0            |
+      | temp    | hum      | quantity   | limit    | room_status  |
+      | 10      | 30       | 10         | 50       | 0            |
     And There is a container "container" assigned to that room
       | product_id | producer_id | limit | temp_min | temp_max  | hum_min  | hum_max | room      |
       | 1          | 2           | 50    | 20       | 70        | 10       | 40      | room_name |
