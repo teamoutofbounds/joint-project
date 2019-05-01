@@ -63,6 +63,7 @@
         </div>
       </div>
 
+      <!--
       <div>
         <div class ="card">
 
@@ -76,12 +77,12 @@
                 <caption style="display: none">Llista de tasques</caption>
                 <thead>
                 <tr>
-                  <!-- Main info -->
+
                   <th scope="col"> <b>Descripció</b> </th>
-                  <!-- Localitzacio -->
+
                   <th scope="col"> <b>Origen</b> </th>
                   <th scope="col"> <b>Destinació</b> </th>
-                  <!-- Contenidor -->
+
                   <th scope="col"> <b>Contenidor</b> </th>
                   <th scope="col"> <b>Quantitat</b> </th>
                 </tr>
@@ -100,6 +101,8 @@
           </div>
         </div>
       </div>
+              -->
+
     </div>
 
     <div class="col-sm-4">
@@ -159,6 +162,45 @@
       <div class="accions mt-4">
         <a class="btn btn-primary d-flex justify-content-center" href="" role="button">Traslladar</a>
       </div>
+
+      <!-- TASK LIST -->
+      <div class="card-header mt-4">
+        <h2>Tasques</h2>
+      </div>
+
+      <div class="scroll-panel mb-5" style=" position: relative;
+                                      width: 100%;
+                                      height: calc(100vh - 575px);
+                                      min-height: 165px;
+                                      overflow-y: scroll;">
+
+        {% if tasks %}
+          {% for task in tasks %}
+            <div class="card border-info mb-2">
+              <div class="card-header bg-transparent border-info">{{ task.description }}</div>
+              <div class="card-body text-info">
+                <h6 class="card-text mb-1"> PRODUCTE: <strong>{{ task.containers.product_id }}</strong></h6>
+                <h6 class="card-text mb-1 text-muted">QUANTITAT: <strong>{{ task.containers.quantity }} containers</strong></h6>
+                <div class="row">
+                  <div class="col-6">
+                    <h6 class="card-text mb-1">ORIGEN: <strong>{{ task.origin_room.get_name }}</strong></h6>
+                  </div>
+                  <div class="col-6">
+                    <h6 class="card-text mb-1">DESTÍ: <strong>{{ task.destination_room.get_name }}</strong></h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+
+        {% else %}
+          <div class="card border-info mb-2">
+            <div class="card-header bg-transparent border-info">AVUI ENCARA NO S'HAN GENERAT TASQUES</div>
+          </div>
+        {% endif %}
+
+      </div>
+
     </div>
 
   </div>
