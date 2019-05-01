@@ -27,6 +27,12 @@
     overflow-y: scroll;
 }
 
+.scroll-panel-ceo {
+    width: 100%;
+    max-height: 16vh;
+    overflow-y: scroll;
+}
+
 /* Tooltip container */
 .tooltip {
   position: relative;

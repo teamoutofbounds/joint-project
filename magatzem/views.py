@@ -122,6 +122,12 @@ def home_gestor(request):
     return render(request, 'magatzem/home-gestor.html', context)
 
 
+def home_ceo(request):
+    context = {}
+    context['title'] = 'Home-CEO'
+    return render(request, 'magatzem/home-ceo.html', context)
+
+
 def home_operari(request):
     context = {}
     context['title'] = 'Home-Operari'
