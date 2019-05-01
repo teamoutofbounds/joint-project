@@ -90,14 +90,19 @@ class NotificationsListView(ListView, LoginRequiredMixin):
 class TaskPanelOperaris(TodayArchiveView, LoginRequiredMixin):
     queryset = Task.objects.all()
     date_field = 'date'
-    context_object_name = 'task_list'
+    # context_object_name = 'task_list'
+    template_name = 'magatzem/tasks-list.html'
 
     def get_context_data(self, **kwargs):
-        context = {}
         tasks = super().get_context_data(**kwargs)
-        context['todo'] = tasks.filter(task_status=0)  # pendent assignacio
-        context['doing'] = tasks.filter(Q(task_status=1) | Q(task_status=2) | Q(task_status=3))
-        context['done'] = tasks.filter(task_status=4)
+        context = {'todo': [], 'doing': [], 'done': []}
+        for task in tasks['object_list']:
+            if task.task_status == 0 or task.task_status == 1 or task.task_status == 2:
+                context['todo'].append(task)  # pendent assignacio
+            elif task.task_status == 3:
+                context['doing'].append(task)
+            else:
+                context['done'].append(task)
         context['title'] = 'Tasques Operaris'
         return context
 

@@ -9,12 +9,12 @@ from . import views
 urlpatterns = [
     # urls gestor
     path('gestor/', views.home_gestor, name='gestor-home'),
-    path('operaris/', views.home_operari, name='operaris-home'),
     path('gestor/sales/', RoomList.as_view(), name='list-room'),
     path('gestor/sales/<int:pk>/', RoomDetail.as_view(), name='detail-room'),
     path('gestor/tasques_operaris', TaskPanelOperaris.as_view(), name='panel-operaris'),
     # urls operari
-    path('operari/user/', NotificationsListView.as_view(), name='notificacio'),
+    path('operaris/notificacions', NotificationsListView.as_view(), name='operaris-notificacions'),
+
     # urls tecnics
     # urls mocks
     # path('gestor/entrades/new/', views.exemple_mock, name='new-arrival'),

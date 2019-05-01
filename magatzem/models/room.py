@@ -27,4 +27,7 @@ class Room(models.Model):
         ordering = ['-room_status', 'name']
 
     def __str__(self):
-        return Room.STR_PATTERN.format(self.name, self.room_status, self.limit, self.quantity)
+        return self.name
+
+    # def __str__(self):
+        # return Room.STR_PATTERN.format(self.name, self.room_status, self.limit, self.quantity)

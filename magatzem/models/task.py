@@ -54,3 +54,6 @@ class Task(models.Model):
                 task.task_status = 1
                 task.save()
         return task
+
+    def get_status(self):
+        return self.STATUS_CHOICES[self.task_status][1]
