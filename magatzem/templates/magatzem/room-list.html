@@ -1,8 +1,9 @@
 {% extends 'magatzem/base-gestor.html' %}
 {% block content %}
 
-<div class="row">
-  <div class="col-sm-12">
+
+  <div class="card-columns mt-3">
+
     {% for room in room_list  %}
     <div class="card" style="margin-bottom: 1em">
       <div class="card-header">
@@ -21,19 +22,19 @@
       </div>
       <div class="card-body">
         <div class="row">
-          <div class="col-sm-6">
+          <div class="col-sm-7">
             <p class="card-text">Temp: {{ room.temp }} ºC</p>
             <p class="card-text">Hum: {{ room.hum }} %</p>
             <p class="card-text">Capacitat: {{ room.quantity }} / {{ room.limit }}</p>
           </div>
-          <div class="col-sm-6">
-            <a href="#" class="btn-primary btn-lg">Mostra sala</a>
+          <div class="col-sm-5 d-flex flex-column">
+            <a href="#" class="btn btn-primary mt-auto">Mostra sala</a>
           </div>
         </div>
       </div>
     </div>
     {% endfor %}
+
   </div>
-</div>
 
 {% endblock content %}
