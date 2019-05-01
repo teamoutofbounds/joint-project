@@ -1,45 +1,57 @@
 {% extends 'magatzem/base-gestor.html' %}
 {% block content %}
 <br>
-<h2>Seleccionar productes de Sala {{room.name}} </h2>
+<h2><b>Seleccionar productes de Sala</b></h2>
 <br>
 <div class="container">
-
+  <form>
   {% for container in productes %}
-      <form>
-        <div class="form-row" style="margin-bottom: 1em">
-          <div class="col-sm" >
-            <b>Producte</b>
-            <p class="card-text" >{{ container.product_id }}</p>
-          </div>
-          <div class="col-sm" >
-            <b>Quantitat disponible</b>
-            <p class="card-text" >{{ container.quantity }}</p>
-          </div>
-          <div class="col-sm">
-            <b>Quantitat a moure</b>
-            <div class="dropdown">
-              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Seleccionar</button>
-            </div>
-            <div class="dropdown-menu">
-              <button class="dropdown-item" type="button">1</button>
-              <button class="dropdown-item" type="button">2</button>
-              <button class="dropdown-item" type="button">3</button>
-            </div>
-          </div>
-          <div class="col-sm">
-            <b>Condicions</b>
-            <p class="card-text" > Temperatura Max: {{ container.temp_max }} </p>
-            <p class="card-text" > Temperatura Min: {{ container.temp_min }}</p>
-          </div>
-        </div>
-      </form>
+    {% if container.quantity > 0 %}
+      <div style="overflow-x:auto">
+      <table class="table-bordered table-striped" width="100%" cellspacing="8" cellpadding="0" border="0">
+       <tr>
+         <th width="20%"> <h5>Producte</h5>  </th>
+         <th width="20%"> <h5>Quantitat actual </h5> </th>
+         <th width="20%"> <h5>Quantitat a modificar </h5> </th>
+         <th width="20%"> <h5>Rang de Temperatura </h5> </th>
+         <th width="20%"> <h5>Rang d'Humitat </h5> </th>
+       </tr>
+       <tr>
+         <td> {{ container.product_id }}</td>
+         <td> <div align="right"> {{ container.quantity }} &nbsp;</div></td>
+         <td> <input type="number" class="form-control" id="inputQuantity" placeholder="0"> </td>
+         <td>
+           <div class="container">
+             <div class="row">
+               &nbsp;Temperatura Màxima: {{ container.temp_max }}ºC
+             </div>
+             <div class="row">
+               &nbsp;Temperatura Mínima: {{ container.temp_min }}ºC
+             </div>
+           </div>
+         </td>
+         <td>
+           <div class="container">
+             <div class="row">
+               &nbsp;Humitat Màxima: {{ container.hum_max }}ºC
+             </div>
+             <div class="row">
+               &nbsp;Humitat Mínima: {{ container.hum_min }}ºC
+             </div>
+           </div>
+         </td>
+       </tr>
+      </table>
+      </div>
+      <br>
+    {% endif %}
   {% endfor %}
+  </form>
 </div>
 
 <div class="text-right" >
   <div class="btn-group-vertical">
-    <button type="button" class="btn btn-success " >Continuar</button>
+    <button type="button" class="btn btn-success " >Aceptar</button>
     <button type="button" class="btn btn-danger " >Cancelar</button>
   </div>
 </div>
