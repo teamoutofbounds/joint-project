@@ -22,7 +22,7 @@
        <tr>
          <td> <div align="center">{{ container.product_id }}</div></td>
          <td> <div align="right"> {{ container.quantity }} &nbsp;</div></td>
-         <td> <input type="number" class="form-control" id="inputQuantity" placeholder="0"> </td>
+         <td> <input type="number" class="form-control" id="inputQuantity" min="0" max="{{ container.quantity }}" placeholder="0"> </td>
          <td> <div align="right"> {{ container.temp_max }}ºC&nbsp;</div></td>
          <td> <div align="right"> {{ container.temp_min }}ºC&nbsp;</div></td>
          <td> <div align="right"> {{ container.hum_max }}ºC&nbsp;</div></td>
@@ -38,9 +38,35 @@
 
 <div class="text-right" >
   <div class="btn-group-vertical">
-    <button type="button" class="btn btn-success " >Aceptar</button>
-    <button type="button" class="btn btn-danger " >Cancelar</button>
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#acceptModal">Aceptar</button>
+      <div class="modal fade" id="acceptModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div align="left"><h5>Estas segur que vols guardar els canvis fets?</h5></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
+              <a class="btn btn-primary text-button" href="#">Guardar canvis</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rejectModal">Cancelar</button>
+      <div class="modal fade" id="rejectModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div align="left"><h5>Estas segur que vols descartar els canvis fets?</h5></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
+              <a class="btn btn-primary text-button" href="#">Descartar canvis</a>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
-</div>
+  </div>
 
 {% endblock content %}
