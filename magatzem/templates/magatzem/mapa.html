@@ -1,0 +1,263 @@
+{% load static from staticfiles %}
+
+<div class="col-sm-7 bg-light">
+
+      <img id="map" src="{% static 'images/magatzem.png' %}" class="img-fluid img-thumbnail mx-auto d-block"
+           style="max-width: 90%; height: auto;" usemap="#map-warehouse">
+
+      <map name="map-warehouse">
+        <!-- Sala 1 -->
+        {% if rooms.0.room_status == 1 %}
+        <area shape="rect" coords="3, 0, 280, 125"
+              href="#" title="SALA {{ rooms.0.name }}
+--------------------------------
+Temperatura:  {{ rooms.0.temp }}º
+Humitat:      {{ rooms.0.hum }}%
+Capacitat:    {{ capacities.1 }}%" data-toggle="tooltip"/>
+        {% else %}
+        <area shape="rect" coords="3, 0, 280, 125"
+              href="#" title="SALA {{ rooms.0.name }}
+--------------------------------
+TANCADA" data-toggle="tooltip"/>
+        {% endif %}
+
+        <!-- Sala 2 -->
+        {% if rooms.1.room_status == 1 %}
+        <area shape="rect" coords="280, 0, 560, 125"
+              href="#" title="SALA 2
+--------------------------------
+Temperatura:  {{ rooms.1.temp }}º
+Humitat:      {{ rooms.1.hum }}%
+Capacitat:    {{ capacities.2 }}%" data-toggle="tooltip">
+        {% else %}
+        <area shape="rect" coords="280, 0, 560, 125"
+              href="#" title="SALA {{ rooms.1.name }}
+--------------------------------
+TeANCADA" data-toggle="tooltip">
+        {% endif %}
+
+        <!-- Sala A -->
+        {% if rooms.2.room_status %}
+        <area shape="rect" coords="3, 127, 105, 248"
+              href="#" title="SALA {{ rooms.2.name }}
+--------------------------------
+Temperatura:  {{ rooms.2.temp }}º
+Humitat:      {{ rooms.2.hum }}%
+Capacitat:    {{ capacities.A }}%" data-toggle="tooltip">
+        {% else %}
+        <area shape="rect" coords="3, 127, 105, 248"
+              href="#" title="SALA {{ rooms.2.name }}
+--------------------------------
+TANCADA" data-toggle="tooltip">
+        {% endif %}
+
+        <!-- Sala B -->
+        {% if rooms.3.room_status == 1 %}
+        <area shape="rect" coords="3, 250, 105, 360"
+              href="#" title="SALA {{ rooms.3.name }}
+--------------------------------
+Temperatura:  {{ rooms.3.temp }}º
+Humitat:      {{ rooms.3.hum }}%
+Capacitat:    {{ capacities.B }}%" data-toggle="tooltip">
+        {% else %}
+        <area shape="rect" coords="3, 250, 105, 360"
+              href="#" title="SALA {{ rooms.3.name }}
+--------------------------------
+TANCADA" data-toggle="tooltip">
+        {% endif %}
+
+        <!-- Sala C -->
+        {% if rooms.4.room_status == 1 %}
+        <area shape="rect" coords="3, 362, 105, 495"
+              href="#" title="SALA {{ rooms.4.name }}
+--------------------------------
+Temperatura:  {{ rooms.4.temp }}º
+Humitat:      {{ rooms.4.hum }}%
+Capacitat:    {{ capacities.C }}%" data-toggle="tooltip">
+        {% else %}
+        <area shape="rect" coords="3, 362, 105, 495"
+              href="#" title="SALA {{ rooms.4.name }}
+--------------------------------
+TANCADA" data-toggle="tooltip">
+        {% endif %}
+
+        <!-- Sala M1-->
+        {% if rooms.5.room_status == 1 %}
+        <area shape="rect" coords="478, 127, 560, 190"
+              href="#" title="{{ rooms.5.name }}
+--------------------------------
+Temperatura:  {{ rooms.5.temp }}º
+Humitat:      {{ rooms.5.hum }}%
+Capacitat:    {{ capacities.M1 }}%" data-toggle="tooltip">
+        {% else %}
+        <area shape="rect" coords="478, 127, 560, 190"
+              href="#" title="{{ rooms.5.name }}
+--------------------------------
+TANCADA" data-toggle="tooltip">
+        {% endif %}
+
+        {% if rooms.6.room_status %}
+        <!-- Sala M2-->
+        <area shape="rect" coords="479, 192, 560, 256"
+              href="#" title="{{ rooms.6.name }}
+--------------------------------
+Temperatura:  {{ rooms.6.temp }}º
+Humitat:      {{ rooms.6.hum }}%
+Capacitat:    {{ capacities.M2 }}%" data-toggle="tooltip">
+        {% else %}
+        <area shape="rect" coords="479, 192, 560, 256"
+              href="#" title="{{ rooms.6.name }}
+--------------------------------
+TANCADA" data-toggle="tooltip">
+        {% endif %}
+
+        <!-- Sala M3-->
+        {% if rooms.7.room_status == 1 %}
+        <area shape="rect" coords="479, 258, 560, 321"
+              href="#" title="{{ rooms.7.name }}
+--------------------------------
+Temperatura:  {{ rooms.7.temp }}º
+Humitat:      {{ rooms.7.hum }}%
+Capacitat:    {{ capacities.M3 }}%" data-toggle="tooltip">
+        {% else %}
+        <area shape="rect" coords="479, 258, 560, 321"
+              href="#" title="{{ rooms.7.name }}
+--------------------------------
+TANCADA" data-toggle="tooltip">
+        {% endif %}
+
+        <!-- Sala F7-->
+        {% if rooms.8.room_status == 1 %}
+        <area shape="rect" coords="479, 323, 560, 387"
+              href="#" title="{{ rooms.8.name }}
+--------------------------------
+Temperatura:  {{ rooms.8.temp }}º
+Humitat:      {{ rooms.8.hum }}%
+Capacitat:    {{ capacities.M4 }}%" data-toggle="tooltip">
+        {% else %}
+        <area shape="rect" coords="479, 323, 560, 387"
+              href="#" title="{{ rooms.8.name }}
+--------------------------------
+TANCADA" data-toggle="tooltip">
+        {% endif %}
+
+        <!-- Sala F7-->
+        {% if rooms.9.room_status == 1 %}
+        <area shape="rect" coords="479, 389, 560, 512"
+              href="#" title="{{ rooms.9.name }}
+--------------------------------
+Temperatura:  {{ rooms.9.temp }}º
+Humitat:      {{ rooms.9.hum }}%
+Capacitat:    {{ capacities.F7 }}%" data-toggle="tooltip">
+        {% else %}
+        <area shape="rect" coords="479, 389, 560, 512"
+              href="#" title="{{ rooms.9.name }}
+--------------------------------
+TANCADA" data-toggle="tooltip">
+        {% endif %}
+
+
+        <!-- Sala F1-->
+        {% if rooms.10.room_status == 1 %}
+        <area shape="rect" coords="348, 182, 410, 235"
+              href="#" title="{{ rooms.10.name }}
+--------------------------------
+Temperatura:  {{ rooms.10.temp }}º
+Humitat:      {{ rooms.10.hum }}%
+Capacitat:    {{ capacities.F1 }}%" data-toggle="tooltip">
+        {% else %}
+        <area shape="rect" coords="348, 182, 410, 235"
+              href="#" title="{{ rooms.10.name }}
+--------------------------------
+TANCADA">
+        {% endif %}
+
+        <!-- Sala F2-->
+        {% if rooms.11.room_status == 1 %}
+        <area shape="rect" coords="348, 237, 410, 289"
+              href="#" title="{{ rooms.11.name }}
+--------------------------------
+Temperatura:  {{ rooms.11.temp }}º
+Humitat:      {{ rooms.11.hum }}%
+Capacitat:    {{ capacities.F2 }}%" data-toggle="tooltip">
+        {% else %}
+        <area shape="rect" coords="348, 237, 410, 289"
+              href="#" title="{{ rooms.11.name }}
+--------------------------------
+TANCADA" data-toggle="tooltip">
+        {% endif %}
+
+        <!-- Sala F3-->
+        {% if rooms.12.room_status == 1 %}
+        <area shape="rect" coords="348, 291, 410, 345"
+              href="#" title="{{ rooms.12.name }}
+--------------------------------
+Temperatura:  {{ rooms.12.temp }}º
+Humitat:      {{ rooms.12.hum }}%
+Capacitat:    {{ capacities.F3 }}%" data-toggle="tooltip">
+        {% else %}
+        <area shape="rect" coords="348, 291, 410, 345"
+              href="#" title="{{ rooms.12.name }}
+--------------------------------
+TANCADA" data-toggle="tooltip">
+        {% endif %}
+
+        <!-- Sala F4-->
+        {% if rooms.13.room_status == 1 %}
+        <area shape="rect" coords="348, 347, 410, 399"
+              href="#" title="{{ rooms.13.name }}
+--------------------------------
+Temperatura:  {{ rooms.13.temp }}º
+Humitat:      {{ rooms.13.hum }}%
+Capacitat:    {{ capacities.F4 }}%" data-toggle="tooltip">
+        {% else %}
+      <area shape="rect" coords="348, 347, 410, 399"
+              href="#" title="{{ rooms.13.name }}
+--------------------------------
+TANCADA" data-toggle="tooltip">
+        {% endif %}
+
+        <!-- Sala F5-->
+        {% if rooms.14.room_status == 1 %}
+        <area shape="rect" coords="348, 401, 410, 454"
+              href="#" title="{{ rooms.14.name }}
+--------------------------------
+Temperatura:  {{ rooms.14.temp }}º
+Humitat:      {{ rooms.14.hum }}%
+Capacitat:    {{ capacities.F5 }}%" data-toggle="tooltip">
+        {% else %}
+            <area shape="rect" coords="348, 401, 410, 454"
+              href="#" title="{{ rooms.14.name }}
+--------------------------------
+TANCADA" data-toggle="tooltip">
+        {% endif %}
+
+        <!-- Sala F6-->
+        {% if rooms.15.room_status == 1 %}
+        <area shape="rect" coords="348, 456, 410, 509"
+              href="#"
+              title="{{ rooms.15.name }}
+--------------------------------
+Temperatura:  {{ rooms.15.temp }}º
+Humitat:      {{ rooms.15.hum }}%
+Capacitat:    {{ capacities.F6 }}%"
+              data-toggle="tooltip">
+        {% else %}
+        <area shape="rect" coords="348, 456, 410, 509"
+              href="#"
+
+              title="{{ rooms.15.name }}
+--------------------------------
+TANCADA"
+              data-toggle="tooltip">
+        {% endif %}
+
+        <!-- Moll càrrega -->
+        <!-- ************ -->
+        <area shape="rect" coords="39, 558, 292, 664"
+              href="#" title="{{ rooms.16.name }}
+--------------------------------
+Capacitat:    {{ capacities.Moll }}%" data-toggle="tooltip">
+
+      </map>
+    </div>
