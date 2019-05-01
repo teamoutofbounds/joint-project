@@ -141,16 +141,9 @@ def home_operari(request):
 
 def entrada_producte(request):
     entry_handler = EntryHandler()
-    container = entry_handler.generate_entry()
-
-    hum = container['hum']
-    temp= container['temp']
-    rooms = Room.objects.filter(Q(hum__gte=hum), Q(temp__gte=temp))
-
-    optimization_handler = RoomHandler(container, rooms)
-
-    context = optimization_handler.select_containers()
-
+    context = {}
+    context['title'] = 'Entrada Productes'
+    context['containers'] = entry_handler.generate_entry()
     return render(request, 'magatzem/product-entry.html', context)
 
 
@@ -541,13 +534,10 @@ def panel_tasks_mock(request):
     }
     '''
         task_type 0 Entrada | 1 Intern | 2 Sortida
-        task_status 0 Pendent | 1 Assignada automaticament | 
+        task_status 0 Pendent | 1 Assignada automaticament |
                     2 Assignada manualment | 3 Rebuda | 4 Completada
         origin_room
         destination_room
         containers
     '''
     return render(request, 'magatzem/tasks-list.html', context)
-
-
-

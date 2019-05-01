@@ -8,7 +8,7 @@ class RoomHandler:
 	def __init__(self, container, sales):
 		self.container = container
 		self.sales = sales
-		self.quantity = container['quantity']
+		self.quantity = container['qty']
 
 	def select_containers(self):
 		self._initialize_sales()
