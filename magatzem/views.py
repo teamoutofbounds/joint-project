@@ -120,11 +120,9 @@ def entrada_producte(request):
     entry_handler = EntryHandler()
     container = entry_handler.generate_entry()
 
-    hum_min = container['hum_min']
-    temp_min = container['temp_min']
-    hum_max = container['hum_max']
-    temp_max = container['temp_max']
-    rooms = Room.objects.filter(Q(hum__gte=hum_min), Q(temp__gte=temp_min), Q(temp__lte=temp_max), Q(hum__lte=hum_max))  #S'ha de canviar els models perque la sala no te max i min
+    hum = container['hum']
+    temp= container['temp']
+    rooms = Room.objects.filter(Q(hum__gte=hum), Q(temp__gte=temp))
 
     optimization_handler = RoomHandler(container, rooms)
 
