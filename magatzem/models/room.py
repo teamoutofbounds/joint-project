@@ -4,6 +4,14 @@ from simple_history.models import HistoricalRecords
 
 
 class Room(models.Model):
+
+    ROOMS_NAME = {
+        '1': 'Sala 1', '2': 'Sala 2',
+        'A': 'Sala A', 'B': 'Sala B', 'C': 'Sala C',
+        'M1': 'M1', 'M2': 'M2', 'M3': 'M3', 'M4': 'M4',
+        'F1': 'F1', 'F2': 'F2', 'F3': 'F3', 'F4': 'F4',
+        'F5': 'F5', 'F6': 'F6', 'F7': 'F7', 'Moll': 'Moll'
+    }
     MAX_STATUS_CHOICES_VALUE = 1
     STATUS_CHOICES = (
         (0, "Tancada"),
@@ -29,7 +37,7 @@ class Room(models.Model):
     '''
 
     def __str__(self):
-        return self.name
+        return Room.STR_PATTERN.format(self.name, self.room_status, self.limit, self.quantity)
 
-    # def __str__(self):
-        # return Room.STR_PATTERN.format(self.name, self.room_status, self.limit, self.quantity)
+    def get_name(self):
+        return Room.ROOMS_NAME[self.name]
