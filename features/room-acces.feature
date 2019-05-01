@@ -1,13 +1,14 @@
 #now this is just copied and need to be modified
 
-Feature: View Restaurant
-  In order to know about a restaurant
-  As a user
-  I want to view the restaurant details including all its dishes and reviews
+Feature: Acces Room
+  In order to be able to acces the data of a room
+  As an user
+  I want to make sure everything is loaded correctly and without mistakes
 
-  Background: There is one restaurant with 2 dishes and another without
-    Given Exists a user "user1" with password "password"
-    And Exists a user "user2" with password "password"
+  Background: There is a not full room with a product
+    Given Exists a user "username" with password "password"
+    And There is a product assigned to a room
+    And The room is not full
     And Exists restaurant registered by "user1"
       | name            | city          | country       |
       | Famous          | London        | England       |
@@ -24,20 +25,3 @@ Feature: View Restaurant
     And Exists review at restaurant "Famous" by "user2"
       | rating          |
       | 2               |
-
-  Scenario: View details for owned restaurant with two reviews and a dish
-    Given I login as user "user1" with password "password"
-    When I view the details for restaurant "Famous"
-    Then I'm viewing restaurants details including
-      | name            | city          | country       |
-      | Famous          | London        | England       |
-    And There is "edit" link available
-    And I'm viewing a restaurant reviews list containing
-      | rating          | comment       | user          |
-      | 4               | Quite good    | user1         |
-      | 2               |               | user2         |
-    And The list contains 2 reviews
-    And I'm viewing a restaurant dishes list containing
-      | name            | user          |
-      | Fish and Chips  | user1         |
-    And The list contains 1 dishes

@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 # from .tasks import assign_task
 from tools.algorithms.sala_selector import RoomHandler
 from tools.api.product_entry import EntryHandler
+from datetime import date
 
 
 # Check if logged in Mixin
@@ -112,18 +113,18 @@ class HomeGestor(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Home Gestor'
-
+        # get last tasks
+        context['last_tasks'] = self.get_last_tasks()
+        # get room capacity
         context['capacities'] = {}
         for item in context['object_list']:
             context['capacities'][item.name] = item.quantity * 100 / item.limit
 
         return context
 
-
-def home_gestor(request):
-    context = {}
-    context['title'] = 'Home-Gestor'
-    return render(request, 'magatzem/home-gestor.html', context)
+    def get_last_tasks(self):
+        tasks = Task.objects.order_by('-date').filter(date=date.today())
+        return tasks
 
 
 def home_ceo(request):
@@ -140,16 +141,9 @@ def home_operari(request):
 
 def entrada_producte(request):
     entry_handler = EntryHandler()
-    container = entry_handler.generate_entry()
-
-    hum = container['hum']
-    temp= container['temp']
-    rooms = Room.objects.filter(Q(hum__gte=hum), Q(temp__gte=temp))
-
-    optimization_handler = RoomHandler(container, rooms)
-
-    context = optimization_handler.select_containers()
-
+    context = {}
+    context['title'] = 'Entrada Productes'
+    context['containers'] = entry_handler.generate_entry()
     return render(request, 'magatzem/product-entry.html', context)
 
 
@@ -540,13 +534,10 @@ def panel_tasks_mock(request):
     }
     '''
         task_type 0 Entrada | 1 Intern | 2 Sortida
-        task_status 0 Pendent | 1 Assignada automaticament | 
+        task_status 0 Pendent | 1 Assignada automaticament |
                     2 Assignada manualment | 3 Rebuda | 4 Completada
         origin_room
         destination_room
         containers
     '''
     return render(request, 'magatzem/tasks-list.html', context)
-
-
-

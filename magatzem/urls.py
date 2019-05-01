@@ -11,10 +11,13 @@ urlpatterns = [
     path('gestor/sales/', RoomList.as_view(), name='list-room'),
     path('gestor/sales/<int:pk>/', RoomDetail.as_view(), name='detail-room'),
     path('gestor/tasques_operaris/', TaskPanelOperaris.as_view(), name='panel-operaris'),
+    path('gestor/entrada', views.entrada_producte, name='entrada-producte'),
+
     # urls operari
     path('operaris/notificacions/', NotificationsListView.as_view(), name='operaris-notificacions'),
 
     # urls tecnics
+
     # urls mocks
     # path('gestor/entrades/new/', views.exemple_mock, name='new-arrival'),
     # path('gestor/moviments/new/', views.exemple_mock, name='new-movement'),
@@ -28,6 +31,3 @@ urlpatterns = [
     path('tasques_mock/', views.panel_tasks_mock, name='tasques-mock'),
 
 ]
-'''
-    path('entrada/', views.entrada_producte, name='entrada'),
-'''
