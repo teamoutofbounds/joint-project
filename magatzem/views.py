@@ -9,14 +9,11 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 
 # from .tasks import assign_task
-
-'''
-# Check if logged in Mixin
 from tools.algorithms.sala_selector import RoomHandler
 from tools.api.product_entry import EntryHandler
-'''
 
 
+# Check if logged in Mixin
 class LoginRequiredMixin(object):
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
@@ -78,8 +75,6 @@ class NotificationsListView(ListView, LoginRequiredMixin):
             queryset = Task.assign_task(self.request.user)
             self.new_task = True
 
-            # queryset = assign_task(self.request.user)
-
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -92,10 +87,19 @@ class NotificationsListView(ListView, LoginRequiredMixin):
 class TaskPanelOperaris(TodayArchiveView, LoginRequiredMixin):
     queryset = Task.objects.all()
     date_field = 'date'
-    context_object_name = 'task_list'
+    # context_object_name = 'task_list'
+    template_name = 'magatzem/tasks-list.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        tasks = super().get_context_data(**kwargs)
+        context = {'todo': [], 'doing': [], 'done': []}
+        for task in tasks['object_list']:
+            if task.task_status == 0 or task.task_status == 1 or task.task_status == 2:
+                context['todo'].append(task)  # pendent assignacio
+            elif task.task_status == 3:
+                context['doing'].append(task)
+            else:
+                context['done'].append(task)
         context['title'] = 'Tasques Operaris'
         return context
 
@@ -132,6 +136,21 @@ def home_operari(request):
     context = {}
     context['title'] = 'Home-Operari'
     return render(request, 'magatzem/notification.html', context)
+
+
+def entrada_producte(request):
+    entry_handler = EntryHandler()
+    container = entry_handler.generate_entry()
+
+    hum = container['hum']
+    temp= container['temp']
+    rooms = Room.objects.filter(Q(hum__gte=hum), Q(temp__gte=temp))
+
+    optimization_handler = RoomHandler(container, rooms)
+
+    context = optimization_handler.select_containers()
+
+    return render(request, 'magatzem/product-entry.html', context)
 
 
 def entrada_producte_mock(request):
@@ -530,18 +549,4 @@ def panel_tasks_mock(request):
     return render(request, 'magatzem/tasks-list.html', context)
 
 
-'''
-def entrada_producte(request):
-    entry_handler = EntryHandler()
-    container = entry_handler.generate_entry()
 
-    hum_min = container['hum_min']
-    temp_min = container['temp_min']
-    rooms = Room.objects.filter(hum__gte=hum_min, temp__gte=temp_min)  #S'ha de canviar els models perque la sala no te max i min
-
-    optimization_handler = RoomHandler(container, rooms)
-
-    context = optimization_handler.select_containers()
-
-    return render(request, 'magatzem/product-entry.html', context)
-'''
