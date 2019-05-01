@@ -27,26 +27,31 @@
 
         <div class="scroll-panel mt-2 mb-5">
 
-          <div class="card border-success mb-3">
-            <div class="card-header bg-transparent border-success">Estat tasca</div>
-            <div class="card-body text-success">
-              <h6 class="card-title">Descripció de la tasca</h6>
-            </div>
-          </div>
+          {% if last_tasks %}
+            {% for task in last_tasks %}
+              <div class="card border-info mb-2">
+                <div class="card-header bg-transparent border-info">{{ task.description }}</div>
+                <div class="card-body text-info">
+                  <h6 class="card-text mb-1"> PRODUCTE: <strong>{{ task.containers.product_id }}</strong></h6>
+                  <h6 class="card-text mb-1 text-muted">QUANTITAT: <strong>{{ task.containers.quantity }} containers</strong></h6>
+                  <div class="row">
+                    <div class="col-6">
+                      <h6 class="card-text mb-1">ORIGEN: <strong>{{ task.origin_room }}</strong></h6>
+                    </div>
+                    <div class="col-6">
+                      <h6 class="card-text mb-1">DESTÍ: <strong>{{ task.destination_room }}</strong></h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
 
-          <div class="card border-success mb-3">
-            <div class="card-header bg-transparent border-success">Estat tasca</div>
-            <div class="card-body text-success">
-              <h6 class="card-title">Descripció de la tasca</h6>
-            </div>
-          </div>
+          {% else %}
+            <div class="card border-info mb-2">
+                <div class="card-header bg-transparent border-info">AVUI ENCARA NO S'HAN GENERAT TASQUES</div>
+              </div>
+          {% endif %}
 
-          <div class="card border-success mb-3">
-            <div class="card-header bg-transparent border-success">Estat tasca</div>
-              <div class="card-body text-success">
-                <h6 class="card-title">Descripció de la tasca</h6>
-            </div>
-          </div>
         </div>
 
         <div class="row">
