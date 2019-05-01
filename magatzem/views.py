@@ -12,13 +12,8 @@ from django.contrib.auth.decorators import login_required
 from tools.algorithms.sala_selector import RoomHandler
 from tools.api.product_entry import EntryHandler
 
-'''
+
 # Check if logged in Mixin
-from tools.algorithms.sala_selector import RoomHandler
-from tools.api.product_entry import EntryHandler
-'''
-
-
 class LoginRequiredMixin(object):
     @method_decorator(login_required())
     def dispatch(self, *args, **kwargs):
@@ -112,6 +107,7 @@ def home_operari(request):
     context = {}
     context['title'] = 'Home-Operari'
     return render(request, 'magatzem/notification.html', context)
+
 
 def entrada_producte(request):
     entry_handler = EntryHandler()
