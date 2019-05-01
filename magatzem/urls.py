@@ -10,9 +10,9 @@ urlpatterns = [
     path('ceo/', views.home_ceo, name='ceo-home'),
     path('gestor/sales/', RoomList.as_view(), name='list-room'),
     path('gestor/sales/<int:pk>/', RoomDetail.as_view(), name='detail-room'),
-    path('gestor/tasques_operaris', TaskPanelOperaris.as_view(), name='panel-operaris'),
+    path('gestor/tasques_operaris/', TaskPanelOperaris.as_view(), name='panel-operaris'),
     # urls operari
-    path('operaris/notificacions', NotificationsListView.as_view(), name='operaris-notificacions'),
+    path('operaris/notificacions/', NotificationsListView.as_view(), name='operaris-notificacions'),
 
     # urls tecnics
     # urls mocks
