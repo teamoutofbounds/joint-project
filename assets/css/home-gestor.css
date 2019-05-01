@@ -1,4 +1,11 @@
 
+.main-box {
+    border-style: solid;
+    border-color: #0D47A1;
+    border-width: 1px;
+    background:#dbe2ef
+}
+
 .text-button {
     background: #1976D2;
     text-transform: uppercase;

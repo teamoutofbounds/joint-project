@@ -11,10 +11,15 @@
 
     {% include 'magatzem/mapa.html' %}
 
-    <div class="col-sm-4 bg-light">
+    <div class="col-sm-5 mt-2 bg-light">
+
+      <div class="box px-4 py-3 main-box">
+
+
       <div class="row">
         <a class="btn btn-lg btn-block mt-3 text-button" href="{% url 'panel-operaris' %}">Tasques Operaris</a>
         <a class="btn btn-lg btn-block mt-2 mb-4 text-button" href="#">Tasques Tècnics</a>
+      </div>
 
         <div class="header-content-left">
           <h5 class="heading mt-2 text-center">Darreres tàsques</h5>
@@ -22,36 +27,41 @@
 
         <div class="scroll-panel mt-2 mb-5">
 
-          <div class="card border-success mb-3">
-            <div class="card-header bg-transparent border-success">Estat tasca</div>
-            <div class="card-body text-success">
-              <h6 class="card-title">Descripció de la tasca</h6>
-            </div>
-          </div>
+          {% if last_tasks %}
+            {% for task in last_tasks %}
+              <div class="card border-info mb-2">
+                <div class="card-header bg-transparent border-info">{{ task.description }}</div>
+                <div class="card-body text-info">
+                  <h6 class="card-text mb-1"> PRODUCTE: <strong>{{ task.containers.product_id }}</strong></h6>
+                  <h6 class="card-text mb-1 text-muted">QUANTITAT: <strong>{{ task.containers.quantity }} containers</strong></h6>
+                  <div class="row">
+                    <div class="col-6">
+                      <h6 class="card-text mb-1">ORIGEN: <strong>{{ task.origin_room }}</strong></h6>
+                    </div>
+                    <div class="col-6">
+                      <h6 class="card-text mb-1">DESTÍ: <strong>{{ task.destination_room }}</strong></h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
 
-          <div class="card border-success mb-3">
-            <div class="card-header bg-transparent border-success">Estat tasca</div>
-            <div class="card-body text-success">
-              <h6 class="card-title">Descripció de la tasca</h6>
-            </div>
-          </div>
-
-          <div class="card border-success mb-3">
-            <div class="card-header bg-transparent border-success">Estat tasca</div>
-            <div class="card-body text-success">
-              <h6 class="card-title">Descripció de la tasca</h6>
-            </div>
-          </div>
+          {% else %}
+            <div class="card border-info mb-2">
+                <div class="card-header bg-transparent border-info">AVUI ENCARA NO S'HAN GENERAT TASQUES</div>
+              </div>
+          {% endif %}
 
         </div>
 
-      </div>
-
-      <div class="row">
+        <div class="row">
         <a class="btn btn-lg btn-block text-button" href="#">Nova entrada</a>
         <a class="btn btn-lg btn-block text-button" href="#">Nova sortida</a>
-        <a class="btn btn-lg btn-block mb-4 text-button" href="#">Avís tècnics</a>
+        <a class="btn btn-lg btn-block mb-2 text-button" href="#">Avís tècnics</a>
       </div>
+
+      </div>
+
     </div>
   </div>
 

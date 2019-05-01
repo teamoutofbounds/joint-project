@@ -6,19 +6,46 @@
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
     <ul class="navbar-nav">
-      <li class="nav-item mr-2 active">
-        <a class="nav-link active" href="{% url 'gestor-home' %}">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item mr-2">
-        <a class="nav-link" href="{% url 'list-room' %}">Sales</a>
-      </li>
-      <li class="nav-item mr-2">
-        <a class="nav-link" href="{% url 'panel-operaris' %}">Tasques Operaris</a>
-      </li>
+
+      {% if title == "Home Gestor" %}
+        <li class="nav-item mr-2 active">
+          <a class="nav-link active" href="{% url 'gestor-home' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+      {% else %}
+        <li class="nav-item mr-2">
+          <a class="nav-link" href="{% url 'gestor-home' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+      {% endif %}
+
+      {% if "/sales/" in request.path %}
+        <li class="nav-item mr-2 active">
+          <a class="nav-link active" href="{% url 'list-room' %}">Sales</a>
+        </li>
+      {% else %}
+        <li class="nav-item mr-2">
+          <a class="nav-link" href="{% url 'list-room' %}">Sales</a>
+        </li>
+      {% endif %}
+
+      {% if "/tasques_operaris/" in request.path %}
+        <li class="nav-item mr-2 active">
+          <a class="nav-link active" href="{% url 'panel-operaris' %}">Tasques Operaris</a>
+        </li>
+      {% else %}
+        <li class="nav-item mr-2">
+          <a class="nav-link" href="{% url 'panel-operaris' %}">Tasques Operaris</a>
+        </li>
+      {% endif %}
       <!-- Delete tabindex and aria when implemented-->
-      <li class="nav-item mr-2">
-        <a class="nav-link" href="#" aria-disabled="true">Tasques Tècnics</a>
-      </li>
+      {% if "/tasques_tecnics/" in request.path %}
+        <li class="nav-item mr-2 active">
+          <a class="nav-link active" href="#" aria-disabled="true">Tasques Tècnics</a>
+        </li>
+      {% else %}
+        <li class="nav-item mr-2">
+          <a class="nav-link" href="#" aria-disabled="true">Tasques Tècnics</a>
+        </li>
+      {% endif %}
     </ul>
     <ul class="navbar-nav ml-auto">
       {% if user.username %}
