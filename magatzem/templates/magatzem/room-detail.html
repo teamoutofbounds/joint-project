@@ -7,7 +7,7 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'list-room' %}">Sales</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ room.name }}</li>
+        <li class="breadcrumb-item active" aria-current="page">{{ room.get_name }}</li>
       </ol>
     </nav>
   </div>
@@ -104,7 +104,7 @@
   <div class="col-sm-4">
 
     <div class="info-sala">
-      <h3><b>Informació {{ room.name }}</b></h3>
+      <h3><b>Informació {{ room.get_name }}</b></h3>
 
       <!-- Nom i estat -->
       <div class="row">

@@ -26,7 +26,7 @@
             <p class="card-text">Capacitat: {{ room.quantity }} / {{ room.limit }}</p>
           </div>
           <div class="col-sm-5 d-flex flex-column">
-            <a href="#" class="btn btn-primary mt-auto">Mostra sala</a>
+            <a href="{% url 'detail-room' room.pk %}" class="btn btn-primary mt-auto">Mostra sala</a>
           </div>
         </div>
       </div>
