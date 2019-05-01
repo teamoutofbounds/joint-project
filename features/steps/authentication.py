@@ -16,7 +16,7 @@ def step_impl(context, username, password):
     form.find_by_value('login').first.click()
     assert context.browser.is_text_present('User: ' + username)
 
-@then('I am not logged in')
+@step('I am not logged in')
 def step_impl(context):
     context.browser.visit(context.get_url('logout')+'?next=/magatzem/')
     assert context.browser.is_text_present('login')
