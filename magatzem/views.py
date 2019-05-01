@@ -127,12 +127,6 @@ class HomeGestor(ListView):
         return tasks
 
 
-def home_gestor(request):
-    context = {}
-    context['title'] = 'Home-Gestor'
-    return render(request, 'magatzem/home-gestor.html', context)
-
-
 def home_ceo(request):
     context = {}
     context['title'] = 'Home-CEO'
