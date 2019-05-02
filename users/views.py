@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 
-from users.forms import MyAuthenticationForm
+from users.forms import AuthenticationForm
 
 '''
 from django.contrib.auth.models import User
@@ -21,7 +21,7 @@ def redirect_view(request):
     if request.user.groups.filter(name='Gestor').exists():
         response = redirect('gestor-home')
     elif request.user.groups.filter(name='Operari').exists():
-        response = redirect('operaris-home')
+        response = redirect('operaris-notificacions')
     elif request.user.groups.filter(name='Tecnic').exists():
         response = redirect('tecnics-home')
     elif request.user.groups.filter(name='Ceo').exists():
@@ -64,15 +64,14 @@ def signup(request): #afegim els usuaris en grups segons el seu registre
     return render(request, 'users/register.html', {'form': form})
 '''
 
-
+'''
 class LoginView(FormView):
-    form_class = MyAuthenticationForm
+    form_class = AuthenticationForm
     template_name = "users/login.html"
 
     # THIS HAS TO BE SELECTED BY ROLE
     success_url = reverse_lazy("gestor-home")
 
-    '''
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated():
             return HttpResponseRedirect(self.get_success_url())
@@ -80,6 +79,7 @@ class LoginView(FormView):
             return super(LoginView, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
+        print('*************ENTER FORM VALID')
         login(self.request, form.get_user())
         return super(LoginView, self).form_valid(form)
-    '''
+'''
