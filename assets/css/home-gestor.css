@@ -1,0 +1,68 @@
+
+.main-box {
+    border-style: solid;
+    border-color: #0D47A1;
+    border-width: 1px;
+    background:#dbe2ef
+}
+
+.text-button {
+    background: #1976D2;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #E3F2FD;
+    border: 2px solid #1976D2;
+    width: 90%;
+    margin: auto;
+    transition: 0.5s;
+}
+
+.text-button:hover {
+    background: #1565C0;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #E3F2FD;
+    border: 2px solid #82B1FF;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.scroll-panel {
+    width: 100%;
+    max-height: 33vh;
+    overflow-y: scroll;
+}
+
+.scroll-panel-ceo {
+    width: 100%;
+    max-height: 16vh;
+    overflow-y: scroll;
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: red;
+  color: black;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

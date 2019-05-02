@@ -28,9 +28,9 @@ def add_item(func, filename):
 
 
 def add_room(params):
-    room = Room(name=params[1], temp_min=params[2], temp_max=params[3],
-                hum_min=params[4], hum_max=params[5], quantity=params[6],
-                limit=params[7], room_status=params[8])
+    room = Room(name=params[1], temp=params[2],
+                hum=params[3], quantity=params[4],
+                limit=params[5], room_status=params[6])
     room.id = params[0]
     room.save()
 

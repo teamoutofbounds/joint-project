@@ -34,8 +34,8 @@ class Container(models.Model):
     QUANTITY_MAX_VALUE = 999999999
     HUM_MIN_VALUE = 0
     HUM_MAX_VALUE = 100
-    TEMP_MIN_VALUE = -999
-    TEMP_MAX_VALUE = 999
+    TEMP_MIN_VALUE = -273
+    TEMP_MAX_VALUE = 100
     STR_PATTERN = "{} [{}] unitats:{} - SLA:{}"
 
     product_id = models.CharField(validators=[validate_products], max_length=64)

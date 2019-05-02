@@ -1,0 +1,106 @@
+.task-column {
+    /*background: lightgrey;*/
+    background: gainsboro;
+}
+
+.task-panel-title{
+    /*background: #00897B;*/
+    background: #428bca;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: .05rem;
+    width: 100%
+ }
+
+.task-title {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1rem;
+ }
+
+.title-product {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.task-status-text {
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-shadow: -1px -1px 0 #495057,
+                  1px -1px 0 #495057,
+                 -1px 1px 0 #495057,
+                  1px 1px 0 #495057;
+}
+
+.in-task {
+    width: 100%;
+    background: lightskyblue;
+}
+
+.out-task {
+    width: 100%;
+    background: lightgreen;
+}
+
+.inside-task {
+    width: 100%;
+    background: antiquewhite;
+}
+
+.status-pendent {
+    color: orangered;
+}
+
+.status-assignada{
+    color: yellow;
+}
+
+.status-rebuda, .status-completada {
+    color: #28a745;
+}
+
+.btn-icon {
+    width:1.75rem;
+    height:1.75rem;
+    border-width: .15rem;
+    border-radius: 6px;
+    border-color: red;
+    opacity: .65;
+    cursor: pointer; /* Mouse pointer on hover */
+}
+
+.btn-icon:hover {
+    width:1.75rem;
+    height:1.75rem;
+    border-radius: 6px;
+    border-color: red;
+    opacity: 1;
+    cursor: pointer; /* Mouse pointer on hover */
+}
+
+.paper-bin {
+    color:red;
+    opacity: .85;
+    position: absolute;
+    transform: translate(-50%, -10%);
+}
+
+.paper-bin:hover {
+    color:red;
+    opacity: 1;
+    position: absolute;
+    transform: translate(-50%, -10%);
+}
+
+.btn-edit {
+    opacity: 0.75;
+    width: 6rem;
+}
+
+.btn-edit:hover {
+    transition: .5s;
+    opacity: 1;
+    width: 8rem;
+}

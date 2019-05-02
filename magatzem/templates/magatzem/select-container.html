@@ -1,52 +1,72 @@
-{% extends 'magatzem/base.html' %}
+{% extends 'magatzem/base-gestor.html' %}
 {% block content %}
-
-<h2>Saleccionar productes de Sala {{room.name}} </h2>
-
+<br>
+<h2><b>Seleccionar productes de Sala</b></h2>
+<br>
 <div class="container">
+  <form>
 
-  {% for container in Container.objects.all%}
-
-    {% if container.room == 5 %}
-      <form>
-        <div class="form-row" style="margin-bottom: 1em">
-          <div class="col-sm" >
-            <b>Producte</b>
-            <p class="card-text" > 9394934 </p>
-            <p class="card-text" >{{ container.product_id }}</p>
-          </div>
-          <div class="col-sm" >
-            <b>Quantitat disponible</b>
-            <p class="card-text" > 5 </p>
-            <p class="card-text" >{{ container.quantity }}</p>
-          </div>
-          <div class="col-sm">
-            <b>Quantitat a moure</b>
-            <div class="dropdown">
-              <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Seleccionar</button>
-            </div>
-            <div class="dropdown-menu">
-              <button class="dropdown-item" type="button">1</button>
-              <button class="dropdown-item" type="button">2</button>
-              <button class="dropdown-item" type="button">3</button>
-            </div>
-          </div>
-          <div class="col-sm">
-            <b>Condicions</b>
-            <p class="card-text" > Max temperature: 4º C </p>
-            <p class="card-text">{{ container.quantity }}</p>
-          </div>
-        </div>
-      </form>
-    {% endif %}
-  {% endfor %}
+      <div style="overflow-x:auto">
+      <table class="table-bordered" width="100%" cellspacing="8" cellpadding="0" border="0">
+       <tr>
+         <th width="25%"><div align="center"> <h5><b> Producte </b></h5></div>  </th>
+         <th width="15%"><div align="center"> <h5><b> Quantitat actual </b></h5></div> </th>
+         <th width="20%"><div align="center"> <h5><b> Modificació </b></h5></div> </th>
+         <th width="10%"><div align="center"> <h5><b> Temp Max </b></h5></div> </th>
+         <th width="10%"><div align="center"> <h5><b> Temp Min </b></h5></div> </th>
+         <th width="10%"><div align="center"> <h5><b> Hum Max </b></h5></div> </th>
+         <th width="10%"><div align="center"> <h5><b> Hum Min </b></h5></div> </th>
+       </tr>
+        {% for container in productes %}
+        {% if container.quantity > 0 %}
+       <tr>
+         <td> <div align="center">{{ container.product_id }}</div></td>
+         <td> <div align="right"> {{ container.quantity }} &nbsp;</div></td>
+         <td> <input type="number" class="form-control" id="inputQuantity" min="0" max="{{ container.quantity }}" placeholder="0"> </td>
+         <td> <div align="right"> {{ container.temp_max }}ºC&nbsp;</div></td>
+         <td> <div align="right"> {{ container.temp_min }}ºC&nbsp;</div></td>
+         <td> <div align="right"> {{ container.hum_max }}ºC&nbsp;</div></td>
+         <td> <div align="right"> {{ container.hum_min }}ºC&nbsp;</div></td>
+       </tr>
+        {% endif %}
+        {% endfor %}
+      </table>
+      </div>
+      <br>
+  </form>
 </div>
 
 <div class="text-right" >
-  <div class="btn-group-vertical" style="margin-right: 70px" >
-    <button type="button" class="btn btn-success">Continuar</button>
-    <button type="button" class="btn btn-danger">Cancelar</button>
+  <div class="btn-group-vertical">
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#acceptModal">Aceptar</button>
+      <div class="modal fade" id="acceptModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div align="left"><h5>Estas segur que vols guardar els canvis fets?</h5></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
+              <a class="btn btn-primary text-button" href="#">Guardar canvis</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rejectModal">Cancelar</button>
+      <div class="modal fade" id="rejectModal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div align="left"><h5>Estas segur que vols descartar els canvis fets?</h5></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
+              <a class="btn btn-primary text-button" href="#">Descartar canvis</a>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
-</div>
+  </div>
 
 {% endblock content %}

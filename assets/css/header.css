@@ -1,0 +1,25 @@
+.header-navbar {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: .9rem;
+    background: #0D47A1!important;
+}
+
+.navbar-brand {
+    color: white;
+    padding-top: .8rem;
+    padding-right: 2rem;
+    padding-left: 1rem;
+}
+
+.nav-link {
+    color: #82B1FF;
+    letter-spacing: .1rem;
+    padding-top: .8rem;
+    margin-right: .5rem;
+}
+
+.navbar-brand:hover, .nav-link:hover, .active {
+    color: white;
+    -webkit-transform: scale(1.05);
+}

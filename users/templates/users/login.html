@@ -1,9 +1,25 @@
 <!-- templates/registration/login.html -->
 {% extends 'magatzem/base.html' %}
 {% load static %}
+{% load static from staticfiles %}
 {% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+
+  <style>
+    body {
+      background-image: linear-gradient(rgba(255,255,255,.85), rgba(255,255,255,.85)), url("{% static 'users/img/logistics.jpg' %}");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
+
+{% endblock header %}
 
 {% block role %}
+  <!--
 	<div class="container">
 	    <div class="loginout" style="margin-top: 10%">
 	        <div class="row">
@@ -31,4 +47,57 @@
 	        </div>
 	    </div>
 	</div>
+	-->
+
+  <div class="content">
+    <img src="{% static 'users/img/test-logo.png' %}" alt="Your logo here">
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {% for hidden_field in form.hidden_fields %}
+        {{ hidden_field }}
+      {% endfor %}
+
+      <!-- ALERT FOR ERRORS -->
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+          {% for error in form.non_field_errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% endif %}
+      <!-- END ALERT -->
+
+      {% for field in form.visible_fields %}
+        <div class="form-group">
+
+          {% if form.is_bound %}
+            {% if field.errors %}
+              {% render_field field class="form-control is-invalid" %}
+              {% for error in field.errors %}
+                <div class="invalid-feedback">
+                  {{ error }}
+                </div>
+              {% endfor %}
+            {% else %}
+              {% render_field field class="form-control is-valid" %}
+            {% endif %}
+          {% else %}
+            {% if field.name == 'username' %}
+              {% render_field field class="form-control" placeholder="Usuari" %}
+            {% else %}
+              {% render_field field class="form-control" placeholder="Contrasenya" %}
+            {% endif %}
+          {% endif %}
+
+          {% if field.help_text %}
+            <small class="form-text text-muted">{{ field.help_text }}</small>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="btn submit-btn">Entrar</button>
+    </form>
+  </div>
+
 {% endblock role %}

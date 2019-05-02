@@ -1,9 +1,11 @@
-from django.db import models
+from django.db import models, transaction
 from .container import Container
 from .room import Room
 from django.contrib.auth.models import User
-from simple_history.models import HistoricalRecords
 from django.core.validators import MaxValueValidator
+from datetime import date
+
+# from simple_history.models import HistoricalRecords
 
 
 class Task(models.Model):
@@ -34,8 +36,24 @@ class Task(models.Model):
     containers = models.ForeignKey(Container, on_delete=models.SET_NULL, null=True, verbose_name='Contenidor')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='Persona assignada')
 
+    date = models.DateField(default=date.today)
     # Contains all the changes of the object
-    history = HistoricalRecords()
+    # history = HistoricalRecords()
 
     def __str__(self):
         return Task.STR_PATTERN.format(self.origin_room, self.destination_room, self.containers)
+
+
+    @classmethod
+    def assign_task(cls, user):
+        with transaction.atomic():
+            task = cls.objects.select_for_update().filter(task_status=0).first()
+            if task and task.user is None:
+                task.user = user
+                # change status to automatically assigned
+                task.task_status = 1
+                task.save()
+        return task
+
+    def get_status(self):
+        return self.STATUS_CHOICES[self.task_status][1]
