@@ -8,24 +8,24 @@
         <th scope="col"><h5><b> Producte </b></h5></th>
         <th scope="col"><h5><b> Quantitat actual </b></h5></th>
         <th scope="col"><h5><b> Modificació </b></h5></th>
+        <th scope="col"><h5><b> Temp Min  </b></h5></th>
         <th scope="col"><h5><b> Temp Max </b></h5></th>
-        <th scope="col"><h5><b> Temp Min </b></h5></th>
-        <th scope="col"><h5><b> Hum Max </b></h5></th>
         <th scope="col"><h5><b> Hum Min </b></h5></th>
+        <th scope="col"><h5><b> Hum Max  </b></h5></th>
       </tr>
     {% endif %}
     {% for container in container_list %}
       {% if container.quantity > 0 %}
         <tr>
           <td> {{ container.product_id }}</td>
-          <td> {{ container.quantity }} </td>
+          <td> {{ container.quantity }}</td>
           <td> <input  type="number" style="width: 75%;" min="0" max="{{ container.quantity }}"
                                   id="inputQuantity_{{ forloop.counter }}" name="{{ container.product_id }}"
                                   placeholder="0"></td>
-          <td> {{ container.temp_max }}ºC&nbsp;</td>
-          <td> {{ container.temp_min }}ºC&nbsp;</td>
-          <td> {{ container.hum_max }}&nbsp;</td>
-          <td> {{ container.hum_min }}&nbsp;</td>
+          <td> {{ container.temp_min }}ºC</td>
+          <td> {{ container.temp_max }}ºC</td>
+          <td> {{ container.hum_min }}</td>
+          <td> {{ container.hum_max }}</td>
         </tr>
       {% endif %}
     {% endfor %}
