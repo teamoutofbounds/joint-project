@@ -1,7 +1,8 @@
 # els links de l'aplicació van aqui
 # els de frontend, heu d'utilitzar les funcions de views que tenen la paraula mock
 from django.urls import path
-from magatzem.views import RoomList, RoomDetail, NotificationsListView, HomeGestor, TaskPanelOperaris
+from magatzem.views import RoomList, RoomDetail, NotificationsListView, HomeGestor, TaskPanelOperaris, \
+    ContainerSelectionList
 from . import views
 
 urlpatterns = [
@@ -10,6 +11,7 @@ urlpatterns = [
     path('ceo/', views.home_ceo, name='ceo-home'),
     path('gestor/sales/', RoomList.as_view(), name='list-room'),
     path('gestor/sales/<int:pk>/', RoomDetail.as_view(), name='detail-room'),
+    path('gestor/sales/<int:pk>/<room>/', ContainerSelectionList.as_view(), name='product-room'),
     path('gestor/tasques_operaris/', TaskPanelOperaris.as_view(), name='panel-operaris'),
     path('gestor/entrada', views.entrada_producte, name='entrada-producte'),
     # urls operari
