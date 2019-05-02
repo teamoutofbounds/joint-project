@@ -29,7 +29,7 @@ class ContainerSelectionList(ListView, LoginRequiredMixin):
     template_name = 'magatzem/select-container.html'
 
     def get_queryset(self):
-        self.room = get_object_or_404(Container, room=self.kwargs['room'])
+        self.room = get_object_or_404(Room, name=self.kwargs['room'])
         return Container.objects.filter(room=self.room)
 
     def get_context_data(self, **kwargs):
