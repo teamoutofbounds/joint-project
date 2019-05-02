@@ -6,6 +6,7 @@
     {% if container_list %}
       <tr>
         <th scope="col"><h5><b> Producte </b></h5></th>
+        <th scope="col"><h5><b> Productor </b></h5></th>
         <th scope="col"><h5><b> Quantitat actual </b></h5></th>
         <th scope="col"><h5><b> Modificació </b></h5></th>
         <th scope="col"><h5><b> Temp Min  </b></h5></th>
@@ -18,6 +19,7 @@
       {% if container.quantity > 0 %}
         <tr>
           <td> {{ container.product_id }}</td>
+          <td> {{ container.producer_id }}</td>
           <td> {{ container.quantity }}</td>
           <td> <input  type="number" style="width: 75%;" min="0" max="{{ container.quantity }}"
                                   id="inputQuantity_{{ forloop.counter }}" name="{{ container.product_id }}"
