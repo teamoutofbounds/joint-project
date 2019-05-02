@@ -76,6 +76,8 @@ class NotificationsListView(ListView, LoginRequiredMixin):
             queryset = Task.assign_task(self.request.user)
             self.new_task = True
 
+        print(queryset)
+
         return queryset
 
     def get_context_data(self, **kwargs):
