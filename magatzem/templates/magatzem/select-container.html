@@ -2,7 +2,7 @@
 {% block content %}
 <p class="mt-4 mb-4"><h2><b>Seleccionar productes de Sala</b></h2></p>
 <div class="container" style="overflow-x:auto">
-  <table class="table-bordered mt-2" width="100%" style="text-align: center overflow-x:auto">
+  <table class="table-bordered mt-2" width="100%" style="text-align: center; overflow-x:auto">
     {% if container_list %}
       <tr>
         <th scope="col"><h5><b> Producte </b></h5></th>
@@ -19,7 +19,7 @@
         <tr>
           <td> {{ container.product_id }}</td>
           <td> {{ container.quantity }} </td>
-          <td align="center"> <input  type="number" style="width: 75%;" min="0" max="{{ container.quantity }}"
+          <td> <input  type="number" style="width: 75%;" min="0" max="{{ container.quantity }}"
                                   id="inputQuantity_{{ forloop.counter }}" name="{{ container.product_id }}"
                                   placeholder="0"></td>
           <td> {{ container.temp_max }}ºC&nbsp;</td>

@@ -1,22 +1,16 @@
-{% extends 'magatzem/base-header.html' %}
+<nav class="navbar navbar-expand-lg header-navbar">
 
-{% block home %}
-  <a class="navbar-brand" href="{% url 'panel-operaris' %}">Storage & Go</a>
-{% endblock home %}
+  {% block home %}{% endblock home %}
+  <!--<a class="navbar-brand" href="{% url 'gestor-home' %}">Storage & Go</a>-->
 
-{% block navegacio %}
-
-
-{% endblock navegacio %}
-
-<!--
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="{% url 'operaris-notificacions' %}">Storage & Go</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+
+    {% block navegacio %}{% endblock navegacio %}
+
     <ul class="navbar-nav ml-auto">
       {% if user.username %}
       <li class="nav-item">
@@ -33,4 +27,3 @@
     </ul>
   </div>
 </nav>
--->

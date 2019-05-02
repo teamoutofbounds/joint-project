@@ -1,14 +1,15 @@
 # els links de l'aplicació van aqui
 # els de frontend, heu d'utilitzar les funcions de views que tenen la paraula mock
 from django.urls import path
-from magatzem.views import RoomList, RoomDetail, NotificationsListView, HomeGestor, TaskPanelOperaris, \
+from magatzem.views import RoomList, RoomDetail, NotificationsListView, HomeGestor, TaskPanelOperaris, HomeCEO, \
     ContainerSelectionList
 from . import views
 
 urlpatterns = [
     # urls gestor
     path('gestor/', HomeGestor.as_view(), name='gestor-home'),
-    path('ceo/', views.home_ceo, name='ceo-home'),
+    # path('ceo/', views.home_ceo, name='ceo-home'),
+    path('ceo/', HomeCEO.as_view(), name='ceo-home'),
     path('gestor/sales/', RoomList.as_view(), name='list-room'),
     path('gestor/sales/<int:pk>/', RoomDetail.as_view(), name='detail-room'),
     path('gestor/sales/<int:pk>/<room>/', ContainerSelectionList.as_view(), name='product-room'),
