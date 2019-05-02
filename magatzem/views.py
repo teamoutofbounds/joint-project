@@ -127,6 +127,32 @@ class HomeGestor(ListView):
         return tasks
 
 
+class HomeCEO(ListView):
+    """ THIS IS A TEMPORARY IMPLEMENTATION:
+        Needed to check if all works properly in the front end,
+        until the real implementation could be done.
+    """
+    model = Room
+    context_object_name = 'rooms'
+    template_name = 'magatzem/home-ceo.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Home CEO'
+        # get last tasks
+        context['last_tasks'] = self.get_last_tasks()
+        # get room capacity
+        context['capacities'] = {}
+        for item in context['object_list']:
+            context['capacities'][item.name] = item.quantity * 100 / item.limit
+
+        return context
+
+    def get_last_tasks(self):
+        tasks = Task.objects.order_by('-date').filter(date=date.today())
+        return tasks
+
+
 def home_ceo(request):
     context = {}
     context['title'] = 'Home-CEO'
