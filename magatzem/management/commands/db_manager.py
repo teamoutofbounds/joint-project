@@ -2,11 +2,16 @@ import os
 import re
 from django.core.management.base import BaseCommand
 from magatzem.models import Container, Room, Task
+from django.contrib.auth.models import Group
+
+container_id = 0
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
         make_database()
+        Group.objects.get_or_create(name='Gestor')
+        Group.objects.get_or_create(name='Operari')
 
 
 def make_database():
@@ -36,12 +41,15 @@ def add_room(params):
 
 
 def add_container(params):
+    global container_id
     # room = Room.objects.get(params[-1])
     room = Room.objects.get(id=params[-1])
     container = Container(product_id=params[0], producer_id=params[1], limit=params[2],
                           temp_min=params[3], temp_max=params[4],
                           hum_min=params[5], hum_max=params[6],
                           quantity=params[7], room=room)
+    container.pk = container_id
+    container_id += 1
     container.save()
 
 
@@ -50,8 +58,10 @@ def add_task(params):
     # This file must contain the following fields:
     # description|task_type|task_status|origin_room|destination_room|product_id|producer_id|limit
 
-    container = Container.objects.filter(product_id=params[5], producer_id=params[6], limit=params[7]).first()
+    # container = Container.objects.filter(product_id=params[5], producer_id=params[6], limit=params[7]).first()
     # container = Container.objects.get(1)
+    container = Container.objects.get(pk=params[5])
     task = Task(description=params[0], task_type=params[1], task_status=params[2],
-                origin_room=Room.objects.get(id=params[3]), destination_room=Room.objects.get(id=params[4]), containers=container)
+                origin_room=Room.objects.get(id=params[3]), destination_room=Room.objects.get(id=params[4]),
+                containers=container)
     task.save()
