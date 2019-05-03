@@ -29,7 +29,7 @@ class ContainerSelectionList(ListView, LoginRequiredMixin):
     template_name = 'magatzem/select-container.html'
 
     def get_queryset(self):
-        self.room = get_object_or_404(Container, room=self.kwargs['room'])
+        self.room = get_object_or_404(Room, name=self.kwargs['room'])
         return Container.objects.filter(room=self.room)
 
     def get_context_data(self, **kwargs):
@@ -76,6 +76,8 @@ class NotificationsListView(ListView, LoginRequiredMixin):
             queryset = Task.assign_task(self.request.user)
             self.new_task = True
 
+        print(queryset)
+
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -113,6 +115,32 @@ class HomeGestor(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Home Gestor'
+        # get last tasks
+        context['last_tasks'] = self.get_last_tasks()
+        # get room capacity
+        context['capacities'] = {}
+        for item in context['object_list']:
+            context['capacities'][item.name] = item.quantity * 100 / item.limit
+
+        return context
+
+    def get_last_tasks(self):
+        tasks = Task.objects.order_by('-date').filter(date=date.today())
+        return tasks
+
+
+class HomeCEO(ListView):
+    """ THIS IS A TEMPORARY IMPLEMENTATION:
+        Needed to check if all works properly in the front end,
+        until the real implementation could be done.
+    """
+    model = Room
+    context_object_name = 'rooms'
+    template_name = 'magatzem/home-ceo.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Home CEO'
         # get last tasks
         context['last_tasks'] = self.get_last_tasks()
         # get room capacity
