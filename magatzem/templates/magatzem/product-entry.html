@@ -1,70 +1,72 @@
 {% extends 'magatzem/base-gestor.html' %}
+{% load static from staticfiles %}
+
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/product-entry.css' %}">
+{% endblock header %}
 
 {% block content %}
+<div class="table-mrg">
+  <div class="col-2"></div>
 
-<div class="col-2"></div>
-
-<div class="col-8">
-  <div class="row" style="border: solid; border-width: 1px; border-color: black">
-    <div class="col-12">
-      <div class="row">
-        <div class="col-6" style="background-color: khaki;">
-          <p class="text-center">10/01/2019</p>
+  <div class="col-8">
+    <div class="row" style="border: solid; border-width: 1px; border-color: black">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-6" style="background-color: khaki;">
+            {{ container.creationDate }}
+          </div>
+          <div class="col-6" style="background-color: khaki">
+            From: {{ container.fromLocation }}
+          </div>
         </div>
-        <div class="col-6" style="background-color: khaki">
-          C/Cabanes (Sant Esteve de Les Roures)
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-2" style="background-color: khaki">
-          REF
-        </div>
-        <div class="col-5" style="background-color: khaki">
-          836596238569
-        </div>
-        <div class="col-5" style="background-color: khaki">
-          STORAGE-A
+        <div class="row">
+          <div class="col-6" style="background-color: khaki">
+            REF: {{ container.ref }}
+          </div>
+          <div class="col-6" style="background-color: khaki">
+            To: C/Cabanes (Sant Esteve de Les Roures)
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="row" style="border: solid; border-width: 10px; border-color: cornflowerblue">
-    <div class="col-12">
-      <div class="row">
-        <div class ="table-responsive">
-          <table class="table table-responsive table-bordered table-hover">
+    <div class="row" style="border: solid; border-width: 10px; border-color: cornflowerblue">
+      <div class="col-12">
+        <div class="row">
+          <div class ="table-responsive">
+            <table class="table table-responsive table-bordered table-hover">
 
-            <caption style="display: none"> Contenidors a entrar </caption>
-            <thead>
-              <tr>
-                <th scope="col"> <b>Producte</b></th>
-                <th scope="col"> <b>Num Contenidors</b></th>
-                <th scope="col"> <b>Data SLA</b></th>
-                <th scope="col"> <b>Temp Min</b></th>
-                <th scope="col"> <b>Temp Max</b></th>
-                <th scope="col"> <b>Hum Min</b></th>
-                <th scope="col"> <b>Hum Max</b></th>
-              </tr>
-            </thead>
-            {% for producte in containers %}
-              <tr>
-                <td>{{ producte.name }}</td>
-                <td>{{ producte.qty }}</td>
-                <td>{{ producte.sla }}</td>
-                <td>{{ producte.tempMinDegree }} ºC</td>
-                <td>{{ producte.tempMaxDegree }} ºC </td>
-                <td>{{ producte.humidMin }} %</td>
-                <td>{{ producte.humidMax }} %</td>
-              </tr>
-            {% endfor %}
-          </table>
+              <caption style="display: none"> Contenidors a entrar </caption>
+              <thead>
+                <tr>
+                  <th scope="col"> <b>Producte</b></th>
+                  <th scope="col"> <b>Num Contenidors</b></th>
+                  <th scope="col"> <b>Data SLA</b></th>
+                  <th scope="col"> <b>Temp Min</b></th>
+                  <th scope="col"> <b>Temp Max</b></th>
+                  <th scope="col"> <b>Hum Min</b></th>
+                  <th scope="col"> <b>Hum Max</b></th>
+                </tr>
+              </thead>
+              {% for producte in container.Products %}
+                <tr>
+                  <td>{{ producte.name }}</td>
+                  <td>{{ producte.qty }}</td>
+                  <td>{{ producte.sla }}</td>
+                  <td>{{ producte.tempMinDegree }} ºC</td>
+                  <td>{{ producte.tempMaxDegree }} ºC </td>
+                  <td>{{ producte.humidMin }} %</td>
+                  <td>{{ producte.humidMax }} %</td>
+                </tr>
+              {% endfor %}
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 <div class="float-right">
   <a class="btn btn-success" href="#" role="button">Registrar</a>
   <a class="btn btn-warning" href="#" role="button">Incidencia</a>

@@ -168,11 +168,20 @@ def home_operari(request):
 
 
 def entrada_producte(request):
-    entry_handler = EntryHandler()
-    context = {}
-    context['title'] = 'Entrada Productes'
-    context['containers'] = entry_handler.generate_entry()
+    if 'ref' in request.GET:
+        entry_handler = EntryHandler()
+        context = {}
+        context['title'] = 'Entrada Productes'
+        transports = entry_handler.generate_entry()
+        for transport in transports:
+            if transport['ref'] == request.GET['ref']:
+                context['container'] = transport
     return render(request, 'magatzem/product-entry.html', context)
+
+
+def manifest_form(request):
+    return render(request, 'magatzem/manifest-form.html')
+
 
 
 def entrada_producte_mock(request):
