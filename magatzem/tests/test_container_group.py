@@ -36,3 +36,17 @@ class ContainerGroupTestCase(TestCase):
         self.assertEqual(containers.id_room, room)
         self.assertEqual(containers.id_product, product)
         self.assertEqual(containers.sla, sla)
+
+    def test_container_group_str(self):
+        containers = ContainerGroup.objects.get(pk=0)
+        room = Room.objects.get(name='Room')
+        product = Product.objects.get(product_id='Product')
+        sla = SLA.objects.get(pk=0)
+        self.assertEqual(ContainerGroup.STR_PATTERN.format(
+            sla.limit, product.product_id, product.producer_id,
+            room.name, containers.quantity), containers.__str__())
+
+    def test_container_group_get_sla(self):
+        containers = ContainerGroup.objects.get(pk=0)
+        sla = SLA.objects.get(pk=0)
+        self.assertEqual(containers.get_sla(), sla.get_sla())
