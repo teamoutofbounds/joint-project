@@ -195,14 +195,6 @@ class HomeCEO(ListView, LoginRequiredMixin, UserPassesTestMixin):
         return tasks
 
 
-def entrada_producte(request):
-    entry_handler = EntryHandler()
-    context = {}
-    context['title'] = 'Entrada Productes'
-    context['containers'] = entry_handler.generate_entry()
-    return render(request, 'magatzem/product-entry.html', context)
-
-
 def home_ceo(request):
     context = {}
     context['title'] = 'Home-CEO'
@@ -213,6 +205,38 @@ def home_operari(request):
     context = {}
     context['title'] = 'Home-Operari'
     return render(request, 'magatzem/notification.html', context)
+
+
+def entrada_producte(request):
+    if 'ref' in request.GET:
+        entry_handler = EntryHandler()
+        context = {}
+        context['title'] = 'Sortida Productes'
+        transports = entry_handler.generate_entry()
+        for transport in transports:
+            if transport['ref'] == request.GET['ref']:
+                context['container'] = transport
+    return render(request, 'magatzem/product-entry.html', context)
+
+
+def manifest_form(request):
+    return render(request, 'magatzem/manifest-form.html', {'title': 'Entrada Productes'})
+
+
+def manifest_sortida_form(request):
+    return render(request, 'magatzem/manifest-leave-form.html', {'title': 'Sortida Productes'})
+
+
+def sortida_producte(request):
+    if 'ref' in request.GET:
+        entry_handler = EntryHandler()
+        context = {}
+        context['title'] = 'Sortida Productes'
+        transports = entry_handler.generate_entry()
+        for transport in transports:
+            if transport['ref'] == request.GET['ref']:
+                context['container'] = transport
+    return render(request, 'magatzem/product-leave.html', context)
 
 
 def entrada_producte_mock(request):
@@ -629,3 +653,34 @@ def panel_tasks_mock(request):
         containers
     '''
     return render(request, 'magatzem/tasks-list.html', context)
+
+
+def panel_tecnics_tasks_mock(request):
+    context = {
+        'todo': [
+            {'description': 'Rotura', 'task_type': 1,
+             'task_status': 'Pendent', 'room': 'Sala 6',
+             'detail': 'Bomba de fred'},
+        ],
+        'doing': [
+            {'description': 'Mantenimiento', 'task_type': 0,
+             'task_status': 'Rebuda', 'room': 'Sala 3',
+             'detail': 'Motor'},
+            {'description': 'Rotura', 'task_type': 1,
+             'task_status': 'Rebuda', 'room': 'Sala 3',
+             'detail': 'Fan-coil'},
+            {'description': 'Ajuste clima', 'task_type': 2,
+             'task_status': 'Rebuda', 'room': 'Sala 10',
+             'detail': '10º C'},
+        ],
+        'done': [
+            {'description': 'Mantenimiento', 'task_type': 0,
+             'task_status': 'Completada', 'room': 'Sala 4',
+             'detail': 'Motor'},
+            {'description': 'Ajuste clima', 'task_type': 2,
+             'task_status': 'Completada', 'room': 'Sala 11',
+             'detail': '2º C'},
+        ]
+    }
+
+    return render(request, 'magatzem/tasks-list-tecnic.html', context)

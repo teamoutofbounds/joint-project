@@ -14,7 +14,10 @@ urlpatterns = [
     path('gestor/sales/<int:pk>/', RoomDetail.as_view(), name='detail-room'),
     path('gestor/sales/<int:pk>/<room>/', ContainerSelectionList.as_view(), name='product-room'),
     path('gestor/tasques_operaris/', TaskPanelOperaris.as_view(), name='panel-operaris'),
-    path('gestor/entrada', views.entrada_producte, name='entrada-producte'),
+    path('gestor/entrada/', views.manifest_form, name='entrada-producte'),
+    path('gestor/sortida/', views.manifest_sortida_form, name='sortida-producte'),
+    path('gestor/entrada/manifest/', views.entrada_producte, name='entrada-manifest'),
+    path('gestor/sortida/manifest/', views.sortida_producte, name='sortida-manifest'),
     # urls operari
     path('operaris/notificacions/', NotificationsListView.as_view(), name='operaris-notificacions'),
 
@@ -31,5 +34,5 @@ urlpatterns = [
     path('sel_sala_mock/', views.seleccionar_sala_mock, name='sel-sala-mock'),
     path('sel_prod_mock/', views.seleccionar_productes_mock, name='sel-prod-mock'),
     path('tasques_mock/', views.panel_tasks_mock, name='tasques-mock'),
-
+    path('tasques_tecnics/', views.panel_tecnics_tasks_mock, name='tasques-tecnics-mock'),
 ]

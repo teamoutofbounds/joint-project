@@ -7,7 +7,7 @@ class EntryHandler:
 
 	def generate_entry(self):
 		response = requests.get(
-			'https://ourfarms.herokuapp.com/apiRest/product/?format=json',
+			'https://ourfarms.herokuapp.com/apiRest/REF/?format=json',
 			auth=('GR1', 'gr1234567890')
 		)
 
