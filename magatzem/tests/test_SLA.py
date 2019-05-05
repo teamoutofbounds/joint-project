@@ -115,8 +115,8 @@ class SLATestCase(TestCase):
                            ['25/01/2021', 5, 20, 50, 76],
                            ['28/12/2019', -28, -12, 20, 34]])
     def container_str(self, limit, temp_min, temp_max, hum_min, hum_max):
-        created = SLA(limit=limit, temp_min=temp_min, temp_max=temp_max,
-                      hum_min=hum_min, hum_max=hum_max)
+        created = SLA.objects.create(limit=limit, temp_min=temp_min, temp_max=temp_max,
+                                     hum_min=hum_min, hum_max=hum_max)
         given = SLA.objects.get(created.pk)
         self.assertEqual(SLA.STR_PATTERN.format(
             limit, temp_min, temp_max, hum_min, hum_max),
