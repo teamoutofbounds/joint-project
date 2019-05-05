@@ -569,3 +569,34 @@ def panel_tasks_mock(request):
         containers
     '''
     return render(request, 'magatzem/tasks-list.html', context)
+
+
+def panel_tecnics_tasks_mock(request):
+    context = {
+        'todo': [
+            {'description': 'Rotura', 'task_type': 1,
+             'task_status': 'Pendent', 'room': 'Sala 6',
+             'detail': 'Bomba de fred'},
+        ],
+        'doing': [
+            {'description': 'Mantenimiento', 'task_type': 0,
+             'task_status': 'Rebuda', 'room': 'Sala 3',
+             'detail': 'Motor'},
+            {'description': 'Rotura', 'task_type': 1,
+             'task_status': 'Rebuda', 'room': 'Sala 3',
+             'detail': 'Fan-coil'},
+            {'description': 'Ajuste clima', 'task_type': 2,
+             'task_status': 'Rebuda', 'room': 'Sala 10',
+             'detail': '10º C'},
+        ],
+        'done': [
+            {'description': 'Mantenimiento', 'task_type': 0,
+             'task_status': 'Completada', 'room': 'Sala 4',
+             'detail': 'Motor'},
+            {'description': 'Ajuste clima', 'task_type': 2,
+             'task_status': 'Completada', 'room': 'Sala 11',
+             'detail': '2º C'},
+        ]
+    }
+
+    return render(request, 'magatzem/tasks-list-tecnic.html', context)
