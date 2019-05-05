@@ -20,13 +20,18 @@ class Room(models.Model):
     STR_PATTERN = "Nom: {}\tEstat: {}\tMaxima capacitat: {}\tOcupat: {}"
 
     name = models.CharField(max_length=16, default='Nova Sala', verbose_name='Nom')
-    temp = models.SmallIntegerField(validators=[MinValueValidator(-273), MaxValueValidator(100)],
-                                    verbose_name='Temperatura (ºC)')
-    hum = models.PositiveSmallIntegerField(validators=[MaxValueValidator(100)], verbose_name='Humitat (%)')
+    temp = models.SmallIntegerField(
+        validators=[MinValueValidator(-273), MaxValueValidator(100)],
+        verbose_name='Temperatura (ºC)')
+    hum = models.PositiveSmallIntegerField(
+        validators=[MaxValueValidator(100), MinValueValidator(0)],
+        verbose_name='Humitat (%)')
     quantity = models.PositiveIntegerField(default=0, verbose_name='Espai ocupat')
     limit = models.PositiveIntegerField(verbose_name='Capacitat màxima')
-    room_status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES, default=0, validators=[MaxValueValidator(1)],
-                                                   verbose_name='Estat')
+    room_status = models.PositiveSmallIntegerField(
+        choices=STATUS_CHOICES, default=0,
+        validators=[MaxValueValidator(1)],
+        verbose_name='Estat')
 
     # Contains all the changes of the object
     history = HistoricalRecords()
