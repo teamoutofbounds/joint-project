@@ -171,7 +171,7 @@ def entrada_producte(request):
     if 'ref' in request.GET:
         entry_handler = EntryHandler()
         context = {}
-        context['title'] = 'Entrada Productes'
+        context['title'] = 'Sortida Productes'
         transports = entry_handler.generate_entry()
         for transport in transports:
             if transport['ref'] == request.GET['ref']:
@@ -180,8 +180,23 @@ def entrada_producte(request):
 
 
 def manifest_form(request):
-    return render(request, 'magatzem/manifest-form.html')
+    return render(request, 'magatzem/manifest-form.html', {'title': 'Entrada Productes'})
 
+
+def manifest_sortida_form(request):
+    return render(request, 'magatzem/manifest-leave-form.html', {'title': 'Sortida Productes'})
+
+
+def sortida_producte(request):
+    if 'ref' in request.GET:
+        entry_handler = EntryHandler()
+        context = {}
+        context['title'] = 'Sortida Productes'
+        transports = entry_handler.generate_entry()
+        for transport in transports:
+            if transport['ref'] == request.GET['ref']:
+                context['container'] = transport
+    return render(request, 'magatzem/product-leave.html', context)
 
 
 def entrada_producte_mock(request):
