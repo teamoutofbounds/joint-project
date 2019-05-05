@@ -9,7 +9,6 @@ from splinter.browser import Browser
 
 os.environ["DJANGO_SETTINGS_MODULE"] = "storageApp.settings"
 
-#now this is just copied and need to be modified
 
 class ExtendedContext(Context):
     def get_url(self, to=None, *args, **kwargs):

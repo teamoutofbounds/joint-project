@@ -22,14 +22,13 @@
 
   <div class="content">
     <img src="{% static 'users/img/test-logo.png' %}" alt="Your logo here">
-    <form method="post" novalidate>
+    <form method="post" id="form">
       {% csrf_token %}
 
       {% for hidden_field in form.hidden_fields %}
         {{ hidden_field }}
       {% endfor %}
 
-      <!-- ALERT FOR ERRORS -->
       {% if form.non_field_errors %}
         <div class="alert alert-danger" role="alert">
           {% for error in form.non_field_errors %}
@@ -37,7 +36,6 @@
           {% endfor %}
         </div>
       {% endif %}
-      <!-- END ALERT -->
 
       {% for field in form.visible_fields %}
         <div class="form-group">
@@ -67,7 +65,7 @@
         </div>
       {% endfor %}
 
-      <button type="submit" class="btn submit-btn">Entrar</button>
+      <button type="submit" class="btn submit-btn" value="login">Entrar</button>
     </form>
   </div>
 
