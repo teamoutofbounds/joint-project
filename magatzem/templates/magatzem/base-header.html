@@ -12,18 +12,12 @@
     {% block navegacio %}{% endblock navegacio %}
 
     <ul class="navbar-nav ml-auto">
-      {% if user.username %}
       <li class="nav-item">
         <a class="nav-link disabled" style="color: white" href="#">{{ request.user.username}}</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'logout' %}">Desconecta'm</a>
       </li>
-      {% else %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'login' %}">Contecta'm</a>
-      </li>
-      {% endif %}
     </ul>
   </div>
 </nav>

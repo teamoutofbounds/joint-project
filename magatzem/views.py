@@ -168,11 +168,35 @@ def home_operari(request):
 
 
 def entrada_producte(request):
-    entry_handler = EntryHandler()
-    context = {}
-    context['title'] = 'Entrada Productes'
-    context['containers'] = entry_handler.generate_entry()
+    if 'ref' in request.GET:
+        entry_handler = EntryHandler()
+        context = {}
+        context['title'] = 'Sortida Productes'
+        transports = entry_handler.generate_entry()
+        for transport in transports:
+            if transport['ref'] == request.GET['ref']:
+                context['container'] = transport
     return render(request, 'magatzem/product-entry.html', context)
+
+
+def manifest_form(request):
+    return render(request, 'magatzem/manifest-form.html', {'title': 'Entrada Productes'})
+
+
+def manifest_sortida_form(request):
+    return render(request, 'magatzem/manifest-leave-form.html', {'title': 'Sortida Productes'})
+
+
+def sortida_producte(request):
+    if 'ref' in request.GET:
+        entry_handler = EntryHandler()
+        context = {}
+        context['title'] = 'Sortida Productes'
+        transports = entry_handler.generate_entry()
+        for transport in transports:
+            if transport['ref'] == request.GET['ref']:
+                context['container'] = transport
+    return render(request, 'magatzem/product-leave.html', context)
 
 
 def entrada_producte_mock(request):
@@ -252,6 +276,26 @@ def llista_sales_mock(request):
                 'name': 'Sala 4',
                 'temp': 0,
                 'hum': 0,
+                'quantity': 0,
+                'limit': 50,
+                'room_status': 0
+            },
+            {
+                'name': 'Sala 5',
+                'temp_min': 0,
+                'temp_max': 0,
+                'hum_min': 0,
+                'hum_max': 0,
+                'quantity': 0,
+                'limit': 50,
+                'room_status': 0
+            },
+            {
+                'name': 'Sala 6',
+                'temp_min': 0,
+                'temp_max': 0,
+                'hum_min': 0,
+                'hum_max': 0,
                 'quantity': 0,
                 'limit': 50,
                 'room_status': 0

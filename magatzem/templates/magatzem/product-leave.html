@@ -17,7 +17,7 @@
             {{ container.creationDate }}
           </div>
           <div class="col-6" style="background-color: khaki">
-            From: {{ container.fromLocation }}
+            From: C/Cabanes (Sant Esteve de Les Roures)
           </div>
         </div>
         <div class="row">
@@ -25,7 +25,7 @@
             REF: {{ container.ref }}
           </div>
           <div class="col-6" style="background-color: khaki">
-            To: C/Cabanes (Sant Esteve de Les Roures)
+            To: {{ container.toLocation }}
           </div>
         </div>
       </div>
@@ -68,9 +68,9 @@
   </div>
 </div>
 <div class="float-right">
-  <a class="btn btn-success" href="#" role="button">Registrar</a>
+  <a class="btn btn-success" href="#" role="button">Confirmar</a>
   <a class="btn btn-warning" href="#" role="button">Incidencia</a>
-  <a class="btn btn-danger" href="{% url 'entrada-producte' %}" role="button">Cancelar</a>
+  <a class="btn btn-danger" href="{% url 'sortida-producte' %}" role="button">Cancelar</a>
 </div>
 
 {% endblock content %}
