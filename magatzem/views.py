@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
 from django.views.generic.dates import TodayArchiveView
@@ -6,7 +7,8 @@ from magatzem.models.room import Room
 from magatzem.models.task import Task
 from magatzem.models.container import Container
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 # from .tasks import assign_task
 from tools.algorithms.sala_selector import RoomHandler
@@ -14,19 +16,27 @@ from tools.api.product_entry import EntryHandler
 from datetime import date
 
 
-# Check if logged in Mixin
-class LoginRequiredMixin(object):
-    @method_decorator(login_required())
-    def dispatch(self, *args, **kwargs):
-        return super(LoginRequiredMixin, self).dispatch(*args, **kwargs)
+# Check roles function
+def is_allowed(user, roles):
+    allowed = False
+    belongs_to = user.groups.all()
+    for role in belongs_to:
+        if role in roles:
+            allowed = True
+    return allowed
 
 
-class ContainerSelectionList(ListView, LoginRequiredMixin):
+class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
     context_object_name = 'container_list'
     slug_field = "room"
     slug_url_kwarg = "room"
     template_name = 'magatzem/select-container.html'
+    # permission variable
+    roles = ('Gestor',)
+
+    def test_func(self):
+        return is_allowed(self.request.user, self.roles)
 
     def get_queryset(self):
         self.room = get_object_or_404(Room, name=self.kwargs['room'])
@@ -38,10 +48,15 @@ class ContainerSelectionList(ListView, LoginRequiredMixin):
         return context
 
 
-class RoomList(ListView, LoginRequiredMixin):
+class RoomList(ListView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
     context_object_name = 'room_list'
     template_name = 'magatzem/room-list.html'
+    # permission variable
+    roles = ('Gestor', 'CEO',)
+
+    def test_func(self):
+        return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -49,10 +64,15 @@ class RoomList(ListView, LoginRequiredMixin):
         return context
 
 
-class RoomDetail(DetailView, LoginRequiredMixin):
+class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
     template_name = 'magatzem/room-detail.html'
     context_object_name = 'room'
+    # permission variable
+    roles = ('Gestor',)
+
+    def test_func(self):
+        return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -63,11 +83,16 @@ class RoomDetail(DetailView, LoginRequiredMixin):
         return context
 
 
-class NotificationsListView(ListView, LoginRequiredMixin):
+class NotificationsListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
     model = Task
     context_object_name = 'task_list'
     template_name = 'magatzem/notification.html'
     new_task = False
+    # permission variable
+    roles = ('Operari',)
+
+    def test_func(self):
+        return is_allowed(self.request.user, self.roles)
 
     def get_queryset(self):
         queryset = Task.objects.filter(Q(user=self.request.user), Q(task_status=1) | Q(task_status=2) |
@@ -87,11 +112,16 @@ class NotificationsListView(ListView, LoginRequiredMixin):
         return context
 
 
-class TaskPanelOperaris(TodayArchiveView, LoginRequiredMixin):
+class TaskPanelOperaris(TodayArchiveView, LoginRequiredMixin, UserPassesTestMixin):
     queryset = Task.objects.all()
     date_field = 'date'
     # context_object_name = 'task_list'
     template_name = 'magatzem/tasks-list.html'
+    # permission variable
+    roles = ('Gestor', 'CEO')
+
+    def test_func(self):
+        return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
         tasks = super().get_context_data(**kwargs)
@@ -107,10 +137,15 @@ class TaskPanelOperaris(TodayArchiveView, LoginRequiredMixin):
         return context
 
 
-class HomeGestor(ListView):
+class HomeGestor(ListView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
     context_object_name = 'rooms'
     template_name = 'magatzem/home-gestor.html'
+    # permission variable
+    roles = ('Gestor',)
+
+    def test_func(self):
+        return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -129,7 +164,7 @@ class HomeGestor(ListView):
         return tasks
 
 
-class HomeCEO(ListView):
+class HomeCEO(ListView, LoginRequiredMixin, UserPassesTestMixin):
     """ THIS IS A TEMPORARY IMPLEMENTATION:
         Needed to check if all works properly in the front end,
         until the real implementation could be done.
@@ -137,6 +172,11 @@ class HomeCEO(ListView):
     model = Room
     context_object_name = 'rooms'
     template_name = 'magatzem/home-ceo.html'
+    # permission variable
+    roles = ('CEO',)
+
+    def test_func(self):
+        return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -155,6 +195,14 @@ class HomeCEO(ListView):
         return tasks
 
 
+def entrada_producte(request):
+    entry_handler = EntryHandler()
+    context = {}
+    context['title'] = 'Entrada Productes'
+    context['containers'] = entry_handler.generate_entry()
+    return render(request, 'magatzem/product-entry.html', context)
+
+
 def home_ceo(request):
     context = {}
     context['title'] = 'Home-CEO'
@@ -165,14 +213,6 @@ def home_operari(request):
     context = {}
     context['title'] = 'Home-Operari'
     return render(request, 'magatzem/notification.html', context)
-
-
-def entrada_producte(request):
-    entry_handler = EntryHandler()
-    context = {}
-    context['title'] = 'Entrada Productes'
-    context['containers'] = entry_handler.generate_entry()
-    return render(request, 'magatzem/product-entry.html', context)
 
 
 def entrada_producte_mock(request):
