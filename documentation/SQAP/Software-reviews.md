@@ -25,4 +25,33 @@ The development team will not commit a code requeriment onto the github reposito
 
 In the next section of this document it is explained in depth what type of tests the team is going to use. 
 
+##### 6.2.5 Quality Gateway
+The aim is to trap requirements-related defects as early as they can be identified. We prevent incorrect requirements from being incorporated in the design and implementation where they will be more difficult and expensive to find and correct.
+
+To pass through the quality gateway and be included in the requirements specification, a requirement must pass a number of tests. These tests are concerned with ensuring that the requirements are accurate, and do not cause problems by being unsuitable for the design and implementation stages later in the project.
+
+This tests are:
+* Does each requirement have a fit criterion that can be used to test whether a solution meets the requirement?
+* Is every requirement in the specification relevant to this system?
+* Does the specification contain a definition of the meaning of essential terms within the specification? 
+* Is every reference to a defined term consistent with its definition?
+* Is the context of the requirements study wide enough to cover everything we need to understand?
+* Does the requirement contain a rationale?
+* Have we asked the stakeholders about conscious, unconscious and undreamed of requirements? 
+* Does the specification contain solutions posturing as requirements?
+* Is the stakeholder value defined for each requirement?
+* Is each requirement uniquely identifiable?
+
+##### 6.2.6 Software Design Review
+A design review is a milestone within a product development process whereby a design is evaluated against its requirements in order to verify the outcomes of previous activities and identify issues before committing to further work.
+In order to evaluate a design against its requirements the SQAP personnel will evaluate the design via examinations (walk-throughs).
+
+##### 6.2.7 DataBase Design Review
+In order to evaluate the correctness of the modalization of the database entities. The SQAP and the developer team members must have a meeting where this topic must be discussed and reach a consensus of the models used in the database.
+
+##### 6.2.8 Test Review
+The main purpose of the test review is to increase test coverage and subsequently the test script quality.
+The SQAP personnell will use the following checklist. ["Test review template"](../templates/test_review.md)
+
+
 [Back to Index](./index.md)
