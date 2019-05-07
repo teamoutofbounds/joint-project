@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-from simple_history.models import HistoricalRecords
+# from simple_history.models import HistoricalRecords
 
 
 class Room(models.Model):
@@ -29,7 +29,7 @@ class Room(models.Model):
                                                    verbose_name='Estat')
 
     # Contains all the changes of the object
-    history = HistoricalRecords()
+    # history = HistoricalRecords()
 
     '''
     class Meta:
