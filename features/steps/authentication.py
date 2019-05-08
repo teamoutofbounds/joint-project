@@ -26,11 +26,11 @@ def step_impl(context, user_name, role_name):
 
 @when('I login as user "{user_name}" with password "{password}"')
 def step_impl(context, user_name, password):
-    context.browser.visit(context.test.live_server_url + '/')
-    # form = context.browser.find_by_tag('form').first
-    # context.browser.fill('username', user_name)
-    # context.browser.fill('password', password)
-    # form.find_by_value('login').first.click()
+    context.browser.visit(context.test.live_server_url)
+    form = context.browser.find_by_tag('form').first
+    context.browser.fill('username', user_name)
+    context.browser.fill('password', password)
+    form.find_by_value('login').first.click()
     pass
 
 
