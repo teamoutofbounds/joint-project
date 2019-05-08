@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-from simple_history.models import HistoricalRecords
 
 
 class Room(models.Model):
@@ -32,9 +31,6 @@ class Room(models.Model):
         choices=STATUS_CHOICES, default=0,
         validators=[MaxValueValidator(1)],
         verbose_name='Estat')
-
-    # Contains all the changes of the object
-    history = HistoricalRecords()
 
     '''
     class Meta:
