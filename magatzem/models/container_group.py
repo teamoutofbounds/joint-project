@@ -1,15 +1,24 @@
 from django.db import models
+from django.core.validators import MaxValueValidator
 from magatzem.models import Room, Product, SLA
 
 
 class ContainerGroup(models.Model):
 
     STR_PATTERN = "SLA={} | Poducte={} | Productor={} | Sala={} | Quantitat={}"
+    STATE = (
+        (0, "unlock"),
+        (1, "lock"),
+    )
 
     quantity = models.PositiveSmallIntegerField(default=0)
     id_room = models.ForeignKey(Room, on_delete=models.PROTECT)
     id_product = models.ForeignKey(Product, on_delete=models.PROTECT)
     sla = models.ForeignKey(SLA, on_delete=models.PROTECT)
+    state = models.PositiveSmallIntegerField(
+        choices=STATE, default=0,
+        validators=[MaxValueValidator(1)],
+        verbose_name='Estat')
 
     def __str__(self):
         return ContainerGroup.STR_PATTERN.format(
