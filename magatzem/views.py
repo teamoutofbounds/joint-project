@@ -322,20 +322,16 @@ def llista_sales_mock(request):
             },
             {
                 'name': 'Sala 5',
-                'temp_min': 0,
-                'temp_max': 0,
-                'hum_min': 0,
-                'hum_max': 0,
+                'temp': 0,
+                'hum': 0,
                 'quantity': 0,
                 'limit': 50,
                 'room_status': 0
             },
             {
                 'name': 'Sala 6',
-                'temp_min': 0,
-                'temp_max': 0,
-                'hum_min': 0,
-                'hum_max': 0,
+                'temp': 0,
+                'hum': 0,
                 'quantity': 0,
                 'limit': 50,
                 'room_status': 0
