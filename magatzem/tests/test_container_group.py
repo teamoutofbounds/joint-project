@@ -36,6 +36,7 @@ class ContainerGroupTestCase(TestCase):
         self.assertEqual(containers.id_room, room)
         self.assertEqual(containers.id_product, product)
         self.assertEqual(containers.sla, sla)
+        self.assertEqual(containers.state, 0)
 
     def test_container_group_str(self):
         containers = ContainerGroup.objects.get(pk=0)
