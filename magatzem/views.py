@@ -12,7 +12,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 
 # from .tasks import assign_task
 from tools.algorithms.sala_selector import RoomHandler
-from tools.api.product_entry import EntryHandler
+# from tools.api.product_entry import EntryHandler
 from datetime import date
 
 

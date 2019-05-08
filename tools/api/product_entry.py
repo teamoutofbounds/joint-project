@@ -1,3 +1,4 @@
+'''
 import json
 
 from pip._vendor import requests
@@ -16,3 +17,4 @@ class EntryHandler:
 
 		list_dic = json.loads(response.content.decode('utf-8'))
 		return list_dic
+'''
