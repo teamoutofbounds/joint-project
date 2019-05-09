@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.dates import TodayArchiveView
 from django.db.models import Q
 from magatzem.models.room import Room
-from magatzem.models.task import Task
+from magatzem.models.task_v import Task
 from magatzem.models.container import Container
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models.container import Container
-from .models.task import Task
+from .models.task_v import Task
 from .models.room import Room
 # Register your models here.
 
