@@ -17,6 +17,7 @@ On this code-walkthrough the team members are going to be divided in two groups 
 * Review all the code identation
 * Review if all the tests have been correctly passed
 * Check refactor possibilities
+
 This tasks have to be done for all the HTMLs, models and views.
 
 ##### 6.2.2 Informal reviews
