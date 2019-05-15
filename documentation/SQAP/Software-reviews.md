@@ -12,6 +12,13 @@ At least one week before each sprint ends, a formal meeting will be made by all 
 The team will also review every document generated during the process of the sprints and will generate the document adjunted in the annex of this SQAP. 
 SQA personnel will be invited to all code walkthroughs to ensure that peer reviews of the source code are conducted. The SPM will ensure that a verifiable process is used to identify all action items generated during this review process. SQA may then audit this process to ensure that all action items have been addressed.
 
+On this code-walkthrough the team members are going to be divided in two groups and the following tasks have to be addressed:
+* Be sure all the buttons are correctly linked
+* Review all the code identation
+* Review if all the tests have been correctly passed
+* Check refactor possibilities
+This tasks have to be done for all the HTMLs, models and views.
+
 ##### 6.2.2 Informal reviews
 Some of the team members are more experienced than others, in order to increase the production in the brief future, the team is going to work via pair-programming. The benefits of this are the fast-learning that the senior developer is going to induce to the less experienced developer, it will also provide a discussion about differents points of view about the implementation of a feature. This discussions can be very rich if both members discuss their ideas and the reasoning behind them. This can lead to find a very optim solution of the implementation.
 
