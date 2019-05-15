@@ -1,12 +1,22 @@
+import re
 from django.db import models
-from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy
 from datetime import date
 from magatzem.models.manifest_container import ManifestContainer
 
 
+def validate_ref(value):
+    if not re.match(r'^(\d{11})$', value):
+        raise ValidationError(
+            gettext_lazy('%(value) no es una referencia de producte valida.'),
+            params={'value': value}
+        )
+
+
 class Manifest(models.Model):
     MANIFEST_STR_PATTERN = "Ref: {} Date: {}"
-    ref = models.PositiveSmallIntegerField(validators=[MinValueValidator(0), ])
+    ref = models.CharField(max_length=11)
     date = models.DateTimeField(default=date.today)
 
     def __str__(self):
