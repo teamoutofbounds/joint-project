@@ -238,6 +238,46 @@ def sortida_producte(request):
                 context['container'] = transport
     return render(request, 'magatzem/product-leave.html', context)
 
+def manifest_list_mock(request):
+    context={
+        'manifestentry':[
+        {'reference': '20199110001',
+         'productor': 'Empresa Pepito',
+         'origin': 'C/ Cannonge Brugulat',
+         'date': '25/5/2019'},
+        {'reference': '20199110001',
+         'productor': 'Empresa Pepito',
+         'origin': 'C/ Cannonge Brugulat',
+         'date': '25/5/2019'},
+        {'reference': '20199110001',
+         'productor': 'Empresa Pepito',
+         'origin': 'C/ Cannonge Brugulat',
+         'date': '25/5/2019'},
+        {'reference': '20199110001',
+         'productor': 'Empresa Pepito',
+         'origin': 'C/ Cannonge Brugulat',
+         'date': '25/5/2019'},
+        ],
+        'manifestexit':[
+        {'reference': '20199110001',
+         'productor': 'Empresa Pepito',
+         'destination': 'C/ Cannonge Brugulat',
+         'date': '25/5/2019'},
+        {'reference': '20199110001',
+         'productor': 'Empresa Pepito',
+         'destination': 'C/ Cannonge Brugulat',
+         'date': '25/5/2019'},
+        {'reference': '20199110001',
+         'productor': 'Empresa Pepito',
+         'destination': 'C/ Cannonge Brugulat',
+         'date': '25/5/2019'},
+        {'reference': '20199110001',
+         'productor': 'Empresa Pepito',
+         'destination': 'C/ Cannonge Brugulat',
+         'date': '25/5/2019'},
+        ]
+    }
+    return render(request, 'magatzem/manifest-list.html', context)
 
 def entrada_producte_mock(request):
     context = {'productes': [

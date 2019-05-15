@@ -1,0 +1,77 @@
+{% extends 'magatzem/base-gestor.html' %}
+{% load static from staticfiles %}
+{% block content %}
+<div class="col">
+    <div class="card-header mt-4">
+        <h2>Manifests d'entrada</h2>
+    </div>
+    <div class="scroll-panel mb-5" style=" position: relative;
+                                      width: 100%;
+                                      height: calc(100vh - 575px);
+                                      min-height: 165px;
+                                      overflow-y: scroll;">
+        {% for entry in manifestentry %}
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <h4>Referencia</h4>
+                    <h5>{{ entry.reference}}</h5>
+                </div>
+                <div class="col">
+                    <h4>Productor</h4>
+                    <h5>{{ entry.productor }}</h5>
+                </div>
+                <div class="col">
+                    <h4>Origen</h4>
+                    <h5>{{ entry.origin }}</h5>
+                </div>
+                <div class="col">
+                    <h4>Data</h4>
+                    <h5>{{ entry.date }}</h5>
+                </div>
+                <div class="col">
+                    <a type="button" class="btn btn-primary" href="{% url 'ceo-home' %}">Mostrar manifest</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="card-header mt-4">
+        <h2>Manifests de sortida</h2>
+    </div>
+    <div class="scroll-panel mb-5" style=" position: relative;
+                                      width: 100%;
+                                      height: calc(100vh - 575px);
+                                      min-height: 165px;
+                                      overflow-y: scroll;">
+        {% for entry in manifestexit %}
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <h4>Referencia</h4>
+                    <h5>{{ entry.reference}}</h5>
+                </div>
+                <div class="col">
+                    <h4>Productor</h4>
+                    <h5>{{ entry.productor }}</h5>
+                </div>
+                <div class="col">
+                    <h4>Desti</h4>
+                    <h5>{{ entry.destination }}</h5>
+                </div>
+                <div class="col">
+                    <h4>Data</h4>
+                    <h5>{{ entry.date }}</h5>
+                </div>
+                <div class="col">
+                    <a type="button" class="btn btn-primary" href="{% url 'ceo-home' %}">Mostrar manifest</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</div>
+
+{% endblock content%}
