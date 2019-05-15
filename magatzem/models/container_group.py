@@ -1,17 +1,19 @@
 from django.db import models
-from django.core.validators import MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from magatzem.models import Room, Product, SLA
 
 
 class ContainerGroup(models.Model):
 
+    MAX_VALUE = 999
     STR_PATTERN = "SLA={} | Poducte={} | Productor={} | Sala={} | Quantitat={}"
     STATE = (
         (0, "unlock"),
         (1, "lock"),
     )
 
-    quantity = models.PositiveSmallIntegerField(default=0)
+    quantity = models.PositiveSmallIntegerField(validators=[MinValueValidator(1),
+                                                            MaxValueValidator(MAX_VALUE)])
     id_room = models.ForeignKey(Room, on_delete=models.PROTECT)
     id_product = models.ForeignKey(Product, on_delete=models.PROTECT)
     sla = models.ForeignKey(SLA, on_delete=models.PROTECT)
