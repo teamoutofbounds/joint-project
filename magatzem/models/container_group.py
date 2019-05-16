@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MaxValueValidator
 from magatzem.models import Room, Product, SLA
 
 
@@ -12,8 +12,7 @@ class ContainerGroup(models.Model):
         (1, "lock"),
     )
 
-    quantity = models.PositiveSmallIntegerField(validators=[MinValueValidator(1),
-                                                            MaxValueValidator(MAX_VALUE)])
+    quantity = models.PositiveSmallIntegerField(validators=[MaxValueValidator(MAX_VALUE)])
     id_room = models.ForeignKey(Room, on_delete=models.PROTECT)
     id_product = models.ForeignKey(Product, on_delete=models.PROTECT)
     sla = models.ForeignKey(SLA, on_delete=models.PROTECT)
