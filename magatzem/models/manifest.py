@@ -6,6 +6,14 @@ from datetime import date
 from magatzem.models.manifest_container import ManifestContainer
 
 
+def validate_name(value):
+    if not re.match(r'^(\w ?)+$', value):
+        raise ValidationError(
+            gettext_lazy('%(value) no es un nom valid.'),
+            params={'value': value}
+        )
+
+
 def validate_ref(value):
     if not re.match(r'^(\d{11})$', value):
         raise ValidationError(
@@ -16,7 +24,7 @@ def validate_ref(value):
 
 class Manifest(models.Model):
     MANIFEST_STR_PATTERN = "Ref: {} Date: {}"
-    ref = models.CharField(max_length=11)
+    ref = models.CharField(validators=[validate_ref] ,max_length=11)
     date = models.DateTimeField(default=date.today)
 
     def __str__(self):
