@@ -4,6 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Room(models.Model):
 
+    MAX_VALUE = 9999
     ROOMS_NAME = {
         '1': 'Sala 1', '2': 'Sala 2',
         'A': 'Sala A', 'B': 'Sala B', 'C': 'Sala C',
@@ -23,9 +24,9 @@ class Room(models.Model):
         validators=[MinValueValidator(-273), MaxValueValidator(100)],
         verbose_name='Temperatura (ºC)')
     hum = models.PositiveSmallIntegerField(
-        validators=[MaxValueValidator(100), MinValueValidator(0)],
-        verbose_name='Humitat (%)')
-    quantity = models.PositiveIntegerField(default=0, verbose_name='Espai ocupat')
+        validators=[MaxValueValidator(100)], verbose_name='Humitat (%)')
+    quantity = models.PositiveIntegerField(
+        validators=[MaxValueValidator(MAX_VALUE)], default=0, verbose_name='Espai ocupat')
     limit = models.PositiveIntegerField(verbose_name='Capacitat màxima')
     room_status = models.PositiveSmallIntegerField(
         choices=STATUS_CHOICES, default=0,
