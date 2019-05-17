@@ -3,10 +3,10 @@
 {% block content %}
 
   {% for task in task_list %}
-
     {% if task.task_status < 3 %}
 
       <br>
+
       <div class="alert alert-success" role="alert">
         Tens una nova tasca!
       </div>
@@ -29,9 +29,7 @@
                         <h5><b>Quantitat:</b> {{ task.containers.quantity }} </h5>
 
                         <div class="text-right">
-                          <button class="btn btn-success" type="button">
-                            <h4>Completar tasca</h4>
-                          </button>
+                            <a class="btn btn-success" href="{% url 'confirm-notification' task.pk %}" role="button">Confirmar Tasca</a>
                         </div>
                     </div>
                 </div>

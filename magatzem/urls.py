@@ -2,7 +2,7 @@
 # els de frontend, heu d'utilitzar les funcions de views que tenen la paraula mock
 from django.urls import path
 from magatzem.views import RoomList, RoomDetail, NotificationsListView, HomeGestor, TaskPanelOperaris, HomeCEO, \
-    ContainerSelectionList
+	ContainerSelectionList, ConfirmNotification
 from . import views
 
 urlpatterns = [
@@ -20,7 +20,7 @@ urlpatterns = [
     path('gestor/sortida/manifest/', views.sortida_producte, name='sortida-manifest'),
     # urls operari
     path('operaris/notificacions/', NotificationsListView.as_view(), name='operaris-notificacions'),
-
+    path('operaris/notificacions/confirm/<int:pk>/', ConfirmNotification.as_view(), name='confirm-notification'),
     # urls tecnics
 
     # urls mocks
