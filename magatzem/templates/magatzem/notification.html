@@ -15,27 +15,34 @@
 
     {% if task.task_status < 4 %}
 
-        <div class ="row">
-            <div class="col-sm-12">
-
-                <div class="card">
-                    <div class="card-header">
-                        <h4> Tasca {{ forloop.counter }}</h4>
-                    </div>
-                    <div class="card-body">
-                        <h5><b>Sala origen:</b> {{ task.origin_room.get_name }}</h5>
-                        <h5><b>Sala destí:</b> {{ task.destination_room.get_name }}</h5>
-                        <h5><b>Producte:</b> {{ task.containers.product_id }}</h5>
-                        <h5><b>Quantitat:</b> {{ task.containers.quantity }} </h5>
-
-                        <div class="text-right">
-                          <button class="btn btn-success" type="button">
-                            <h4>Completar tasca</h4>
-                          </button>
-                        </div>
-                    </div>
-                </div>
-
+      <p>
+      <li class="list-group-item">
+        <button class="btn btn-info" type="button" data-toggle="collapse"
+                data-target="#collapseOne{{ forloop.counter }}" aria-expanded="false"
+                aria-controls="collapseOne{{ forloop.counter }}">
+          <h4>Tasca nº{{ forloop.counter }}</h4>
+        </button>
+      </li>
+      </p>
+      <div id="collapseOne{{ forloop.counter }}" class="collapse">
+        <div class="card-body">
+          <li class="list-group-item">
+            <h4><b>Sala origen:</b> {{ task.origin_room.get_name }}</h4>
+          </li>
+          <li class="list-group-item">
+            <h4><b>Sala desti:</b> {{ task.destination_room.get_name }}</h4>
+          </li>
+          <li class="list-group-item">
+            <h4><b><b>Producte:</b> {{ task.containers.product_id.product_id }}</b></h4>
+          <li class="list-group-item">
+            <h5>&nbsp;<b>Cantitat:</b> {{ task.containers.quantity }} </h5>
+          </li>
+          </li>
+          <li class="list-group-item">
+            <div class="text-right">
+              <button class="btn btn-success" type="button">
+                <h4>Completar tasca</h4>
+              </button>
             </div>
         </div>
     {% endif %}
@@ -46,7 +53,7 @@
   {% if not task_list %}
 
     <br>
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-warning alert-dismissable fade show" role="alert">
       No hi ha noves tasques
     </div>
 

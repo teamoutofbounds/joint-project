@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+from magatzem.models import *
+
 
 class Room(models.Model):
 
@@ -43,3 +45,6 @@ class Room(models.Model):
 
     def get_name(self):
         return Room.ROOMS_NAME[self.name]
+
+    def get_containers(self, _state=0):
+        return ContainerGroup.objects.filter(id_room=self.id, state=_state)

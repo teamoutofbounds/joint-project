@@ -39,7 +39,7 @@
 
             </div>
             <div class="card-body">
-              <h6 class="card-subtitle mb-3"> PRODUCTE: <strong>{{ task.containers.product_id }}</strong></h6>
+              <h6 class="card-subtitle mb-3"> PRODUCTE: <strong>{{ task.containers.product_id.product_id }}</strong></h6>
               <h6 class="card-subtitle mb-3">ORIGEN: <strong>{{ task.origin_room.get_name }}</strong></h6>
               <h6 class="card-subtitle mb-3 text-muted">QUANTITAT: <strong>{{ task.containers.quantity }} containers</strong></h6>
               <h6 class="card-subtitle mb-3">DESTÍ: <strong>{{ task.destination_room.get_name }}</strong></h6>
@@ -83,7 +83,7 @@
                 <h6 class="task-title">{{ task.description }}</h6>
               </div>
               <div class="card-body">
-                <h6 class="card-subtitle mb-3"> PRODUCTE: <strong>{{ task.containers.product_id }}</strong></h6>
+                <h6 class="card-subtitle mb-3"> PRODUCTE: <strong>{{ task.containers.product_id.product_id }}</strong></h6>
                 <h6 class="card-subtitle mb-3">ORIGEN: <strong>{{ task.origin_room.get_name }}</strong></h6>
                 <h6 class="card-subtitle mb-3 text-muted">QUANTITAT: <strong>{{ task.containers.quantity }} containers</strong></h6>
                 <h6 class="card-subtitle mb-3">DESTÍ: <strong>{{ task.destination_room.get_name }}</strong></h6>
@@ -123,7 +123,7 @@
               <h6 class="task-title">{{ task.description }}</h6>
             </div>
             <div class="card-body">
-              <h6 class="card-subtitle mb-3"> PRODUCTE: <strong>{{ task.containers.product_id }}</strong></h6>
+              <h6 class="card-subtitle mb-3"> PRODUCTE: <strong>{{ task.containers.product_id.product_id }}</strong></h6>
               <h6 class="card-subtitle mb-3">ORIGEN: <strong>{{ task.origin_room.get_name }}</strong></h6>
               <h6 class="card-subtitle mb-3 text-muted">QUANTITAT: <strong>{{ task.containers.quantity }} containers</strong></h6>
               <h6 class="card-subtitle mb-3">DESTÍ: <strong>{{ task.destination_room.get_name }}</strong></h6>
