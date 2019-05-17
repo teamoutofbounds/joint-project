@@ -9,7 +9,33 @@
 
   <div class="row main-row mt-4 justify-content-md-center">
 
-    {% include 'users/user-list.html' %}
+    <div class="col-sm-7 bg-light">
+    <div class="col mb-3">
+        <a class="btn btn-success pull-right" href="{% url 'create-user-ceo' %}">Create User</a>
+    </div>
+        {% for user in all_users %}
+        <div class="card mb-1" >
+          <div class="card-block row m-1">
+            <h4 class="card-title col-md-12 p-1">{{user.username}}</h4>
+            <div class="col-md-3 p-3">
+              <h6 class="card-subtitle text-muted"><i class="fa fa-user fa-sm prefix grey-text"></i>Username</h6>
+              <p class="card-text">{{user.username}}</p>
+            </div>
+            <div class="col-md-3 p-3" >
+              <h6 class="card-subtitle text-muted">Name</h6>
+              <p class="card-text">{{user.first_name}} {{ user.last_name }}</p>
+            </div>
+            <div class="col-md-3 p-3">
+              <h6 class="card-subtitle text-muted">Role</h6>
+              <p class="card-text">{{user.groups.get.name}}</p>
+            </div>
+            <div class="col-md-3 p-1">
+                <a class="btn m-1 btn-outline-danger" href="{% url 'delete-user-ceo' pk=user.pk%}">Delete</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+</div>
 
     {% include 'magatzem/barra_lateral-ceo.html' %}
 

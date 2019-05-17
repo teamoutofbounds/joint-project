@@ -14,20 +14,36 @@
         <div class="card-body">
             <div class="row">
                 <div class="col">
-                    <h4>Referencia</h4>
-                    <h5>{{ entry.reference}}</h5>
+                    <div class="row">
+                        <h4>Referencia</h4>
+                    </div>
+                    <div class="row">
+                        <h5>{{ entry.reference}}</h5>
+                    </div>
                 </div>
                 <div class="col">
-                    <h4>Productor</h4>
-                    <h5>{{ entry.productor }}</h5>
+                    <div class="row">
+                        <h4>Productor</h4>
+                    </div>
+                    <div class="row">
+                        <h5>{{ entry.productor }}</h5>
+                    </div>
                 </div>
                 <div class="col">
-                    <h4>Origen</h4>
-                    <h5>{{ entry.origin }}</h5>
+                    <div class="row">
+                        <h4>Origen</h4>
+                    </div>
+                    <div class="row">
+                        <h5>{{ entry.origin }}</h5>
+                    </div>
                 </div>
                 <div class="col">
-                    <h4>Data</h4>
-                    <h5>{{ entry.date }}</h5>
+                    <div class="row">
+                        <h4>Data</h4>
+                    </div>
+                    <div class="row">
+                        <h5>{{ entry.date }}</h5>
+                    </div>
                 </div>
                 <div class="col">
                     <a type="button" class="btn btn-primary" href="{% url 'ceo-home' %}">Mostrar manifest</a>
@@ -44,24 +60,40 @@
                                       height: calc(100vh - 575px);
                                       min-height: 165px;
                                       overflow-y: scroll;">
-        {% for entry in manifestexit %}
+        {% for exit in manifestexit %}
         <div class="card-body">
             <div class="row">
                 <div class="col">
-                    <h4>Referencia</h4>
-                    <h5>{{ entry.reference}}</h5>
+                    <div class="row">
+                        <h4>Referencia</h4>
+                    </div>
+                    <div class="row">
+                        <h5>{{ exit.reference}}</h5>
+                    </div>
                 </div>
                 <div class="col">
-                    <h4>Productor</h4>
-                    <h5>{{ entry.productor }}</h5>
+                    <div class="row">
+                        <h4>Productor</h4>
+                    </div>
+                    <div class="row">
+                        <h5>{{ exit.productor }}</h5>
+                    </div>
                 </div>
                 <div class="col">
-                    <h4>Desti</h4>
-                    <h5>{{ entry.destination }}</h5>
+                    <div class="row">
+                        <h4>Desti</h4>
+                    </div>
+                    <div class="row">
+                        <h5>{{ exit.destination }}</h5>
+                    </div>
                 </div>
                 <div class="col">
-                    <h4>Data</h4>
-                    <h5>{{ entry.date }}</h5>
+                    <div class="row">
+                        <h4>Data</h4>
+                    </div>
+                    <div class="row">
+                        <h5>{{ exit.date }}</h5>
+                    </div>
                 </div>
                 <div class="col">
                     <a type="button" class="btn btn-primary" href="{% url 'ceo-home' %}">Mostrar manifest</a>

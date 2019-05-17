@@ -1,17 +1,4 @@
-{% extends 'magatzem/base-ceo.html' %}
-{% load static from staticfiles %}
-
-{% block header %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/home-gestor.css' %}">
-{% endblock header %}
-
-{% block content %}
-
-  <div class="row main-row mt-4 justify-content-md-center">
-
-  {% include 'users/user-list.html' %}
-
-    <div class="col-sm-5 mt-2 bg-light">
+<div class="col-sm-5 mt-2 bg-light">
 
       <div class="box px-3 py-3" style="border-style: solid;
                                         border-color: #0D47A1;
@@ -68,11 +55,7 @@
 
       <div class="row">
         <button type="button" class="btn btn-lg btn-block text-button">Valoracions Clients</button>
-        <button type="button" class="btn btn-lg btn-block mb-2 text-button">Gestió usuaris</button>
+         <a class="btn btn-lg btn-block mb-2 text-button" href="{% url 'list_users' %}">Gestió usuaris</a>
       </div>
       </div>
-
-    </div>
-  </div>
-
-{% endblock content%}
+</div>

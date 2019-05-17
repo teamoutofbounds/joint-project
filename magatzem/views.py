@@ -9,14 +9,21 @@ from magatzem.models.container import Container
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth import authenticate
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Group
 
 # from .tasks import assign_task
 from tools.algorithms.sala_selector import RoomHandler
 from tools.api.product_entry import EntryHandler
 from datetime import date
 
-
 # Check roles function
+from users.forms import SignUpForm
+
+
 def is_allowed(user, roles):
     allowed = False
     belongs_to = user.groups.all()
@@ -720,3 +727,51 @@ def panel_tecnics_tasks_mock(request):
     }
 
     return render(request, 'magatzem/tasks-list-tecnic.html', context)
+
+
+def list_users(request):
+    all_users = User.objects.all()
+    return render(request, 'users/list_users-ceo.html', {'all_users': all_users})
+
+
+def create_user_as_ceo(request):
+    gestor = Group.objects.get_or_create(name='Gestor')[0]
+    operari = Group.objects.get_or_create(name='Operari')[0]
+    tecnic = Group.objects.get_or_create(name='Tecnic')[0]
+    ceo = Group.objects.get_or_create(name='Ceo')[0]
+    # add permisions to every group here
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            created = authenticate(username=username, password=raw_password)
+            user_type = form.cleaned_data.get('user_type')
+            if user_type.name == "Gestor":
+                created.groups.add(gestor)
+                created.save()
+            elif user_type.name == "Operari":
+                created.groups.add(operari)
+                created.save()
+            elif user_type.name == "Tecnic":
+                created.groups.add(tecnic)
+                created.save()
+            elif user_type.name == "Ceo":
+                created.groups.add(ceo)
+                created.save()
+            return redirect('list_users')
+    else:
+        form = SignUpForm()
+    return render(request, 'users/usercreate-ceo.html', {'form': form})
+
+
+def delete_user_as_ceo(request, pk):
+    try:
+        u = User.objects.get(pk=pk)
+        u.delete()
+
+    except User.DoesNotExist:
+        pass
+
+    return redirect('list_users')
