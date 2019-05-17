@@ -13,30 +13,39 @@
     <div class="col mb-3">
         <a class="btn btn-success pull-right" href="{% url 'create-user-ceo' %}">Create User</a>
     </div>
-        {% for user in all_users %}
-            {% if user.username != "admin" %}
-            <div class="card mb-1" >
-              <div class="card-block row m-1">
-                <h4 class="card-title col-md-12 p-1">{{user.username}}</h4>
-                <div class="col-md-3 p-3">
-                  <h6 class="card-subtitle text-muted"><i class="fa fa-user fa-sm prefix grey-text"></i>Username</h6>
-                  <p class="card-text">{{user.username}}</p>
-                </div>
-                <div class="col-md-3 p-3" >
-                  <h6 class="card-subtitle text-muted">Name</h6>
-                  <p class="card-text">{{user.first_name}} {{ user.last_name }}</p>
-                </div>
-                <div class="col-md-3 p-3">
-                  <h6 class="card-subtitle text-muted">Role</h6>
-                  <p class="card-text">{{user.groups.get.name}}</p>
-                </div>
-                <div class="col-md-3 p-1">
-                    <a class="btn m-1 btn-outline-danger" href="{% url 'delete-user-ceo' pk=user.pk%}">Delete</a>
-                </div>
-              </div>
+     {% for user in all_users %}
+        {% if user.username != "admin" %}
+        <div class="card mb-1" >
+          <div class="card-block row m-1">
+            <h4 class="card-title col-md-12 p-1">{{user.username}}</h4>
+            <div class="col-md-3 p-3">
+              <h6 class="card-subtitle text-muted"><i class="fa fa-user fa-sm prefix grey-text"></i>Username</h6>
+              <p class="card-text">{{user.username}}</p>
             </div>
-            {% endif %}
-        {% endfor %}
+            <div class="col-md-3 p-3" >
+              <h6 class="card-subtitle text-muted">First Name</h6>
+              <p class="card-text">{{user.first_name}} </p>
+            </div>
+            <div class="col-md-3 p-3">
+              <h6 class="card-subtitle text-muted">Last Name</h6>
+              <p class="card-text">{{ user.last_name }}</p>
+            </div>
+            <div class="col-md-3 p-3">
+                <button class="btn m-1 btn-outline-danger" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false">Delete</button>
+            </div>
+          </div>
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body">Are you sure you want to the delete the user account " {{ user.username }}"?
+                <div class="text-center">
+                    <a class="btn btn-outline-danger m-1" href="{% url 'delete-user-ceo' pk=user.pk %}">Yes, delete!</a>
+                    <a class="btn btn-outline-primary m-1" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"  href="{% url 'list_users' %} ">Cancel</a>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        {% endif %}
+    {% endfor %}
 </div>
 
     {% include 'magatzem/barra_lateral-ceo.html' %}

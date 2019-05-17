@@ -746,7 +746,6 @@ def panel_tecnics_tasks_mock(request):
     }
 
     return render(request, 'magatzem/tasks-list-tecnic.html', context)
-<<<<<<< HEAD
 
 
 def list_users(request):
@@ -787,12 +786,7 @@ def create_user_as_ceo(request):
 
 
 def delete_user_as_ceo(request, pk):
-    try:
-        u = User.objects.get(pk=pk)
-        u.delete()
-
-    except User.DoesNotExist:
-        pass
+    u = User.objects.get(pk=pk)
+    u.delete()
 
     return redirect('list_users')
-
