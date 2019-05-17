@@ -12,19 +12,9 @@ class TaskTecnic(Task):
         (2, "Ajust"),
     )
 
-    task_type = models.PositiveSmallIntegerField(validators=[MaxValueValidator(MAX_TYPE_CHOICES_VALUE)],
-                                                 choices=TYPE_CHOICES, default=1, verbose_name='Tipus')
+    task_type = models.PositiveSmallIntegerField(
+        validators=[MaxValueValidator(MAX_TYPE_CHOICES_VALUE)],
+        choices=TYPE_CHOICES, default=1, verbose_name='Tipus')
 
     detail = models.CharField(max_length=250)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-
-
-
-
-
-
-
-
-
-
-
