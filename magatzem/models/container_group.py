@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
-from magatzem.models import Room, Product, SLA
+from .room import Room
+from .product import Product
+from .sla import SLA
 
 
 class ContainerGroup(models.Model):

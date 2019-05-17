@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-from magatzem.models import ContainerGroup
+from magatzem.models import *
 
 
 class Room(models.Model):
