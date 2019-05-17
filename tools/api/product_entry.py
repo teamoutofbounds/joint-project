@@ -20,8 +20,6 @@ class EntryHandler:
 
 		# use the opener to fetch a URL
 		with opener.open('https://ourfarms.herokuapp.com/apiRest/REF/?format=json') as u:
-		#u = opener.open('https://ourfarms.herokuapp.com/apiRest/REF/?format=json')
-
 			soup = BeautifulSoup(u.read(), 'html.parser')
 			list_dic = json.loads(soup.decode('utf-8'))
 
