@@ -21,7 +21,7 @@ def redirect_view(request):
     elif request.user.groups.filter(name='Tecnic').exists():
         response = redirect('tecnics-home')
     elif request.user.groups.filter(name='Ceo').exists():
-        response = redirect('oficina/ceo/')
+        response = redirect('/magatzem/ceo')
     else:
         raise Http404
     return response
