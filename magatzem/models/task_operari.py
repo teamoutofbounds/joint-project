@@ -25,8 +25,12 @@ class TaskOperari(Task):
     destination_room = models.ForeignKey(
         Room, related_name='destination', on_delete=models.PROTECT,
         verbose_name="Sala destí")
-    containers = models.ForeignKey(ContainerGroup, on_delete=models.SET_NULL, null=True, verbose_name='Contenidor')
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='Persona assignada')
+    containers = models.ForeignKey(
+        ContainerGroup, on_delete=models.SET_NULL,
+        null=True, verbose_name='Contenidor')
+    user = models.ForeignKey(
+        User, on_delete=models.SET_NULL,
+        null=True, verbose_name='Persona assignada')
 
     @classmethod
     def assign_task(cls, user):
