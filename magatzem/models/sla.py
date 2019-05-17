@@ -21,10 +21,14 @@ class SLA(models.Model):
     STR_PATTERN = "Limit={} | Tmin={} Tmax={} | Hmin={} Hmax{}"
 
     limit = models.CharField(validators=[validate_limit], max_length=10)
-    temp_min = models.IntegerField(validators=[MinValueValidator(TEMP_MIN_VALUE), MaxValueValidator(TEMP_MAX_VALUE)])
-    temp_max = models.IntegerField(validators=[MinValueValidator(TEMP_MIN_VALUE), MaxValueValidator(TEMP_MAX_VALUE)])
-    hum_min = models.IntegerField(validators=[MinValueValidator(HUM_MIN_VALUE), MaxValueValidator(HUM_MAX_VALUE)])
-    hum_max = models.IntegerField(validators=[MinValueValidator(HUM_MIN_VALUE), MaxValueValidator(HUM_MAX_VALUE)])
+    temp_min = models.IntegerField(validators=[MinValueValidator(TEMP_MIN_VALUE),
+                                               MaxValueValidator(TEMP_MAX_VALUE)])
+    temp_max = models.IntegerField(validators=[MinValueValidator(TEMP_MIN_VALUE),
+                                               MaxValueValidator(TEMP_MAX_VALUE)])
+    hum_min = models.IntegerField(validators=[MinValueValidator(HUM_MIN_VALUE),
+                                              MaxValueValidator(HUM_MAX_VALUE)])
+    hum_max = models.IntegerField(validators=[MinValueValidator(HUM_MIN_VALUE),
+                                              MaxValueValidator(HUM_MAX_VALUE)])
     SLA = models.IntegerField(default=0)
 
     def __str__(self):
