@@ -1,8 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
-from magatzem.models.product import Product
-from magatzem.models.sla import SLA
-from magatzem.models.manifest import Manifest
+from magatzem.models import *
 
 
 class ManifestContainer(models.Model):

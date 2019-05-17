@@ -5,8 +5,6 @@ from django.db.models import Q
 
 from magatzem.models.room import Room
 from magatzem.models.task_operari import TaskOperari
-from magatzem.models.task_v import Task
-from magatzem.models.container import Container
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -41,7 +39,7 @@ class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
 
     def get_queryset(self):
         self.room = get_object_or_404(Room, name=self.kwargs['room'])
-        return Container.objects.filter(room=self.room)
+        return self.room.get_containers()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -85,7 +83,7 @@ class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
 
 
 class NotificationsListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
-    model = Task
+    model = TaskOperari
     context_object_name = 'task_list'
     template_name = 'magatzem/notification.html'
     new_task = False
@@ -112,7 +110,7 @@ class NotificationsListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
 
 
 class TaskPanelOperaris(ListView, LoginRequiredMixin, UserPassesTestMixin):
-    queryset = TaskOperari.objects.filter(date=date.today)
+    queryset = TaskOperari.objects.filter(date=date.today())
     template_name = 'magatzem/tasks-list.html'
     # permission variable
     roles = ('Gestor', 'CEO')
@@ -188,7 +186,7 @@ class HomeCEO(ListView, LoginRequiredMixin, UserPassesTestMixin):
         return context
 
     def get_last_tasks(self):
-        tasks = Task.objects.order_by('-date').filter(date=date.today())
+        tasks = TaskOperari.objects.order_by('-date').filter(date=date.today())
         return tasks
 
 
