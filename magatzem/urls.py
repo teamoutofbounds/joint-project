@@ -27,6 +27,7 @@ urlpatterns = [
     # path('gestor/entrades/new/', views.exemple_mock, name='new-arrival'),
     # path('gestor/moviments/new/', views.exemple_mock, name='new-movement'),
     # path('gestor/sortides/new', views.exemple_mock, name='new-exit'),
+    path('ceo/manifest_mock', views.manifest_list_mock, name='manifest-list-mock'),
     path('entrada_mock/', views.entrada_producte_mock, name='entrada_mock'),
     path('llista_sales_mock/', views.llista_sales_mock, name='llista-sales-mock'),
     path('sala_mock/', views.sala_mock, name='sala_mock'),
