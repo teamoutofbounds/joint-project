@@ -17,8 +17,9 @@ class Task(models.Model):
 
     description = models.CharField(max_length=32, verbose_name='Descripció')
 
-    task_status = models.PositiveSmallIntegerField(validators=[MaxValueValidator(MAX_STATUS_CHOICES_VALUE)],
-                                                   choices=STATUS_CHOICES, default=0, verbose_name='Estat')
+    task_status = models.PositiveSmallIntegerField(
+        validators=[MaxValueValidator(MAX_STATUS_CHOICES_VALUE)],
+        choices=STATUS_CHOICES, default=0, verbose_name='Estat')
 
     date = models.DateField(default=date.today)
 
