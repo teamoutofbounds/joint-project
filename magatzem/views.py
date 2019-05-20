@@ -245,6 +245,14 @@ class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
 # Entry/Exit Manifesto functions
 ##############################################################################
 
+def manifest_form(request):
+    return render(request, 'magatzem/manifest-form.html', {'title': 'Entrada Productes'})
+
+
+def manifest_sortida_form(request):
+    return render(request, 'magatzem/manifest-leave-form.html', {'title': 'Sortida Productes'})
+
+
 def entrada_producte(request):
     if 'ref' in request.GET:
         entry_handler = EntryHandler()
