@@ -31,4 +31,5 @@ class Manifest(models.Model):
         return self.MANIFEST_STR_PATTERN.format(self.ref, self.date)
 
     def _get_manifest_containers(self):
+        from magatzem.models import ManifestContainer
         return ManifestContainer.objects.filter(id_manifest=self)

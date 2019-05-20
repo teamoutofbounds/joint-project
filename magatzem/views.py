@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView
 from django.db.models import Q
 
-from magatzem.models import TaskTecnic, ManifestEntrance, ManifestDeparture
+from magatzem.models import TaskTecnic, ManifestEntrance, ManifestDeparture, ContainerGroup
 
 from magatzem.models.room import Room
 from magatzem.models.task_operari import TaskOperari
