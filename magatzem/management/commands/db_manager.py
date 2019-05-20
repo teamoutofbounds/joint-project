@@ -25,8 +25,8 @@ def make_database():
 def add_item(func, filename):
     with open(filename, 'r') as file:
         for line in file.readlines():
-            if re.match(r'^*', line):
-                continue
+            # if re.match('^*', line):
+            #    continue
 
             params = line.split('|')
             func(params)
