@@ -1,16 +1,15 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView
 from django.db.models import Q
 
+from magatzem.models import TaskTecnic
 from magatzem.models.room import Room
 from magatzem.models.task_operari import TaskOperari
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.contrib.auth import authenticate
-from django.shortcuts import render, redirect
-from django.contrib.auth.models import User, Group
+from django.shortcuts import render
 
 
 from tools.algorithms.sala_selector import RoomHandler
@@ -18,9 +17,9 @@ from tools.api.product_entry import EntryHandler
 
 from datetime import date
 
-# Check roles function
-from users.forms import SignUpForm
 
+# Security related functions
+##############################################################################
 
 def is_allowed(user, roles):
     allowed = False
@@ -31,27 +30,8 @@ def is_allowed(user, roles):
     return allowed
 
 
-class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
-    model = Room
-    context_object_name = 'container_list'
-    slug_field = "room"
-    slug_url_kwarg = "room"
-    template_name = 'magatzem/select-container.html'
-    # permission variable
-    roles = ('Gestor',)
-
-    def test_func(self):
-        return is_allowed(self.request.user, self.roles)
-
-    def get_queryset(self):
-        self.room = get_object_or_404(Room, name=self.kwargs['room'])
-        return self.room.get_containers()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Selecció de Contenidors'
-        return context
-
+# Rooms related functions
+##############################################################################
 
 class RoomList(ListView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
@@ -82,13 +62,17 @@ class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['tasks'] = TaskOperari.objects.filter(~Q(task_status=4),
-                                                      Q(origin_room=context['room']) | Q(destination_room=context['room']))
+                                                      Q(origin_room=context['room'])
+                                                      | Q(destination_room=context['room']))
         context['containers'] = self.object.get_containers()
         context['title'] = context['room'].name
         return context
 
 
-class NotificationsListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
+# Notification related functions
+##############################################################################
+
+class NotificationsOperarisListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
     model = TaskOperari
     context_object_name = 'task_list'
     template_name = 'magatzem/notification.html'
@@ -115,6 +99,46 @@ class NotificationsListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
         return context
 
 
+class NotificationsTecnicsListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
+    model = TaskTecnic
+    context_object_name = 'task_list'
+    template_name = 'magatzem/notification-tecnic.html'
+    # permission variable
+    roles = ('Tecnic',)
+
+    def test_func(self):
+        return is_allowed(self.request.user, self.roles)
+
+    def get_queryset(self):
+        queryset = TaskOperari.objects.filter(Q(task_status=1) | Q(task_status=2) |
+                                              Q(task_status=3))
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Home'
+        return context
+
+
+class ConfirmNotification(UpdateView):
+    model = TaskOperari
+    template_name = 'magatzem/confirm-notification.html'
+    fields = {}
+
+    def form_valid(self, form):
+        if self.request.POST['confirm'] == "SI":
+            form.instance.task_status = 4
+            return super().form_valid(form)
+        else:
+            return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('operaris-notificacions')
+
+
+# Task Panels related functions
+##############################################################################
+
 class TaskPanelOperaris(ListView, LoginRequiredMixin, UserPassesTestMixin):
     queryset = TaskOperari.objects.filter(date=date.today())
     template_name = 'magatzem/tasks-list.html'
@@ -137,6 +161,32 @@ class TaskPanelOperaris(ListView, LoginRequiredMixin, UserPassesTestMixin):
         context['title'] = 'Tasques Operaris'
         return context
 
+
+class TaskPanelTecnics(ListView, LoginRequiredMixin, UserPassesTestMixin):
+    queryset = TaskTecnic.objects.filter(date=date.today())
+    template_name = 'magatzem/tasks-list-tecnic.html'
+    # permission variable
+    roles = ('Gestor', 'CEO')
+
+    def test_func(self):
+        return is_allowed(self.request.user, self.roles)
+
+    def get_context_data(self, **kwargs):
+        tasks = super().get_context_data(**kwargs)
+        context = {'todo': [], 'doing': [], 'done': []}
+        for task in tasks['object_list']:
+            if task.task_status == 0 or task.task_status == 1 or task.task_status == 2:
+                context['todo'].append(task)  # pendent assignacio
+            elif task.task_status == 3:
+                context['doing'].append(task)
+            else:
+                context['done'].append(task)
+        context['title'] = 'Tasques Tecnics'
+        return context
+
+
+# Home Gestor
+##############################################################################
 
 class HomeGestor(ListView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
@@ -165,63 +215,33 @@ class HomeGestor(ListView, LoginRequiredMixin, UserPassesTestMixin):
         return tasks
 
 
-class HomeCEO(ListView, LoginRequiredMixin, UserPassesTestMixin):
-    """ THIS IS A TEMPORARY IMPLEMENTATION:
-        Needed to check if all works properly in the front end,
-        until the real implementation could be done.
-    """
+# Container Movement functions
+##############################################################################
+
+class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
-    context_object_name = 'rooms'
-    template_name = 'magatzem/home-ceo.html'
+    context_object_name = 'container_list'
+    slug_field = "room"
+    slug_url_kwarg = "room"
+    template_name = 'magatzem/select-container.html'
     # permission variable
-    roles = ('CEO',)
+    roles = ('Gestor',)
 
     def test_func(self):
         return is_allowed(self.request.user, self.roles)
 
+    def get_queryset(self):
+        self.room = get_object_or_404(Room, name=self.kwargs['room'])
+        return self.room.get_containers()
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Home CEO'
-        # get last tasks
-        context['last_tasks'] = self.get_last_tasks()
-        # get room capacity
-        context['capacities'] = {}
-        for item in context['object_list']:
-            context['capacities'][item.name] = item.quantity * 100 / item.limit
-
+        context['title'] = 'Selecció de Contenidors'
         return context
 
-    def get_last_tasks(self):
-        tasks = TaskOperari.objects.order_by('-date').filter(date=date.today())
-        return tasks
 
-
-def home_ceo(request):
-    context = {}
-    context['title'] = 'Home-CEO'
-    return render(request, 'magatzem/home-ceo.html', context)
-
-
-def home_operari(request):
-    context = {}
-    context['title'] = 'Home-Operari'
-    return render(request, 'magatzem/notification.html', context)
-
-
-class ConfirmNotification(UpdateView):
-    model = TaskOperari
-    template_name = 'magatzem/confirm-notification.html'
-    fields = {}
-    def form_valid(self, form):
-        if self.request.POST['confirm'] == "SI":
-            form.instance.task_status = 4
-            return super().form_valid(form)
-        else:
-            return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy('operaris-notificacions')
-
+# Entry/Exit Manifesto functions
+##############################################################################
 
 def entrada_producte(request):
     if 'ref' in request.GET:
@@ -233,14 +253,6 @@ def entrada_producte(request):
             if transport['ref'] == request.GET['ref']:
                 context['container'] = transport
     return render(request, 'magatzem/product-entry.html', context)
-
-
-def manifest_form(request):
-    return render(request, 'magatzem/manifest-form.html', {'title': 'Entrada Productes'})
-
-
-def manifest_sortida_form(request):
-    return render(request, 'magatzem/manifest-leave-form.html', {'title': 'Sortida Productes'})
 
 
 def sortida_producte(request):
@@ -255,6 +267,9 @@ def sortida_producte(request):
                 context['container'] = transport
     return render(request, 'magatzem/product-leave.html', context)
 
+
+# Mock functions
+##############################################################################
 
 def manifest_list_mock(request):
     context = {
@@ -739,47 +754,3 @@ def panel_tecnics_tasks_mock(request):
     }
 
     return render(request, 'magatzem/tasks-list-tecnic.html', context)
-
-
-def list_users(request):
-    all_users = User.objects.all()
-    return render(request, 'users/list_users-ceo.html', {'all_users': all_users})
-
-
-def create_user_as_ceo(request):
-    gestor = Group.objects.get_or_create(name='Gestor')[0]
-    operari = Group.objects.get_or_create(name='Operari')[0]
-    tecnic = Group.objects.get_or_create(name='Tecnic')[0]
-    ceo = Group.objects.get_or_create(name='Ceo')[0]
-    # add permisions to every group here
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            created = authenticate(username=username, password=raw_password)
-            user_type = form.cleaned_data.get('user_type')
-            if user_type.name == "Gestor":
-                created.groups.add(gestor)
-                created.save()
-            elif user_type.name == "Operari":
-                created.groups.add(operari)
-                created.save()
-            elif user_type.name == "Tecnic":
-                created.groups.add(tecnic)
-                created.save()
-            elif user_type.name == "Ceo":
-                created.groups.add(ceo)
-                created.save()
-            return redirect('list_users')
-    else:
-        form = SignUpForm()
-    return render(request, 'users/usercreate-ceo.html', {'form': form})
-
-
-def delete_user_as_ceo(request, pk):
-    u = User.objects.get(pk=pk)
-    u.delete()
-
-    return redirect('list_users')
