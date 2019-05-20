@@ -1,7 +1,8 @@
 import os
 import re
 from django.core.management.base import BaseCommand
-from magatzem.models import Container, Room, Task
+# from magatzem.models import Container, Room, Task
+from magatzem.models import Room
 from django.contrib.auth.models import Group
 
 container_id = 0
@@ -17,17 +18,16 @@ class Command(BaseCommand):
 def make_database():
     path = os.getcwd()
     add_item(add_room, path + '/data/rooms.data')
-    add_item(add_container, path + '/data/containers.data')
-    add_item(add_task, path + '/data/tasks.data')
+    # add_item(add_container, path + '/data/containers.data')
+    # add_item(add_task, path + '/data/tasks.data')
 
 
 def add_item(func, filename):
     with open(filename, 'r') as file:
         for line in file.readlines():
-            '''
-            if re.match('^*', line):
+            if re.match(r'^*', line):
                 continue
-            '''
+
             params = line.split('|')
             func(params)
 
@@ -40,6 +40,7 @@ def add_room(params):
     room.save()
 
 
+'''
 def add_container(params):
     global container_id
     # room = Room.objects.get(params[-1])
@@ -51,8 +52,8 @@ def add_container(params):
     container.pk = container_id
     container_id += 1
     container.save()
-
-
+'''
+'''
 def add_task(params):
     # task.data
     # This file must contain the following fields:
@@ -65,3 +66,4 @@ def add_task(params):
                 origin_room=Room.objects.get(id=params[3]), destination_room=Room.objects.get(id=params[4]),
                 containers=container)
     task.save()
+'''
