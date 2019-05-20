@@ -3,7 +3,8 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView
 from django.db.models import Q
 
-from magatzem.models import TaskTecnic
+from magatzem.models import TaskTecnic, ManifestEntrance, ManifestDeparture
+
 from magatzem.models.room import Room
 from magatzem.models.task_operari import TaskOperari
 
@@ -13,6 +14,7 @@ from django.shortcuts import render
 
 
 from tools.algorithms.sala_selector import RoomHandler
+from tools.api.ManifestCreator import ApiManifestCreator
 from tools.api.product_entry import EntryHandler
 
 from datetime import date
@@ -249,10 +251,28 @@ def entrada_producte(request):
         context = {}
         context['title'] = 'Entrada Productes'
         transports = entry_handler.generate_entry()
+        _save_manifest(transports, 1)
         for transport in transports:
             if transport['ref'] == request.GET['ref']:
                 context['container'] = transport
     return render(request, 'magatzem/product-entry.html', context)
+
+
+def _save_manifest(transports, num):
+    if num == 1: # entrada
+        ManifestEntrance.objects.save(ref=transports['ref'],
+                                      origin=transports['fromLocation'],
+                                      date=transports['creationDate'])
+        for product in transports['Products']:
+            creator = ApiManifestCreator(product, transports)
+            creator.create_entry()
+    else: # sortida
+        ManifestDeparture.objects.save(ref=transports['ref'],
+                                       origin=transports['fromLocation'],
+                                       date=transports['creationDate'])
+        for product in transports['Products']:
+            creator = ApiManifestCreator(product, transports)
+            creator.create_departure()
 
 
 def sortida_producte(request):
