@@ -1,21 +1,22 @@
-{% extends 'magatzem/base.html' %}
-
-{% block content %}
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: #ff1a17">{{ error }}</p>
+<div class="col-sm-7 bg-light">
+      <h3>Fill in this form to create a new user:</h3>
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+              <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% for error in field.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+              </p>
         {% endfor %}
-      </p>
-    {% endfor %}
-    <button type="submit">Sign up</button>
-  </form>
-{% endblock content %}
+        <!-- Button -->
+        <div class="form-group">
+            <a href="{% url 'create-user-ceo' %}">
+                 <button id="submit" type="submit" class="btn m-1 btn-success pull-right">Submit</button>
+            </a>
+            <a class="btn m-1 btn-outline-primary pull-right" href="{% url 'list_users' %}">Back</a>
+        </div>
+      </form>
+</div>

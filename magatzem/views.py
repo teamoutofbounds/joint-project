@@ -1,6 +1,6 @@
-from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, UpdateView
 from django.db.models import Q
 
 from magatzem.models.room import Room
@@ -8,14 +8,20 @@ from magatzem.models.task_operari import TaskOperari
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth import authenticate
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User, Group
 
 
 from tools.algorithms.sala_selector import RoomHandler
-# from tools.api.product_entry import EntryHandler
+from tools.api.product_entry import EntryHandler
+
 from datetime import date
 
-
 # Check roles function
+from users.forms import SignUpForm
+
+
 def is_allowed(user, roles):
     allowed = False
     belongs_to = user.groups.all()
@@ -202,11 +208,26 @@ def home_operari(request):
     return render(request, 'magatzem/notification.html', context)
 
 
+class ConfirmNotification(UpdateView):
+    model = TaskOperari
+    template_name = 'magatzem/confirm-notification.html'
+    fields = {}
+    def form_valid(self, form):
+        if self.request.POST['confirm'] == "SI":
+            form.instance.task_status = 4
+            return super().form_valid(form)
+        else:
+            return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('operaris-notificacions')
+
+
 def entrada_producte(request):
     if 'ref' in request.GET:
         entry_handler = EntryHandler()
         context = {}
-        context['title'] = 'Sortida Productes'
+        context['title'] = 'Entrada Productes'
         transports = entry_handler.generate_entry()
         for transport in transports:
             if transport['ref'] == request.GET['ref']:
@@ -234,46 +255,48 @@ def sortida_producte(request):
                 context['container'] = transport
     return render(request, 'magatzem/product-leave.html', context)
 
+
 def manifest_list_mock(request):
-    context={
-        'manifestentry':[
-        {'reference': '20199110001',
-         'productor': 'Empresa Pepito',
-         'origin': 'C/ Cannonge Brugulat',
-         'date': '25/5/2019'},
-        {'reference': '20199110001',
-         'productor': 'Empresa Pepito',
-         'origin': 'C/ Cannonge Brugulat',
-         'date': '25/5/2019'},
-        {'reference': '20199110001',
-         'productor': 'Empresa Pepito',
-         'origin': 'C/ Cannonge Brugulat',
-         'date': '25/5/2019'},
-        {'reference': '20199110001',
-         'productor': 'Empresa Pepito',
-         'origin': 'C/ Cannonge Brugulat',
-         'date': '25/5/2019'},
+    context = {
+        'manifestentry': [
+            {'reference': '20199110001',
+             'productor': 'Empresa Pepito',
+             'origin': 'C/ Cannonge Brugulat',
+             'date': '25/5/2019'},
+            {'reference': '20199110001',
+             'productor': 'Empresa Pepito',
+             'origin': 'C/ Cannonge Brugulat',
+             'date': '25/5/2019'},
+            {'reference': '20199110001',
+             'productor': 'Empresa Pepito',
+             'origin': 'C/ Cannonge Brugulat',
+             'date': '25/5/2019'},
+            {'reference': '20199110001',
+             'productor': 'Empresa Pepito',
+             'origin': 'C/ Cannonge Brugulat',
+             'date': '25/5/2019'},
         ],
-        'manifestexit':[
-        {'reference': '20199110001',
-         'productor': 'Empresa Pepito',
-         'destination': 'C/ Cannonge Brugulat',
-         'date': '25/5/2019'},
-        {'reference': '20199110001',
-         'productor': 'Empresa Pepito',
-         'destination': 'C/ Cannonge Brugulat',
-         'date': '25/5/2019'},
-        {'reference': '20199110001',
-         'productor': 'Empresa Pepito',
-         'destination': 'C/ Cannonge Brugulat',
-         'date': '25/5/2019'},
-        {'reference': '20199110001',
-         'productor': 'Empresa Pepito',
-         'destination': 'C/ Cannonge Brugulat',
-         'date': '25/5/2019'},
+        'manifestexit': [
+            {'reference': '20199110001',
+             'productor': 'Empresa Pepito',
+             'destination': 'C/ Cannonge Brugulat',
+             'date': '25/5/2019'},
+            {'reference': '20199110001',
+             'productor': 'Empresa Pepito',
+             'destination': 'C/ Cannonge Brugulat',
+             'date': '25/5/2019'},
+            {'reference': '20199110001',
+             'productor': 'Empresa Pepito',
+             'destination': 'C/ Cannonge Brugulat',
+             'date': '25/5/2019'},
+            {'reference': '20199110001',
+             'productor': 'Empresa Pepito',
+             'destination': 'C/ Cannonge Brugulat',
+             'date': '25/5/2019'},
         ]
     }
     return render(request, 'magatzem/manifest-list.html', context)
+
 
 def entrada_producte_mock(request):
     context = {'productes': [
@@ -716,3 +739,47 @@ def panel_tecnics_tasks_mock(request):
     }
 
     return render(request, 'magatzem/tasks-list-tecnic.html', context)
+
+
+def list_users(request):
+    all_users = User.objects.all()
+    return render(request, 'users/list_users-ceo.html', {'all_users': all_users})
+
+
+def create_user_as_ceo(request):
+    gestor = Group.objects.get_or_create(name='Gestor')[0]
+    operari = Group.objects.get_or_create(name='Operari')[0]
+    tecnic = Group.objects.get_or_create(name='Tecnic')[0]
+    ceo = Group.objects.get_or_create(name='Ceo')[0]
+    # add permisions to every group here
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            created = authenticate(username=username, password=raw_password)
+            user_type = form.cleaned_data.get('user_type')
+            if user_type.name == "Gestor":
+                created.groups.add(gestor)
+                created.save()
+            elif user_type.name == "Operari":
+                created.groups.add(operari)
+                created.save()
+            elif user_type.name == "Tecnic":
+                created.groups.add(tecnic)
+                created.save()
+            elif user_type.name == "Ceo":
+                created.groups.add(ceo)
+                created.save()
+            return redirect('list_users')
+    else:
+        form = SignUpForm()
+    return render(request, 'users/usercreate-ceo.html', {'form': form})
+
+
+def delete_user_as_ceo(request, pk):
+    u = User.objects.get(pk=pk)
+    u.delete()
+
+    return redirect('list_users')

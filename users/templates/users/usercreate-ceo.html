@@ -5,11 +5,13 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css/home-gestor.css' %}">
 {% endblock header %}
 
-{% block content %}
+{{% block content %}
 
   <div class="row main-row mt-4 justify-content-md-center">
 
-    {% include 'magatzem/mapa.html' %}
+
+    {% include 'users/register.html' %}
+
 
     {% include 'magatzem/barra_lateral-ceo.html' %}
 

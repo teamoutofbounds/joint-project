@@ -1,12 +1,12 @@
-{% extends 'magatzem/base-operaris.html' %}
+{% extends 'magatzem/base-tecnics.html' %}
 
 {% block content %}
 
   {% for task in task_list %}
+
     {% if task.task_status < 3 %}
 
       <br>
-
       <div class="alert alert-success" role="alert">
         Tens una nova tasca!
       </div>
@@ -14,8 +14,10 @@
     {% endif %}
 
     {% if task.task_status < 4 %}
+
         <div class ="row">
             <div class="col-sm-12">
+
                 <div class="card">
                     <div class="card-header">
                         <h4> Tasca {{ forloop.counter }}</h4>
@@ -27,22 +29,24 @@
                         <h5><b>Quantitat:</b> {{ task.containers.quantity }} </h5>
 
                         <div class="text-right">
-                            <a class="btn btn-success"
-                               href="{% url 'confirm-notification' task.pk %}"
-                               role="button">Confirmar Tasca</a>
+                          <button class="btn btn-success" type="button">
+                            <h4>Completar tasca</h4>
+                          </button>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     {% endif %}
 
   {% endfor %}
 
+
   {% if not task_list %}
 
     <br>
-    <div class="alert alert-warning alert-dismissable fade show" role="alert">
+    <div class="alert alert-warning" role="alert">
       No hi ha noves tasques
     </div>
 

@@ -1,8 +1,8 @@
 # els links de l'aplicació van aqui
 # els de frontend, heu d'utilitzar les funcions de views que tenen la paraula mock
 from django.urls import path
-from magatzem.views import RoomList, RoomDetail, NotificationsListView, HomeGestor, TaskPanelOperaris, HomeCEO, \
-    ContainerSelectionList
+from magatzem.views import RoomList, RoomDetail, NotificationsListView, HomeGestor, TaskPanelOperaris, HomeCEO,\
+    ContainerSelectionList, ConfirmNotification
 from . import views
 
 urlpatterns = [
@@ -10,6 +10,9 @@ urlpatterns = [
     path('gestor/', HomeGestor.as_view(), name='gestor-home'),
     # path('ceo/', views.home_ceo, name='ceo-home'),
     path('ceo/', HomeCEO.as_view(), name='ceo-home'),
+    path('ceo/users/list/', views.list_users, name='list_users'),
+    path('ceo/users/create/', views.create_user_as_ceo, name='create-user-ceo'),
+    path('ceo/users/delete/<int:pk>/confirm', views.delete_user_as_ceo, name='delete-user-ceo'),
     path('gestor/sales/', RoomList.as_view(), name='list-room'),
     path('gestor/sales/<int:pk>/', RoomDetail.as_view(), name='detail-room'),
     path('gestor/sales/<int:pk>/<room>/', ContainerSelectionList.as_view(), name='product-room'),
@@ -20,8 +23,9 @@ urlpatterns = [
     path('gestor/sortida/manifest/', views.sortida_producte, name='sortida-manifest'),
     # urls operari
     path('operaris/notificacions/', NotificationsListView.as_view(), name='operaris-notificacions'),
-
+    path('operaris/notificacions/confirm/<int:pk>/', ConfirmNotification.as_view(), name='confirm-notification'),
     # urls tecnics
+    # path('tecnic/', , name='tecnic-home'),
 
     # urls mocks
     # path('gestor/entrades/new/', views.exemple_mock, name='new-arrival'),

@@ -1,0 +1,32 @@
+{% extends 'magatzem/base-ceo.html' %}
+{% load static from staticfiles %}
+
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/home-gestor.css' %}">
+{% endblock header %}
+
+{{% block content %}
+
+  <div class="row main-row mt-4 justify-content-md-center">
+    <div class="col-sm-7 bg-light">
+    <div class="col mb-3">
+        <a class="btn btn-success pull-right" href="{% url 'create-user-ceo' %}">Create User</a>
+    </div>
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <div class="panel-title">Are you sure you want to the delete the user account "patata"?</div>
+        </div>
+        <div class="panel-body">
+            <div class="text-center">
+                <a class="btn btn-outline-danger m-1" href="{% url 'delete-user-ceo' pk=key.pk %}">Yes, delete!</a>
+                <a class="btn btn-outline-primary m-1" href="{% url 'list_users' %}">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% include 'magatzem/barra_lateral-ceo.html' %}
+
+  </div>
+
+{% endblock content%}
