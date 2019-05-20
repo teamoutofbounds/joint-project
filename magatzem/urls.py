@@ -7,7 +7,7 @@ from . import views
 
 urlpatterns = [
     # urls gestor
-    path('magatzem/gestor/', HomeGestor.as_view(), name='gestor-home'),
+    path('gestor/', HomeGestor.as_view(), name='gestor-home'),
     # path('ceo/', views.home_ceo, name='ceo-home'),
     path('ceo/', HomeCEO.as_view(), name='ceo-home'),
     path('ceo/users/list/', views.list_users, name='list_users'),
