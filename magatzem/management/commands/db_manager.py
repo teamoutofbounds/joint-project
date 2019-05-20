@@ -2,7 +2,7 @@ import os
 import re
 from django.core.management.base import BaseCommand
 # from magatzem.models import Container, Room, Task
-from magatzem.models import Room, Product
+from magatzem.models import Room, Product, SLA
 from django.contrib.auth.models import Group
 
 container_id = 0
@@ -19,6 +19,7 @@ def make_database():
     path = os.getcwd()
     add_item(add_room, path + '/data/rooms.data')
     add_item(add_product, path + '/data/product.data')
+    add_item(add_sla, path + '/data/sla.data')
     # add_item(add_container, path + '/data/containers.data')
     # add_item(add_task, path + '/data/tasks.data')
 
@@ -28,7 +29,6 @@ def add_item(func, filename):
         for line in file.readlines():
             # if re.match('^*', line):
             #    continue
-
             params = line.split('|')
             func(params)
 
@@ -46,6 +46,13 @@ def add_product(params):
                       product_id=params[1],
                       producer_id=params[2])
     product.save()
+
+
+def add_sla(params):
+    sla = SLA(pk=params[0], limit=params[1],
+              temp_min=params[2], temp_max=params[3],
+              hum_min=params[3], hum_max=params[4])
+    sla.save()
 
 
 '''
