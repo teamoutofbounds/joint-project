@@ -2,7 +2,7 @@ import os
 import re
 from django.core.management.base import BaseCommand
 # from magatzem.models import Container, Room, Task
-from magatzem.models import Room, Product, SLA
+from magatzem.models import Room, Product, SLA, ContainerGroup
 from django.contrib.auth.models import Group
 
 container_id = 0
@@ -20,6 +20,7 @@ def make_database():
     add_item(add_room, path + '/data/rooms.data')
     add_item(add_product, path + '/data/product.data')
     add_item(add_sla, path + '/data/sla.data')
+    add_item(add_containers_groups, path + '/data/containers.data')
     # add_item(add_container, path + '/data/containers.data')
     # add_item(add_task, path + '/data/tasks.data')
 
@@ -27,7 +28,7 @@ def make_database():
 def add_item(func, filename):
     with open(filename, 'r') as file:
         for line in file.readlines():
-            # if re.match('^*', line):
+            # if re.match(r'^*', line):
             #    continue
             params = line.split('|')
             func(params)
@@ -53,6 +54,18 @@ def add_sla(params):
               temp_min=params[2], temp_max=params[3],
               hum_min=params[3], hum_max=params[4])
     sla.save()
+
+
+def add_containers_groups(params):
+    # product|sla|room|quantity
+    product = Product.objects.get(pk=params[0])
+    sla = SLA.objects.get(pk=params[1])
+    room = Room.objects.get(pk=params[2])
+    container_group = ContainerGroup(id_product=product,
+                                     id_room=room,
+                                     sla=sla,
+                                     quantity=params[3])
+    container_group.save()
 
 
 '''
