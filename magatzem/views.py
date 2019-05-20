@@ -14,7 +14,8 @@ from django.contrib.auth.models import User, Group
 
 
 from tools.algorithms.sala_selector import RoomHandler
-# from tools.api.product_entry import EntryHandler
+from tools.api.product_entry import EntryHandler
+
 from datetime import date
 
 # Check roles function
@@ -208,10 +209,9 @@ def home_operari(request):
 
 
 class ConfirmNotification(UpdateView):
-    model = Task
+    model = TaskOperari
     template_name = 'magatzem/confirm-notification.html'
     fields = {}
-
     def form_valid(self, form):
         if self.request.POST['confirm'] == "SI":
             form.instance.task_status = 4
