@@ -48,6 +48,8 @@ i.e., _dev:Added new models_ -> _dev:Added new models 2_
 English is the language that must be used by all the team members for
 the Quality Management, all the documents and the code comments.
 
+Furthermore, commit messages should not be ambiguous or confusing.
+
 It has been used a specific numeration depending of the document that is being treated:
 
 &nbsp;&nbsp;&nbsp;&nbsp;__User Stories__: Related with the PUC proposed.
