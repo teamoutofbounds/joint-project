@@ -2,7 +2,7 @@ import os
 import re
 from django.core.management.base import BaseCommand
 # from magatzem.models import Container, Room, Task
-from magatzem.models import Room
+from magatzem.models import Room, Product
 from django.contrib.auth.models import Group
 
 container_id = 0
@@ -18,6 +18,7 @@ class Command(BaseCommand):
 def make_database():
     path = os.getcwd()
     add_item(add_room, path + '/data/rooms.data')
+    add_item(add_product, path + '/data/product.data')
     # add_item(add_container, path + '/data/containers.data')
     # add_item(add_task, path + '/data/tasks.data')
 
@@ -38,6 +39,13 @@ def add_room(params):
                 limit=params[5], room_status=params[6])
     room.id = params[0]
     room.save()
+
+
+def add_product(params):
+    product = Product(pk=params[0],
+                      product_id=params[1],
+                      producer_id=params[2])
+    product.save()
 
 
 '''
