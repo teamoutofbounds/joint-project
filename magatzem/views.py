@@ -1,24 +1,20 @@
-from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView
-from django.views.generic.dates import TodayArchiveView
 from django.db.models import Q
+
 from magatzem.models.room import Room
-from magatzem.models.task import Task
-from magatzem.models.container import Container
-from django.utils.decorators import method_decorator
+from magatzem.models.task_operari import TaskOperari
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
-from django.contrib.auth.models import Permission
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import User, Group
 
-# from .tasks import assign_task
+
 from tools.algorithms.sala_selector import RoomHandler
-from tools.api.product_entry import EntryHandler
+# from tools.api.product_entry import EntryHandler
 from datetime import date
 
 # Check roles function
@@ -48,7 +44,7 @@ class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
 
     def get_queryset(self):
         self.room = get_object_or_404(Room, name=self.kwargs['room'])
-        return Container.objects.filter(room=self.room)
+        return self.room.get_containers()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -84,15 +80,15 @@ class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['tasks'] = Task.objects.filter(~Q(task_status=4),
-                                               Q(origin_room=context['room']) | Q(destination_room=context['room']))
-        context['containers'] = Container.objects.filter(room=context['room']).defer('room')
+        context['tasks'] = TaskOperari.objects.filter(~Q(task_status=4),
+                                                      Q(origin_room=context['room']) | Q(destination_room=context['room']))
+        context['containers'] = self.object.get_containers()
         context['title'] = context['room'].name
         return context
 
 
 class NotificationsListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
-    model = Task
+    model = TaskOperari
     context_object_name = 'task_list'
     template_name = 'magatzem/notification.html'
     new_task = False
@@ -103,13 +99,11 @@ class NotificationsListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
         return is_allowed(self.request.user, self.roles)
 
     def get_queryset(self):
-        queryset = Task.objects.filter(Q(user=self.request.user), Q(task_status=1) | Q(task_status=2) |
-                                       Q(task_status=3))
+        queryset = TaskOperari.objects.filter(Q(user=self.request.user), Q(task_status=1) | Q(task_status=2) |
+                                              Q(task_status=3))
         if not queryset:
-            queryset = Task.assign_task(self.request.user)
+            queryset = TaskOperari.assign_task(self.request.user)
             self.new_task = True
-
-        print(queryset)
 
         return queryset
 
@@ -120,10 +114,8 @@ class NotificationsListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
         return context
 
 
-class TaskPanelOperaris(TodayArchiveView, LoginRequiredMixin, UserPassesTestMixin):
-    queryset = Task.objects.all()
-    date_field = 'date'
-    # context_object_name = 'task_list'
+class TaskPanelOperaris(ListView, LoginRequiredMixin, UserPassesTestMixin):
+    queryset = TaskOperari.objects.filter(date=date.today())
     template_name = 'magatzem/tasks-list.html'
     # permission variable
     roles = ('Gestor', 'CEO')
@@ -168,7 +160,7 @@ class HomeGestor(ListView, LoginRequiredMixin, UserPassesTestMixin):
         return context
 
     def get_last_tasks(self):
-        tasks = Task.objects.order_by('-date').filter(date=date.today())
+        tasks = TaskOperari.objects.order_by('-date').filter(date=date.today())
         return tasks
 
 
@@ -199,7 +191,7 @@ class HomeCEO(ListView, LoginRequiredMixin, UserPassesTestMixin):
         return context
 
     def get_last_tasks(self):
-        tasks = Task.objects.order_by('-date').filter(date=date.today())
+        tasks = TaskOperari.objects.order_by('-date').filter(date=date.today())
         return tasks
 
 
@@ -257,6 +249,7 @@ def sortida_producte(request):
         context = {}
         context['title'] = 'Sortida Productes'
         transports = entry_handler.generate_entry()
+        # mostrar només el que s'ha de treure
         for transport in transports:
             if transport['ref'] == request.GET['ref']:
                 context['container'] = transport

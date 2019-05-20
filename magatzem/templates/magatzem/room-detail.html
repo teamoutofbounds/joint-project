@@ -45,64 +45,23 @@
               {% for container in containers %}
                 <tr>
                   <!-- Main info -->
-                  <td> {{ container.product_id }} </td>
-                  <td> {{ container.producer_id }} </td>
+                  <td> {{ container.product_id.product_id }} </td>
+                  <td> {{ container.product_id.producer_id }} </td>
                   <td> {{ container.quantity }} </td>
                   <!-- Temperatures -->
-                  <td> {{ container.temp_min }} </td>
-                  <td> {{ container.temp_max }} </td>
+                  <td> {{ container.sla.temp_min }} </td>
+                  <td> {{ container.sla.temp_max }} </td>
                   <!-- Humidity -->
-                  <td> {{ container.hum_min }} </td>
-                  <td> {{ container.hum_max }} </td>
+                  <td> {{ container.sla.hum_min }} </td>
+                  <td> {{ container.sla.hum_max }} </td>
                   <!-- Limit date -->
-                  <td> {{ container.limit }} </td>
+                  <td> {{ container.sla.limit }} </td>
                 </tr>
               {% endfor %}
             </table>
           </div>
         </div>
       </div>
-
-      <!--
-      <div>
-        <div class ="card">
-
-          <div class="card-header">
-            <h2>Tasques</h2>
-          </div>
-
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-bordered table-hover" style="text-align: center">
-                <caption style="display: none">Llista de tasques</caption>
-                <thead>
-                <tr>
-
-                  <th scope="col"> <b>Descripció</b> </th>
-
-                  <th scope="col"> <b>Origen</b> </th>
-                  <th scope="col"> <b>Destinació</b> </th>
-
-                  <th scope="col"> <b>Contenidor</b> </th>
-                  <th scope="col"> <b>Quantitat</b> </th>
-                </tr>
-                </thead>
-                {% for task in tasks %}
-                  <tr>
-                    <td>{{ task.description }}</td>
-                    <td>{{ task.origin_room.name }}</td>
-                    <td>{{ task.destination_room.name }}</td>
-                    <td>{{ task.containers.product_id }}</td>
-                    <td>{{ task.containers.quantity }}</td>
-                  </tr>
-                {% endfor %}
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-              -->
-
     </div>
 
     <div class="col-sm-4">
@@ -179,7 +138,7 @@
             <div class="card border-info mb-2">
               <div class="card-header bg-transparent border-info">{{ task.description }}</div>
               <div class="card-body text-info">
-                <h6 class="card-text mb-1"> PRODUCTE: <strong>{{ task.containers.product_id }}</strong></h6>
+                <h6 class="card-text mb-1"> PRODUCTE: <strong>{{ task.containers.product_id.product_id }}</strong></h6>
                 <h6 class="card-text mb-1 text-muted">QUANTITAT: <strong>{{ task.containers.quantity }} containers</strong></h6>
                 <div class="row">
                   <div class="col-6">

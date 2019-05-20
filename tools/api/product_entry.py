@@ -1,3 +1,4 @@
+'''
 import json
 
 import urllib.request
@@ -24,3 +25,4 @@ class EntryHandler:
 			list_dic = json.loads(soup.decode('utf-8'))
 
 		return list_dic
+'''
