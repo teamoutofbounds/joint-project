@@ -1,5 +1,7 @@
 from django.urls import path
 
+from oficina import views
+from oficina.views import HomeCEO
 
 urlpatterns = [
     path('ceo/', HomeCEO.as_view(), name='ceo-home'),
