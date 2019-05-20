@@ -41,7 +41,9 @@ The metrics that we have defined are:
 ##### 5.2.2.4 Conventions:
 During the development of the project, there has been defined some conventions/basic rules in order to make clear the way of working of the team project. Also there has been provided some guides for the Development Team (DT).
 
-One of the conventions that the group stated are the messages for the commits, which must be write like: SQAP-_number-of-section_: message
+One of the conventions that the group stated are the messages for the commits, which must be write like: SQAP-_number-of-section_: message. If it occurs that a message is identical to one from before, said message must contain either a number signifying its chronological position in the commit list.
+
+i.e., _dev:Added new models_ -> _dev:Added new models 2_
 
 English is the language that must be used by all the team members for
 the Quality Management, all the documents and the code comments.
