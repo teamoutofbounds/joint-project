@@ -47,4 +47,5 @@ class Room(models.Model):
         return Room.ROOMS_NAME[self.name]
 
     def get_containers(self, _state=0):
-        return ContainerGroup.objects.filter(id_room=self.id, state=_state)
+        from magatzem.models import ContainerGroup
+        return ContainerGroup.objects.filter(id_room=self.pk, state=_state)

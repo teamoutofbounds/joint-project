@@ -31,7 +31,7 @@
                   <h6 class="task-title">{{ task.description }}</h6>
                 </div>
                 <div class="col-md-2">
-                  <a href="#" class= "btn btn-icon"><i class="fas fa-trash-alt paper-bin"></i></a>
+                  <a href="{% url  'task-tecnic-delete' 2 %}" class= "btn btn-icon"><i class="fas fa-trash-alt paper-bin"></i></a>
                 </div>
               </div>
 
@@ -110,18 +110,12 @@
                 <div class="col-md-10">
                   <h6 class="task-title">{{ task.description }}</h6>
                 </div>
-                <div class="col-md-2">
-                  <a href="#" class= "btn btn-icon"><i class="fas fa-trash-alt paper-bin"></i></a>
-                </div>
               </div>
 
             </div>
             <div class="card-body">
               <h6 class="card-subtitle mb-3"> SALA: <strong>{{ task.room }}</strong></h6>
               <h6 class="card-subtitle mb-3"> DETALL: <strong>{{ task.detail }}</strong></h6>
-              <div class="row ml-1">
-                <a href="#" class="btn btn-dark btn-edit"><i class='far fa-edit mr-2'></i>Editar</a>
-              </div>
             </div>
           </div>
         {% endfor %}

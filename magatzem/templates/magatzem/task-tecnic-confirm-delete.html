@@ -1,0 +1,19 @@
+{% extends "magatzem/base-gestor.html" %}
+{% block content %}
+  <div class="container">
+    <div class="content-section">
+      <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+          <legend class="border-bottom mb-4">Eliminar la tasca</legend>
+          <h2>Està segur que vol eliminar la tasca?</h2>
+        </fieldset>
+        <div class="form-group">
+          <button class="btn btn-outline-danger" type="submit">Si, Eliminar</button>
+          <a class="btn btn-outline-secondary" href="{% url 'panel-tecnics' %}">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+{% endblock content %}

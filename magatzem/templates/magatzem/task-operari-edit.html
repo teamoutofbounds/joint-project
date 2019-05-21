@@ -1,0 +1,20 @@
+{% extends "magatzem/base-gestor.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div class="container">
+      <div class="content-section">
+        <form method="POST">
+          {% csrf_token %}
+          <fieldset class="form-group">
+              {{ form|crispy }}
+          </fieldset>
+          <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Confirmar</button>
+            <a class="btn btn-outline-secondary" href="{% url 'panel-operaris' %}">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+{% endblock content %}
