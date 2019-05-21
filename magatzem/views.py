@@ -71,10 +71,11 @@ class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
         return context
 
 
+# TODO
 class UpdateClimaRoom(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
     fields = ['state', 'hum', 'temp']
-    template_name = 'magatzem/room-detail.html'
+    # template_name = 'magatzem/room-detail.html'
     context_object_name = 'room'
     # permission variable
     roles = ('Gestor',)
@@ -186,7 +187,6 @@ class TaskPanelOperaris(ListView, LoginRequiredMixin, UserPassesTestMixin):
 
 
 class TaskPanelTecnics(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
-    # queryset = TaskTecnic.objects.filter(date=date.today())  # no funciona a la vida real
     template_name = 'magatzem/tasks-list-tecnic.html'
     # permission variable
     roles = ('Gestor', 'CEO')
@@ -195,22 +195,13 @@ class TaskPanelTecnics(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
         return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
-        tasks = super().get_context_data(**kwargs)
-        # context = {'todo': [], 'doing': [], 'done': []}
-        context = {}
-        context['todo'] = TaskTecnic.objects.filter(Q(task_status=0) | Q(task_status=1) | Q(task_status=2))
-        context['doing'] = TaskTecnic.objects.filter(task_status=3)
-        context['done'] = TaskTecnic.objects.filter(task_status=4, date=date.today())
-        '''
-        for task in tasks['object_list']:
-            if task.task_status == 0 or task.task_status == 1 or task.task_status == 2:
-                context['todo'].append(task)  # pendent assignacio
-            elif task.task_status == 3:
-                context['doing'].append(task)
-            else:
-                context['done'].append(task)
-        '''
-        context['title'] = 'Tasques Tecnics'
+        context = {'todo': TaskTecnic.objects.filter(Q(task_status=0)
+                                                     | Q(task_status=1)
+                                                     | Q(task_status=2)),
+                   'doing': TaskTecnic.objects.filter(task_status=3),
+                   'done': TaskTecnic.objects.filter(task_status=4,
+                                                     date=date.today()),
+                   'title': 'Tasques Tecnics'}
         return context
 
 
