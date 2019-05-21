@@ -6,9 +6,9 @@
 {% endblock header %}
 
 {% block content %}
-  {% if not container %}
-    <h5 class="my-5">No hi cap comanda amb aquesta referència.</h5>
-    <a class="btn btn-success" href="{% url 'entrada-producte' %}" role="button">Tornar</a>
+  {% if not containers %}
+    <h5 class="my-5">No hi productes per servir aquesta comanda</h5>
+    <a class="btn btn-success" href="{% url 'sortida-producte' %}" role="button">Tornar</a>
   {% else %}
 <div class="table-mrg">
   <div class="col-2"></div>
@@ -18,7 +18,7 @@
       <div class="col-12">
         <div class="row">
           <div class="col-6" style="background-color: khaki;">
-            {{ container.creationDate }}
+            {{ containers.creationDate }}
           </div>
           <div class="col-6" style="background-color: khaki">
             From: C/Cabanes (Sant Esteve de Les Roures)
@@ -26,10 +26,10 @@
         </div>
         <div class="row">
           <div class="col-6" style="background-color: khaki">
-            REF: {{ container.ref }}
+            REF: {{ ref }}
           </div>
           <div class="col-6" style="background-color: khaki">
-            Productor: {{ container.toLocation }}
+            Productor: {{ toLocation }}
           </div>
         </div>
       </div>
@@ -53,15 +53,15 @@
                   <th scope="col"> <b>Hum Max</b></th>
                 </tr>
               </thead>
-              {% for producte in container.Products %}
+              {% for container in containers %}
                 <tr>
-                  <td>{{ producte.name }}</td>
-                  <td>{{ producte.qty }}</td>
-                  <td>{{ producte.sla }}</td>
-                  <td>{{ producte.tempMinDegree }} ºC</td>
-                  <td>{{ producte.tempMaxDegree }} ºC </td>
-                  <td>{{ producte.humidMin }} %</td>
-                  <td>{{ producte.humidMax }} %</td>
+                  <td>{{ container.id_product.product_id }}</td>
+                  <td>{{ container.quatity }}</td>
+                  <td>{{ container.sla.limit }}</td>
+                  <td>{{ container.sla.temp_min }} ºC</td>
+                  <td>{{ container.sla.temp_max }} ºC </td>
+                  <td>{{ container.sla.hum_min }} %</td>
+                  <td>{{ container.sla.hum_max }} %</td>
                 </tr>
               {% endfor %}
             </table>

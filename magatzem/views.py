@@ -314,25 +314,27 @@ def entrada_producte(request):
         context = {}
         context['title'] = 'Entrada Productes'
         transports = entry_handler.generate_entry()
-        _generar_manifest_entrada(transports)
+        # _generar_manifest_entrada(transports)
         for transport in transports:
             if transport['ref'] == request.GET['ref']:
+                _generar_manifest_entrada(transport)
                 context['container'] = transport
     return render(request, 'magatzem/product-entry.html', context)
 
 
-def _generar_manifest_entrada(transports):
-    for transport in transports:
-        creator = ApiManifestCreator(transport['ref'], transport['fromLocation'], None)
-        for product in transport['Products']:
-            creator._create_entry_manifest(product)
+def _generar_manifest_entrada(transport):
+    #for transport in transports:
+    creator = ApiManifestCreator(transport['ref'], transport['fromLocation'], None)
+    for product in transport['Products']:
+        creator._create_entry_manifest(product)
 
 
-def _generar_manifest_sortida(transports):
-    for transport in transports:
-        creator = ApiManifestCreator(transport, transport['fromLocation'], transport['toLocation'])
-        for product in transport['Products']:
-            creator._create_departure_manifest(product)
+def _generar_manifest_sortida(transport):
+    # for transport in transports:
+    creator = ApiManifestCreator(transport, transport['fromLocation'], transport['toLocation'])
+    for product in transport['Products']:
+        creator._create_departure_manifest(product)
+    return creator.container_list
 
 
 def sortida_producte(request):
@@ -342,10 +344,12 @@ def sortida_producte(request):
         context['title'] = 'Sortida Productes'
         transports = entry_handler.generate_entry()
         # mostrar només el que s'ha de treure
-        _generar_manifest_sortida(transports)
         for transport in transports:
             if transport['ref'] == request.GET['ref']:
-                context['container'] = transport
+                containers = _generar_manifest_sortida(transport)
+                context['containers'] = containers
+                context['ref'] = transport['ref']
+                context['toLocation'] = transport['toLocation']
     return render(request, 'magatzem/product-leave.html', context)
 
 

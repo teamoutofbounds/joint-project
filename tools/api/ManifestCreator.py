@@ -57,6 +57,9 @@ class ApiManifestCreator(object):
                                                         .exclude(state=1)\
                                                         .order_by('sla_id', 'quantity')
 
+        if not container_group:
+            return []
+
         qty = product['qty']
         for container in container_group:
             if container.state == 1:
@@ -69,10 +72,11 @@ class ApiManifestCreator(object):
                                                  id_product=_product,
                                                  id_SLA=sla,
                                                  id_manifest=self.manifest)
+                self.container_list.append(container)
             elif container.quantity > qty:
                 container.quantity -= qty
                 container.save()
-                ContainerGroup.objects.create(
+                new_container = ContainerGroup.objects.create(
                     quantity=qty,
                     id_product=container.id_product,
                     id_room=container.id_product,
@@ -83,6 +87,7 @@ class ApiManifestCreator(object):
                                                  id_product=_product,
                                                  id_SLA=sla,
                                                  id_manifest=self.manifest)
+                self.container_list.append(new_container)
             else:
                 container.state = 1
                 container.save()
@@ -90,4 +95,5 @@ class ApiManifestCreator(object):
                                                  id_product=_product,
                                                  id_SLA=sla,
                                                  id_manifest=self.manifest)
+                self.container_list.append(container)
                 break
