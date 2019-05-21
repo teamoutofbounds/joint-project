@@ -25,7 +25,8 @@ def validate_ref(value):
 class Manifest(models.Model):
     MANIFEST_STR_PATTERN = "Ref: {} Date: {}"
     ref = models.CharField(validators=[validate_ref], max_length=11)
-    date = models.DateTimeField(default=date.today)
+    # date = models.DateTimeField(default=date.today)
+    date = models.DateField(default=date.today)
 
     def __str__(self):
         return self.MANIFEST_STR_PATTERN.format(self.ref, self.date)

@@ -315,7 +315,7 @@ def entrada_producte(request):
         context = {}
         context['title'] = 'Entrada Productes'
         transports = entry_handler.generate_entry()
-        _save_manifest(transports, 1)
+        # _save_manifest(transports, 1)
         for transport in transports:
             if transport['ref'] == request.GET['ref']:
                 context['container'] = transport
