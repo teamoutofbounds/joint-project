@@ -6,7 +6,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 def validate_limit(value):
-    if not re.match(r'^(\d{2}/\d{2}/\d{4})$', value):
+    if not re.match(r'^(\d{4}-\d{2}-\d{2})$', value):
         raise ValidationError(
             gettext_lazy('%(value) no és un Level Service Agreement vàlid.'),
             params={'value': value}
@@ -41,5 +41,5 @@ class SLA(models.Model):
         return self.SLA
 
     def _set_service_level_agreement(self):
-        data = self.limit.split('/')
-        self.SLA = int(data[2] + data[1] + data[0])
+        data = self.limit.split('-')
+        self.SLA = int(data[0]) + int(data[1]) + int(data[2])
