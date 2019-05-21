@@ -233,6 +233,7 @@ class EditOperariTask(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     model = TaskTecnic
     fields = ['user']
     template_name = 'magatzem/tasks-list-tecnic.html'
+    success_url = reverse_lazy('panel-tecnics')
 
     # permission variable
     roles = ('Gestor',)
