@@ -335,7 +335,6 @@ def _generar_manifest_sortida(transports):
             creator._create_departure_manifest(product)
 
 
-
 def sortida_producte(request):
     if 'ref' in request.GET:
         entry_handler = EntryHandler()

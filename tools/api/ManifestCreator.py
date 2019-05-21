@@ -1,10 +1,11 @@
 from magatzem.models import Product, SLA, ManifestEntrance, ManifestContainer, ManifestDeparture, Manifest, ContainerGroup, Room
 import copy
 
+
 class ApiManifestCreator(object):
 
     def __init__(self, ref, producer_id, toLocation):
-        if toLocation == None: # Cas entrada
+        if not toLocation: # Cas entrada
             ManifestEntrance.objects.get_or_create(ref=ref, origin=producer_id)
         else:   # Cas sortida
             ManifestDeparture.objects.get_or_create(ref=ref, destination=toLocation)
@@ -15,7 +16,7 @@ class ApiManifestCreator(object):
 
     def _create_entry_manifest(self, product):
         _product = Product.objects.get_or_create(product_id=product['name'],
-                                                producer_id=self.producer_id)
+                                                 producer_id=self.producer_id)
         sla = SLA.objects.get_or_create(limit=product['sla'][:10],
                                         temp_min=product['tempMinDegree'],
                                         temp_max=product['tempMaxDegree'],
@@ -23,14 +24,14 @@ class ApiManifestCreator(object):
                                         hum_max=product['humidMax'])
         _product = Product.objects.get(product_id=product['name'])
         sla = SLA.objects.get(limit=product['sla'][:10],
-                                        temp_min=product['tempMinDegree'],
-                                        temp_max=product['tempMaxDegree'],
-                                        hum_min=product['humidMin'],
-                                        hum_max=product['humidMax'])
+                              temp_min=product['tempMinDegree'],
+                              temp_max=product['tempMaxDegree'],
+                              hum_min=product['humidMin'],
+                              hum_max=product['humidMax'])
         manifest_container = ManifestContainer.objects.create(quantity=product['qty'],
-                                                                id_product=_product,
-                                                                id_SLA=sla,
-                                                                id_manifest=self.manifest)
+                                                              id_product=_product,
+                                                              id_SLA=sla,
+                                                              id_manifest=self.manifest)
         room = Room.objects.get(pk=16)
         container_group = ContainerGroup.objects.create(quantity=product['qty'],
                                                         id_room=room,
@@ -38,15 +39,14 @@ class ApiManifestCreator(object):
                                                         sla=sla,
                                                         state=1)
 
-
     def _create_departure_manifest(self, product):
         _product = Product.objects.get(product_id=product['name'],
-                                        producer_id=self.producer_id)
-        sla = SLA.objects.get(limit=product['sla'][:10])
-                                #temp_min=product['tempMinDegree'],
-                                #temp_max=product['tempMaxDegree'],
-                                #hum_min=product['humidMin'],
-                                #hum_max=product['humidMax'])
+                                       producer_id=self.producer_id)
+        sla = SLA.objects.get(limit=product['sla'][:10],
+                              temp_min=product['tempMinDegree'],
+                              temp_max=product['tempMaxDegree'],
+                              hum_min=product['humidMin'],
+                              hum_max=product['humidMax'])
 
         container_group = ContainerGroup.objects.filter(id_product=_product,
                                                         sla_id=sla).order_by('sla_id', 'quantity')
@@ -70,6 +70,6 @@ class ApiManifestCreator(object):
             container.state=1
             quantity = container.quantity - product['qty']
             ManifestContainer.objects.create(quantity=container.quantity,
-                                                id_product=_product,
-                                                id_SLA=sla,
-                                                id_manifest=self.manifest)
+                                             id_product=_product,
+                                             id_SLA=sla,
+                                             id_manifest=self.manifest)
