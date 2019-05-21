@@ -87,7 +87,6 @@ class UpdateClimaRoom(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
         return super().form_valid(form)
 
 
-
 # Notification related functions
 ##############################################################################
 
@@ -315,28 +314,29 @@ def entrada_producte(request):
         context = {}
         context['title'] = 'Entrada Productes'
         transports = entry_handler.generate_entry()
-        # _save_manifest(transports, 1)
+        _generar_manifest_entrada(transports)
         for transport in transports:
             if transport['ref'] == request.GET['ref']:
                 context['container'] = transport
     return render(request, 'magatzem/product-entry.html', context)
 
 
-def _save_manifest(transports, num):
-    if num == 1: # entrada
-        ManifestEntrance.objects.save(ref=transports['ref'],
-                                      origin=transports['fromLocation'],
-                                      date=transports['creationDate'])
-        for product in transports['Products']:
-            creator = ApiManifestCreator(product, transports)
-            creator.create_entry()
-    else: # sortida
-        ManifestDeparture.objects.save(ref=transports['ref'],
-                                       origin=transports['fromLocation'],
-                                       date=transports['creationDate'])
-        for product in transports['Products']:
-            creator = ApiManifestCreator(product, transports)
-            creator.create_departure()
+def _generar_manifest_entrada(transports):
+    ManifestEntrance.objects.save(ref=transports['ref'],
+                                  origin=transports['fromLocation'],
+                                  date=transports['creationDate'])
+    for product in transports['Products']:
+        creator = ApiManifestCreator(product, transports)
+        creator.create_entry()
+
+
+def _generar_manifest_sortida(transports):
+    ManifestDeparture.objects.save(ref=transports['ref'],
+                                   origin=transports['fromLocation'],
+                                   date=transports['creationDate'])
+    for product in transports['Products']:
+        creator = ApiManifestCreator(product, transports)
+        creator.create_departure()
 
 
 def sortida_producte(request):
@@ -346,6 +346,7 @@ def sortida_producte(request):
         context['title'] = 'Sortida Productes'
         transports = entry_handler.generate_entry()
         # mostrar només el que s'ha de treure
+        _generar_manifest_sortida(transports)
         for transport in transports:
             if transport['ref'] == request.GET['ref']:
                 context['container'] = transport
