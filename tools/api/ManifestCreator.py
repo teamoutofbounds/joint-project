@@ -17,12 +17,15 @@ class ApiManifestCreator(object):
     def _create_entry_manifest(self, product):
         _product = Product.objects.get_or_create(product_id=product['name'],
                                                  producer_id=self.producer_id)
+
         sla = SLA.objects.get_or_create(limit=product['sla'][:10],
                                         temp_min=product['tempMinDegree'],
                                         temp_max=product['tempMaxDegree'],
                                         hum_min=product['humidMin'],
                                         hum_max=product['humidMax'])
+
         _product = Product.objects.get(product_id=product['name'])
+
         sla = SLA.objects.get(limit=product['sla'][:10],
                               temp_min=product['tempMinDegree'],
                               temp_max=product['tempMaxDegree'],
@@ -37,11 +40,12 @@ class ApiManifestCreator(object):
                                                         id_room=room,
                                                         id_product=_product,
                                                         sla=sla,
-                                                        state=1)
+                                                        state=0) #1
 
     def _create_departure_manifest(self, product):
         _product = Product.objects.get(product_id=product['name'],
                                        producer_id=self.producer_id)
+
         sla = SLA.objects.get(limit=product['sla'][:10],
                               temp_min=product['tempMinDegree'],
                               temp_max=product['tempMaxDegree'],
@@ -49,27 +53,47 @@ class ApiManifestCreator(object):
                               hum_max=product['humidMax'])
 
         container_group = ContainerGroup.objects.filter(id_product=_product,
-                                                        sla_id=sla).order_by('sla_id', 'quantity')
+                                                        sla_id=sla)\
+                                                        .exclude(state=1)\
+                                                        .order_by('sla_id', 'quantity')
+
+        if not container_group:
+            return []
+
         qty = product['qty']
         for container in container_group:
+            if container.state == 1:
+                continue
             if container.quantity < qty:
                 qty -= container.quantity
+                container.state = 1
+                container.save()
+                ManifestContainer.objects.create(quantity=container.quantity,
+                                                 id_product=_product,
+                                                 id_SLA=sla,
+                                                 id_manifest=self.manifest)
                 self.container_list.append(container)
             elif container.quantity > qty:
-                container2 = copy.deepcopy(container)
-                container2.quantity = qty
                 container.quantity -= qty
                 container.save()
-                self.container_list.append(container2)
+                new_container = ContainerGroup.objects.create(
+                    quantity=qty,
+                    id_product=container.id_product,
+                    id_room=container.id_product,
+                    sla=container.sla,
+                    state=1
+                    )
+                ManifestContainer.objects.create(quantity=qty,
+                                                 id_product=_product,
+                                                 id_SLA=sla,
+                                                 id_manifest=self.manifest)
+                self.container_list.append(new_container)
             else:
-                qty -= container.quantity
+                container.state = 1
+                container.save()
+                ManifestContainer.objects.create(quantity=container.quantity,
+                                                 id_product=_product,
+                                                 id_SLA=sla,
+                                                 id_manifest=self.manifest)
                 self.container_list.append(container)
                 break
-
-        for container in self.container_list:
-            container.state=1
-            quantity = container.quantity - product['qty']
-            ManifestContainer.objects.create(quantity=container.quantity,
-                                             id_product=_product,
-                                             id_SLA=sla,
-                                             id_manifest=self.manifest)
