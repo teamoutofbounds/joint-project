@@ -1,4 +1,4 @@
-{% extends 'magatzem/base-gestor.html' %}
+{% extends 'magatzem/base-ceo.html' %}
 {% load static from staticfiles %}
 {% block content %}
 <div class="col">
@@ -18,15 +18,7 @@
                         <h4>Referencia</h4>
                     </div>
                     <div class="row">
-                        <h5>{{ entry.reference}}</h5>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="row">
-                        <h4>Productor</h4>
-                    </div>
-                    <div class="row">
-                        <h5>{{ entry.productor }}</h5>
+                        <h5>{{ entry.ref}}</h5>
                     </div>
                 </div>
                 <div class="col">
@@ -46,7 +38,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <a type="button" class="btn btn-primary" href="{% url 'ceo-home' %}">Mostrar manifest</a>
+                    <a type="button" class="btn btn-primary" href="{% url 'manifests-detail-ceo' entry.pk %}">Mostrar manifest</a>
                 </div>
             </div>
         </div>
@@ -68,15 +60,7 @@
                         <h4>Referencia</h4>
                     </div>
                     <div class="row">
-                        <h5>{{ exit.reference}}</h5>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="row">
-                        <h4>Productor</h4>
-                    </div>
-                    <div class="row">
-                        <h5>{{ exit.productor }}</h5>
+                        <h5>{{ exit.ref}}</h5>
                     </div>
                 </div>
                 <div class="col">
@@ -96,7 +80,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <a type="button" class="btn btn-primary" href="{% url 'ceo-home' %}">Mostrar manifest</a>
+                    <a type="button" class="btn btn-primary" href="{% url 'manifests-detail-ceo' exit.pk %}">Mostrar manifest</a>
                 </div>
             </div>
         </div>
