@@ -16,8 +16,8 @@ urlpatterns = [
     path('gestor/tasques_operaris/<int:pk>/edit/', EditTecnicTask.as_view(), name='task-tecnic-edit'),
     # urls gestor tasques tecnics
     path('gestor/tasques_tecnics/', TaskPanelTecnics.as_view(), name='panel-tecnics'),
-    path('gestor/tasques_tecnics/<pk>/edit/', EditTecnicTask.as_view(), name='task-tecnic-edit'),
-    path('gestor/tasques_tecnics/<pk>/delete/', DeleteTecnicTask.as_view(), name='task-tecnic-delete'),
+    path('gestor/tasques_tecnics/<int:pk>/edit/', EditTecnicTask.as_view(), name='task-tecnic-edit'),
+    path('gestor/tasques_tecnics/<int:pk>/delete/', DeleteTecnicTask.as_view(), name='task-tecnic-delete'),
     # urls gestor tasques magatzem
     path('gestor/entrada/', views.manifest_form, name='entrada-producte'),
     path('gestor/sortida/', views.manifest_sortida_form, name='sortida-producte'),
