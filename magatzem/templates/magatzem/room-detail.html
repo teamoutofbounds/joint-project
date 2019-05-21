@@ -45,8 +45,8 @@
               {% for container in containers %}
                 <tr>
                   <!-- Main info -->
-                  <td> {{ container.product_id.product_id }} </td>
-                  <td> {{ container.product_id.producer_id }} </td>
+                  <td> {{ container.id_product.product_id }} </td>
+                  <td> {{ container.id_product.producer_id }} </td>
                   <td> {{ container.quantity }} </td>
                   <!-- Temperatures -->
                   <td> {{ container.sla.temp_min }} </td>
