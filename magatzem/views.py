@@ -71,6 +71,27 @@ class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
         return context
 
 
+class UpdateClimaRoom(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+    model = Room
+    fields = ['state', 'hum', 'temp']
+    template_name = 'magatzem/room-detail.html'
+    context_object_name = 'room'
+    # permission variable
+    roles = ('Gestor',)
+
+    def test_func(self):
+        return is_allowed(self.request.user, self.roles)
+
+    def form_valid(self, form):
+        TaskOperari.objects.create(room=self.object,
+                                   description="Ajuste clima",
+                                   task_status=1,
+                                   task_type=2,
+                                   detail=str(form.instance.hum) + str(form.instance.temp))
+        return super().form_valid(form)
+
+
+
 # Notification related functions
 ##############################################################################
 
