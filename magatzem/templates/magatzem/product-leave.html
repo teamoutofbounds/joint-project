@@ -6,6 +6,10 @@
 {% endblock header %}
 
 {% block content %}
+  {% if not container %}
+    <h5 class="my-5">No hi cap comanda amb aquesta referència.</h5>
+    <a class="btn btn-success" href="{% url 'entrada-producte' %}" role="button">Tornar</a>
+  {% else %}
 <div class="table-mrg">
   <div class="col-2"></div>
 
@@ -72,5 +76,6 @@
   <a class="btn btn-warning" href="#" role="button">Incidencia</a>
   <a class="btn btn-danger" href="{% url 'sortida-producte' %}" role="button">Cancelar</a>
 </div>
+  {% endif %}
 
 {% endblock content %}
