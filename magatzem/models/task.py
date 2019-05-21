@@ -5,9 +5,6 @@ from datetime import date
 
 class Task(models.Model):
 
-    class Meta:
-        abstract = True
-
     MAX_STATUS_CHOICES_VALUE = 4
     STATUS_CHOICES = (
         (0, "Pendent d'assignació"),
