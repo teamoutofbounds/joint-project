@@ -22,7 +22,7 @@ class HomeCEO(ListView, LoginRequiredMixin, UserPassesTestMixin):
     """
     model = Room
     context_object_name = 'rooms'
-    template_name = 'magatzem/home-ceo.html'
+    template_name = 'oficina/home-ceo.html'
     # permission variable
     roles = ('CEO',)
 
@@ -100,7 +100,7 @@ def create_user_as_ceo(request):
 
 class ManifestList(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
 
-    template_name = 'magatzem/manifest-list.html'
+    template_name = 'oficina/manifest-list.html'
     # permission variable
     roles = ('CEO',)
 
@@ -112,7 +112,7 @@ class ManifestList(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
 
 class ManifestDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
     model = Manifest
-    template_name = 'magatzem/manifest-detail.html'
+    template_name = 'oficina/manifest-detail.html'
     context_object_name = 'manifest'
     # permission variable
     roles = ('CEO',)
