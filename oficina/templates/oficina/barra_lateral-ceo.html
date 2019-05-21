@@ -12,7 +12,7 @@
           <h6 style="font-weight: 600; color: red; margin-left: 2rem;">Expiren avui</h6>
           <div class="scroll-panel-ceo">
 
-            {% for container in sla %}
+            {% for container in containers %}
                 <div class="card border-info mb-2">
                   <div class="card-header bg-transparent border-info">SLA: {{ container.sla.SLA }}</div>
                   <div class="card-body text-info">
@@ -34,9 +34,9 @@
       </div>
 
       <div class="row">
-        <button type="button" class="btn btn-lg btn-block mb-2 text-button">Manifests</button>
-        <button type="button" class="btn btn-lg btn-block mt-3 text-button">Panell tàsques Operaris</button>
-        <button type="button" class="btn btn-lg btn-block mt-2 mb-4 text-button">Panell tàsques Tècnics</button>
+        <a href="#" class="btn btn-lg btn-block mb-2 text-button">Manifests</a>
+        <a href="#" class="btn btn-lg btn-block mt-3 text-button">Panell tàsques Operaris</a>
+        <a href="#" class="btn btn-lg btn-block mt-2 mb-4 text-button">Panell tàsques Tècnics</a>
       </div>
 
       <div class="header-content-left">
@@ -44,7 +44,7 @@
       </div>
 
       <div class="row">
-        <button type="button" class="btn btn-lg btn-block text-button">Valoracions Clients</button>
+         <a href="#" class="btn btn-lg btn-block text-button">Valoracions Clients</a>
          <a class="btn btn-lg btn-block mb-2 text-button" href="{% url 'list_users' %}">Gestió usuaris</a>
       </div>
       </div>

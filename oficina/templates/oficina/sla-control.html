@@ -1,0 +1,47 @@
+{% extends 'oficina/home-ceo.html' %}
+{% block content %}
+
+    <div class="row">
+        <div class="col-sm-8">
+          <div class="card">
+              <div class="card-header">
+                  <h2>Control SLA</h2>
+              </div>
+              <div class="card-body">
+                  <div class="table-responsive">
+                      <table class="table table-bordered table-hover" style="text-align: center">
+                          <caption style="display: none">Llista de SLA</caption>
+                          <thead>
+                          <tr>
+                              <!-- Main info SLA -->
+                              <th scope="col"> <b>SLA</b></th>
+                              <th scope="col"> <b>Data Límit</b></th>
+                              <!-- Temperatures -->
+                              <th scope="col"> <b>Temp Min</b></th>
+                              <th scope="col"> <b>Temp Max</b></th>
+                              <!-- Humidity -->
+                              <th scope="col"> <b>Hum Min</b></th>
+                              <th scope="col"> <b>Hum Max</b> </th>
+                          </tr>
+                          </thead>
+
+                          {% for container in containers%}
+                             <tr>
+                                <!-- Main info SLA -->
+                                <td> {{ container.sla.SLA }}</td>
+                                <td> {{ container.sla.limit }}</td>
+                                <!-- Temperatures -->
+                                 <td> {{ container.sla.temp_min }}</td>
+                                 <td> {{ container.sla.temp_max }}</td>
+                                <!-- Humidity -->
+                                <td> {{ container.sla.hum_min }}</td>
+                                <td> {{ container.sla.hum_max }}</td>
+                             </tr>
+                          {% endfor %}
+                      </table>
+                  </div>
+              </div>
+          </div>
+        </div>
+    </div>
+{% endblock %}

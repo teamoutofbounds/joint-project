@@ -43,14 +43,17 @@ class HomeCEO(ListView, LoginRequiredMixin, UserPassesTestMixin):
         tasks = TaskOperari.objects.order_by('-date').filter(date=date.today())
         return tasks
 
+def controlSla(request):
+    context ={}
+    context['title'] = 'Sla Control'
+    context['sla'] = getContainersExpiringSLA(date.today())
+    return render(request, 'oficina/sla-control.html', context)
 
 def getContainersExpiringSLA(date):
-    # parse date
-    elems = str(date).split('-')
-    result = elems[2] + '/' + elems[1] + '/' + elems[0]
 
     # get all possible slas
-    slas = SLA.objects.filter(limit=result)
+    slas = SLA.objects.filter(limit=date)
+    print('Hola' + str(slas))
     containers = []
     for sla in slas:
         queryset = ContainerGroup.objects.filter(sla=sla)
