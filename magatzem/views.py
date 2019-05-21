@@ -342,10 +342,12 @@ def sortida_producte(request):
         entry_handler = EntryHandler()
         context = {}
         context['title'] = 'Sortida Productes'
+        context['is_valid_ref'] = False
         transports = entry_handler.generate_entry()
         # mostrar només el que s'ha de treure
         for transport in transports:
             if transport['ref'] == request.GET['ref']:
+                context['is_valid_ref'] = True
                 containers = _generar_manifest_sortida(transport)
                 context['containers'] = containers
                 context['ref'] = transport['ref']

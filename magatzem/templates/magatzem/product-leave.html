@@ -6,8 +6,11 @@
 {% endblock header %}
 
 {% block content %}
-  {% if not containers %}
-    <h5 class="my-5">No hi productes per servir aquesta comanda</h5>
+  {% if not is_valid_ref %}
+    <h5 class="my-5">No hi cap comanda amb aquesta referència.</h5>
+    <a class="btn btn-success" href="{% url 'sortida-producte' %}" role="button">Tornar</a>
+  {% elif not containers %}
+    <h5 class="my-5">No hi productes per servir aquesta comanda.</h5>
     <a class="btn btn-success" href="{% url 'sortida-producte' %}" role="button">Tornar</a>
   {% else %}
 <div class="table-mrg">
