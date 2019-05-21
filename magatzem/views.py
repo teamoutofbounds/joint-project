@@ -24,12 +24,7 @@ from datetime import date
 ##############################################################################
 
 def is_allowed(user, roles):
-    allowed = False
-    belongs_to = user.groups.all()
-    for role in belongs_to:
-        if role in roles:
-            allowed = True
-    return allowed
+    return user.groups.filter(name__in=roles).exists()
 
 
 # Rooms related functions
