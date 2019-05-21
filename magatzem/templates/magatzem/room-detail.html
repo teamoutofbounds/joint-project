@@ -118,10 +118,14 @@
         </div>
       </div>
 
-      <div class="accions mt-4">
-        <a class="btn btn-primary d-flex justify-content-center" href="{% url 'product-room' room.pk room.name %}" role="button">Traslladar</a>
+      <div class="accions mt-2">
+        <a class="btn btn-primary d-flex justify-content-center" href="{% url 'product-room' room.pk room.name %}">Traslladar</a>
       </div>
-
+      <div class="open mt-2">
+        {% if room.room_status == 0 %}
+            <a class="btn btn-primary d-flex justify-content-center" href="{% url 'update-clima' room.id %}">Obrir Sala</a>
+        {% endif %}
+      </div>
       <!-- TASK LIST -->
       <div class="card-header mt-4">
         <h2>Tasques</h2>

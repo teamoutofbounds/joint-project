@@ -1,0 +1,17 @@
+{% extends 'oficina/base-ceo.html' %}
+{% load static from staticfiles %}
+
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/home-gestor.css' %}">
+{% endblock header %}
+
+{% block content %}
+
+  <div class="row main-row mt-4 justify-content-md-center">
+
+      {% include 'magatzem/mapa.html' %}
+      {% include 'oficina/barra_lateral-ceo.html' %}
+
+  </div>
+
+{% endblock content%}
