@@ -1,8 +1,8 @@
 # els links de l'aplicació van aqui
 # els de frontend, heu d'utilitzar les funcions de views que tenen la paraula mock
 from django.urls import path
-from magatzem.views import RoomList, RoomDetail, NotificationsOperarisListView, HomeGestor, TaskPanelOperaris,\
-    ContainerSelectionList, ConfirmNotification
+from magatzem.views import RoomList, RoomDetail, NotificationsOperarisListView, HomeGestor, TaskPanelOperaris, \
+    ContainerSelectionList, ConfirmNotification, TaskPanelTecnics, EditTecnicTask, DeleteTecnicTask
 from . import views
 
 urlpatterns = [
@@ -11,11 +11,18 @@ urlpatterns = [
     path('gestor/sales/', RoomList.as_view(), name='list-room'),
     path('gestor/sales/<int:pk>/', RoomDetail.as_view(), name='detail-room'),
     path('gestor/sales/<int:pk>/<room>/', ContainerSelectionList.as_view(), name='product-room'),
+    # urls gestor tasques operaris
     path('gestor/tasques_operaris/', TaskPanelOperaris.as_view(), name='panel-operaris'),
+    path('gestor/tasques_operaris/<int:pk>/edit/', EditTecnicTask.as_view(), name='task-tecnic-edit'),
+    # urls gestor tasques tecnics
+    path('gestor/tasques_tecnics/', TaskPanelTecnics.as_view(), name='panel-tecnics'),
+    path('gestor/tasques_tecnics/<pk>/edit/', EditTecnicTask.as_view(), name='task-tecnic-edit'),
+    path('gestor/tasques_tecnics/<pk>/delete/', DeleteTecnicTask.as_view(), name='task-tecnic-delete'),
+    # urls gestor tasques magatzem
     path('gestor/entrada/', views.manifest_form, name='entrada-producte'),
     path('gestor/sortida/', views.manifest_sortida_form, name='sortida-producte'),
-    path('gestor/entrada/manifest/', views.entrada_producte, name='entrada-manifest'),
-    path('gestor/sortida/manifest/', views.sortida_producte, name='sortida-manifest'),
+    path('gestor/entrada/manifest/', views.entrada_producte, name='entrada-manifest'),  # hauria de ser /new
+    path('gestor/sortida/manifest/', views.sortida_producte, name='sortida-manifest'),  # hauria de ser /new
     # urls operari
     path('operaris/notificacions/', NotificationsOperarisListView.as_view(), name='operaris-notificacions'),
     path('operaris/notificacions/confirm/<int:pk>/', ConfirmNotification.as_view(), name='confirm-notification'),

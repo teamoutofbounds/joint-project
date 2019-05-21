@@ -1,4 +1,6 @@
 from django.db import models, transaction
+from django.urls import reverse
+
 from .room import Room
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator
@@ -42,3 +44,6 @@ class TaskOperari(Task):
                 task.task_status = 1
                 task.save()
         return task
+
+    def get_absolute_url(self):
+        return reverse('panel-operaris', kwargs={})

@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView, TemplateView
 from django.db.models import Q
 
 from magatzem.models import TaskTecnic, ManifestEntrance, ManifestDeparture, ContainerGroup
@@ -143,7 +143,7 @@ class ConfirmNotification(UpdateView):
 
 class TaskPanelOperaris(ListView, LoginRequiredMixin, UserPassesTestMixin):
     queryset = TaskOperari.objects.filter(date=date.today())
-    template_name = 'magatzem/tasks-list.html'
+    template_name = 'magatzem/tasks-list-operari.html'
     # permission variable
     roles = ('Gestor', 'CEO')
 
@@ -164,8 +164,8 @@ class TaskPanelOperaris(ListView, LoginRequiredMixin, UserPassesTestMixin):
         return context
 
 
-class TaskPanelTecnics(ListView, LoginRequiredMixin, UserPassesTestMixin):
-    queryset = TaskTecnic.objects.filter(date=date.today())
+class TaskPanelTecnics(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
+    # queryset = TaskTecnic.objects.filter(date=date.today())  # no funciona a la vida real
     template_name = 'magatzem/tasks-list-tecnic.html'
     # permission variable
     roles = ('Gestor', 'CEO')
@@ -175,7 +175,12 @@ class TaskPanelTecnics(ListView, LoginRequiredMixin, UserPassesTestMixin):
 
     def get_context_data(self, **kwargs):
         tasks = super().get_context_data(**kwargs)
-        context = {'todo': [], 'doing': [], 'done': []}
+        # context = {'todo': [], 'doing': [], 'done': []}
+        context = {}
+        context['todo'] = TaskTecnic.objects.filter(Q(task_status=0) | Q(task_status=1) | Q(task_status=2))
+        context['doing'] = TaskTecnic.objects.filter(task_status=3)
+        context['done'] = TaskTecnic.objects.filter(task_status=4, date=date.today())
+        '''
         for task in tasks['object_list']:
             if task.task_status == 0 or task.task_status == 1 or task.task_status == 2:
                 context['todo'].append(task)  # pendent assignacio
@@ -183,8 +188,51 @@ class TaskPanelTecnics(ListView, LoginRequiredMixin, UserPassesTestMixin):
                 context['doing'].append(task)
             else:
                 context['done'].append(task)
+        '''
         context['title'] = 'Tasques Tecnics'
         return context
+
+
+class EditTecnicTask(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+    model = TaskTecnic
+    fields = ['task_type', 'room', 'task_type', 'detail']
+    template_name = 'magatzem/tasks-tecnic-edit.html'
+
+    # permission variable
+    roles = ('Gestor',)
+
+    def test_func(self):
+        return is_allowed(self.request.user, self.roles)
+
+    def get_task_info(self):
+        return self.object
+
+
+class EditOperariTask(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+    model = TaskTecnic
+    fields = ['user']
+    template_name = 'magatzem/tasks-list-tecnic.html'
+
+    # permission variable
+    roles = ('Gestor',)
+
+    def test_func(self):
+        return is_allowed(self.request.user, self.roles)
+
+    def get_task_info(self):
+        return self.object
+
+
+class DeleteTecnicTask(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
+    model = TaskTecnic
+    template_name = 'magatzem/tasks-tecnic-confirm-delete.html'
+    success_url = reverse_lazy('panel-tecnics')
+
+    # permission variable
+    roles = ('Gestor',)
+
+    def test_func(self):
+        return is_allowed(self.request.user, self.roles)
 
 
 # Home Gestor

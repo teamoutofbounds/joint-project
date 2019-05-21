@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 from .room import Room
 from django.core.validators import MaxValueValidator
 from magatzem.models.task import Task
@@ -18,3 +20,6 @@ class TaskTecnic(Task):
 
     detail = models.CharField(max_length=250)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
+
+    def get_absolute_url(self):
+        return reverse('panel-tecnics', kwargs={'pk': self.pk})
