@@ -18,9 +18,9 @@ class Command(BaseCommand):
 def make_database():
     path = os.getcwd()
     add_item(add_room, path + '/data/rooms.data')
-    add_item(add_product, path + '/data/product.data')
-    add_item(add_sla, path + '/data/sla.data')
-    add_item(add_containers_groups, path + '/data/containers.data')
+    #add_item(add_product, path + '/data/product.data')
+    #add_item(add_sla, path + '/data/sla.data')
+    #add_item(add_containers_groups, path + '/data/containers.data')
     # add_item(add_container, path + '/data/containers.data')
     # add_item(add_task, path + '/data/tasks.data')
 
