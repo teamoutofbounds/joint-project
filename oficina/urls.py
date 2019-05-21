@@ -10,4 +10,5 @@ urlpatterns = [
     path('ceo/users/list/', views.list_users, name='list_users'),
     path('ceo/users/create/', views.create_user_as_ceo, name='create-user-ceo'),
     path('ceo/users/delete/<int:pk>/confirm', views.delete_user_as_ceo, name='delete-user-ceo'),
+    path('ceo/sla-control', views.controlSla, name='sla-control')
 ]
