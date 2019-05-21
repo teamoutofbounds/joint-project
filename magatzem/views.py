@@ -69,8 +69,8 @@ class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
 # TODO
 class UpdateClimaRoom(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
-    fields = ['state', 'hum', 'temp']
-    # template_name = 'magatzem/room-detail.html'
+    fields = ['room_status', 'hum', 'temp']
+    template_name = 'magatzem/task-tecnic-clima-room.html'
     context_object_name = 'room'
     # permission variable
     roles = ('Gestor',)
