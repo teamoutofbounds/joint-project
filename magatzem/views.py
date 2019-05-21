@@ -324,16 +324,16 @@ def manifest_sortida_form(request):
 
 
 def entrada_producte(request):
-    if 'ref' in request.GET:
-        entry_handler = EntryHandler()
-        context = {}
-        context['title'] = 'Entrada Productes'
-        transports = entry_handler.generate_entry()
-        # _generar_manifest_entrada(transports)
-        for transport in transports:
-            if transport['ref'] == request.GET['ref']:
-                _generar_manifest_entrada(transport)
-                context['container'] = transport
+    # if 'ref' in request.POST:
+    entry_handler = EntryHandler()
+    context = {}
+    context['title'] = 'Entrada Productes'
+    transports = entry_handler.generate_entry()
+    # _generar_manifest_entrada(transports)
+    for transport in transports:
+        if transport['ref'] == request.POST['ref']:
+            _generar_manifest_entrada(transport)
+            context['container'] = transport
     return render(request, 'magatzem/product-entry.html', context)
 
 
