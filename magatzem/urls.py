@@ -2,7 +2,8 @@
 # els de frontend, heu d'utilitzar les funcions de views que tenen la paraula mock
 from django.urls import path
 from magatzem.views import RoomList, RoomDetail, NotificationsOperarisListView, HomeGestor, TaskPanelOperaris, \
-    ContainerSelectionList, ConfirmNotification, TaskPanelTecnics, EditTecnicTask, DeleteTecnicTask, UpdateClimaRoom
+    ContainerSelectionList, ConfirmNotification, TaskPanelTecnics, EditTecnicTask, DeleteTecnicTask, \
+    NotificationsTecnicsListView, ConfirmNotificationTecnics, UpdateClimaRoom
 from . import views
 
 urlpatterns = [
@@ -27,6 +28,9 @@ urlpatterns = [
     path('operaris/notificacions/', NotificationsOperarisListView.as_view(), name='operaris-notificacions'),
     path('operaris/notificacions/confirm/<int:pk>/', ConfirmNotification.as_view(), name='confirm-notification'),
     # urls tecnics
+    path('tecnic/notificacions/', NotificationsTecnicsListView.as_view(), name='tecnics-notificacions'),
+    path('tecnics/notificacions/confirm/<int:pk>/', ConfirmNotificationTecnics.as_view(),
+         name='confirm-notification-tecnics'),
     # path('tecnic/', , name='tecnic-home'),
 
     #urls generar tasques
