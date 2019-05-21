@@ -322,20 +322,18 @@ def entrada_producte(request):
 
 
 def _generar_manifest_entrada(transports):
-    ManifestEntrance.objects.save(ref=transports['ref'],
-                                  origin=transports['fromLocation'],
-                                  date=transports['creationDate'])
-    for product in transports['Products']:
-        creator = ApiManifestCreator(product, transports)
-        creator.create_entry()
+    for transport in transports:
+        creator = ApiManifestCreator(transport['ref'], transport['fromLocation'])
+        for product in transport['Products']:
+            creator._create_entry_manifest(product)
 
 
 def _generar_manifest_sortida(transports):
-    ManifestDeparture.objects.save(ref=transports['ref'],
-                                   origin=transports['fromLocation'],
-                                   date=transports['creationDate'])
-    for product in transports['Products']:
-        creator = ApiManifestCreator(product, transports)
+    for transport in transports:
+        ManifestDeparture.objects.create(ref=transport['ref'],
+                                       origin=transport['fromLocation'],
+                                       date=transport['creationDate'][:10])
+        creator = ApiManifestCreator(transport)
         creator.create_departure()
 
 
