@@ -23,6 +23,8 @@ from datetime import date
 # Security related functions
 ##############################################################################
 
+#TODO
+# Afegir comprovació de si està connectat
 def is_allowed(user, roles):
     return user.groups.filter(name__in=roles).exists()
 
@@ -30,6 +32,8 @@ def is_allowed(user, roles):
 # Rooms related functions
 ##############################################################################
 
+#TODO
+# Canviar el mostrar sala per obrir sala si està tancada (HTML)
 class RoomList(ListView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
     context_object_name = 'room_list'
@@ -45,7 +49,10 @@ class RoomList(ListView, LoginRequiredMixin, UserPassesTestMixin):
         context['title'] = 'Sales'
         return context
 
-
+#TODO
+# Afegir margin top al breadcrum (HTML)
+# Afegir botó per canviar la temperatura de la sala i humitat quan està oberta
+# Quan està tancada no pot haver el boto de modificar ni obrir (tot i que no hauries de poder entrar)
 class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
     template_name = 'magatzem/room-detail.html'
@@ -62,11 +69,12 @@ class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
                                                       Q(origin_room=context['room'])
                                                       | Q(destination_room=context['room']))
         context['containers'] = self.object.get_containers()
-        context['title'] = context['room'].name
+        context['title'] = "sala " + context['room'].name
         return context
 
 
 # TODO
+# arreglar el form
 class UpdateClimaRoom(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
     fields = ['room_status', 'hum', 'temp']
@@ -90,6 +98,9 @@ class UpdateClimaRoom(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
 # Notification related functions
 ##############################################################################
 
+#TODO
+# Falta boto X (Joan)
+# TaskOperari object is not iterable ARREGLAR
 class NotificationsOperarisListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
     model = TaskOperari
     context_object_name = 'task_list'
@@ -120,7 +131,7 @@ class NotificationsOperarisListView(ListView, LoginRequiredMixin, UserPassesTest
 class NotificationsTecnicsListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
     model = TaskTecnic
     context_object_name = 'task_list'
-    template_name = 'magatzem/notification-tecnic.html'
+    template_name = 'magatzem/notification- .html'
     # permission variable
     roles = ('Tecnic',)
 
@@ -137,7 +148,8 @@ class NotificationsTecnicsListView(ListView, LoginRequiredMixin, UserPassesTestM
         context['title'] = 'Home'
         return context
 
-
+#TODO
+# Quan s'arregli l ode dalt comprovar si va (HAURIA DE FUNCIONAR)
 class ConfirmNotification(UpdateView):
     model = TaskOperari
     template_name = 'magatzem/confirm-notification.html'
@@ -152,6 +164,7 @@ class ConfirmNotification(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('operaris-notificacions')
+
 
 class ConfirmNotificationTecnics(UpdateView):
     model = TaskTecnic
@@ -171,6 +184,8 @@ class ConfirmNotificationTecnics(UpdateView):
 
 # Task Panels related functions
 ##############################################################################
+
+#TODO
 
 class TaskPanelOperaris(ListView, LoginRequiredMixin, UserPassesTestMixin):
     queryset = TaskOperari.objects.filter(date=date.today())
@@ -194,7 +209,9 @@ class TaskPanelOperaris(ListView, LoginRequiredMixin, UserPassesTestMixin):
         context['title'] = 'Tasques Operaris'
         return context
 
-
+#TODO
+# Canviar elbotó que et porta a aquesta vista perque porta al mock en comptes de aqui
+# Arreglar per a que surti el nom de sala
 class TaskPanelTecnics(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
     template_name = 'magatzem/tasks-list-tecnic.html'
     # permission variable
@@ -214,6 +231,8 @@ class TaskPanelTecnics(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
         return context
 
 
+#TODO
+# Falta linkejar el boto a aquesta vista
 class EditTecnicTask(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     model = TaskTecnic
     fields = ['task_type', 'room', 'task_type', 'detail']
@@ -228,7 +247,8 @@ class EditTecnicTask(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     def get_task_info(self):
         return self.object
 
-
+#TODO
+# Falta linkejar el boto a aquesta vista
 class EditOperariTask(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     model = TaskTecnic
     fields = ['user']
@@ -244,7 +264,8 @@ class EditOperariTask(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     def get_task_info(self):
         return self.object
 
-
+#TODO
+# Falta linkejar el boto a aquesta vista
 class DeleteTecnicTask(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
     model = TaskTecnic
     template_name = 'magatzem/tasks-tecnic-confirm-delete.html'
@@ -290,6 +311,8 @@ class HomeGestor(ListView, LoginRequiredMixin, UserPassesTestMixin):
 # Container Movement functions
 ##############################################################################
 
+# TODO
+#Mirar que collons fa aixo i perque el url es tal com es ?¿WTF?¿
 class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
     context_object_name = 'container_list'
@@ -314,7 +337,9 @@ class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
 
 # Entry/Exit Manifesto functions
 ##############################################################################
-
+#TODO
+# S'han d'unificar i utilitzar el bonito
+# Centrar el missatge d'error si no existeix per a millorar la USER EXPERIENCE
 def manifest_form(request):
     return render(request, 'magatzem/manifest-form.html', {'title': 'Entrada Productes'})
 
@@ -322,7 +347,9 @@ def manifest_form(request):
 def manifest_sortida_form(request):
     return render(request, 'magatzem/manifest-leave-form.html', {'title': 'Sortida Productes'})
 
-
+#TODO
+# Solucionar el error si entres dos vegades el mateix
+# Ficar un missatge en plan "ja las descarregat"
 def entrada_producte(request):
     # if 'ref' in request.POST:
     entry_handler = EntryHandler()
@@ -351,7 +378,9 @@ def _generar_manifest_sortida(transport):
         creator._create_departure_manifest(product)
     return creator.container_list
 
-
+#TODO
+# Solucionar el error si entres dos vegades el mateix
+# Ficar un missatge en plan "ja las descarregat"
 def sortida_producte(request):
     if 'ref' in request.GET:
         entry_handler = EntryHandler()
