@@ -69,8 +69,8 @@ class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
 # TODO
 class UpdateClimaRoom(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
     model = Room
-    fields = ['state', 'hum', 'temp']
-    # template_name = 'magatzem/room-detail.html'
+    fields = ['room_status', 'hum', 'temp']
+    template_name = 'magatzem/task-tecnic-clima-room.html'
     context_object_name = 'room'
     # permission variable
     roles = ('Gestor',)
@@ -93,7 +93,7 @@ class UpdateClimaRoom(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
 class NotificationsOperarisListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
     model = TaskOperari
     context_object_name = 'task_list'
-    template_name = 'magatzem/notification.html'
+    template_name = 'magatzem/notification-operari.html'
     new_task = False
     # permission variable
     roles = ('Operari',)
@@ -128,7 +128,7 @@ class NotificationsTecnicsListView(ListView, LoginRequiredMixin, UserPassesTestM
         return is_allowed(self.request.user, self.roles)
 
     def get_queryset(self):
-        queryset = TaskOperari.objects.filter(Q(task_status=1) | Q(task_status=2) |
+        queryset = TaskTecnic.objects.filter(Q(task_status=1) | Q(task_status=2) |
                                               Q(task_status=3))
         return queryset
 
@@ -152,6 +152,21 @@ class ConfirmNotification(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('operaris-notificacions')
+
+class ConfirmNotificationTecnics(UpdateView):
+    model = TaskTecnic
+    template_name = 'magatzem/confirm-notification-tecnics.html'
+    fields = {}
+
+    def form_valid(self, form):
+        if self.request.POST['confirm'] == "SI":
+            form.instance.task_status = 4
+            return super().form_valid(form)
+        else:
+            return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('tecnics-notificacions')
 
 
 # Task Panels related functions
@@ -309,16 +324,16 @@ def manifest_sortida_form(request):
 
 
 def entrada_producte(request):
-    if 'ref' in request.GET:
-        entry_handler = EntryHandler()
-        context = {}
-        context['title'] = 'Entrada Productes'
-        transports = entry_handler.generate_entry()
-        # _generar_manifest_entrada(transports)
-        for transport in transports:
-            if transport['ref'] == request.GET['ref']:
-                _generar_manifest_entrada(transport)
-                context['container'] = transport
+    # if 'ref' in request.POST:
+    entry_handler = EntryHandler()
+    context = {}
+    context['title'] = 'Entrada Productes'
+    transports = entry_handler.generate_entry()
+    # _generar_manifest_entrada(transports)
+    for transport in transports:
+        if transport['ref'] == request.POST['ref']:
+            _generar_manifest_entrada(transport)
+            context['container'] = transport
     return render(request, 'magatzem/product-entry.html', context)
 
 

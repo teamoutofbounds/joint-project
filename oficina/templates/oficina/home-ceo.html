@@ -5,15 +5,12 @@
   <link rel="stylesheet" type="text/css" href="{% static 'css/home-gestor.css' %}">
 {% endblock header %}
 
-{{% block content %}
+{% block content %}
 
   <div class="row main-row mt-4 justify-content-md-center">
 
-
-    {% include 'users/register.html' %}
-
-
-    {% include 'oficina/barra_lateral-ceo.html' %}
+      {% include 'magatzem/mapa.html' %}
+      {% include 'oficina/barra_lateral-ceo.html' %}
 
   </div>
 

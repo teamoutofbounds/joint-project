@@ -1,4 +1,4 @@
-{% extends 'magatzem/base-ceo.html' %}
+{% extends 'oficina/base-ceo.html' %}
 {% load static from staticfiles %}
 
 {% block header %}
@@ -31,24 +31,15 @@
               <p class="card-text">{{ user.last_name }}</p>
             </div>
             <div class="col-md-3 p-3">
-                <button class="btn m-1 btn-outline-danger" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false">Delete</button>
-            </div>
-          </div>
-          <div class="collapse" id="collapseExample">
-            <div class="card card-body">Are you sure you want to the delete the user account " {{ user.username }}"?
-                <div class="text-center">
-                    <a class="btn btn-outline-danger m-1" href="{% url 'delete-user-ceo' pk=user.pk %}">Yes, delete!</a>
-                    <a class="btn btn-outline-primary m-1" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"  href="{% url 'list_users' %} ">Cancel</a>
-                </div>
+                <a class="btn btn-outline-danger m-1" href="{% url 'delete-user-ceo' pk=user.pk %}">Delete</a>
             </div>
           </div>
         </div>
-
         {% endif %}
     {% endfor %}
 </div>
 
-    {% include 'magatzem/barra_lateral-ceo.html' %}
+    {% include 'oficina/barra_lateral-ceo.html' %}
 
   </div>
 

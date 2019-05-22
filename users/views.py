@@ -19,7 +19,7 @@ def redirect_view(request):
     elif request.user.groups.filter(name='Operari').exists():
         response = redirect('operaris-notificacions')
     elif request.user.groups.filter(name='Tecnic').exists():
-        response = redirect('tecnics-home')
+        response = redirect('tecnics-notificacions')
     elif request.user.groups.filter(name='Ceo').exists():
         response = redirect('ceo-home')
     else:

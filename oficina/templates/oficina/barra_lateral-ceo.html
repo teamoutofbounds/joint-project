@@ -1,0 +1,56 @@
+<div class="col-sm-5 mt-2 bg-light">
+
+  <div class="box px-3 py-3" style="border-style: solid;
+                                        border-color: #0D47A1;
+                                        border-width: 1px;
+                                        background:#dbe2ef ">
+    <div class="row">
+      <a class="btn btn-lg btn-block text-button" href="{% url 'sla-control' %}">Control SLA</a>
+    </div>
+
+    <div class="mt-4 mb-5">
+      <div class="scroll-panel-ceo">
+        {% if slas %}
+        <h6 style="font-weight: 600; color: red; margin-left: 2rem;">Expiren avui</h6>
+
+
+        {% for sla in slas %}
+        <div class="card border-info mb-2">
+          <div class="card-header bg-transparent border-info">SLA: {{ sla.SLA }}</div>
+          <div class="card-body text-info">
+            <h6 class="card-text mb-1">Data Limit: {{ sla.limit }}</h6>
+            <h6 class="card-text mb-1">Temp Min: {{ sla.temp_min }}</h6>
+            <h6 class="card-text mb-1">Temp Max: {{ sla.temp_max }}</h6>
+            <h6 class="card-text mb-1">Hum Min: {{ sla.hum_min }}</h6>
+            <h6 class="card-text mb-1">Hum Max: {{ sla.hum_max }}</h6>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        {% if not slas %}
+        <h6 style="font-weight: 600; color: red; margin-left: 2rem;">No hi ha productes que expirin avui</h6>
+        {% endif %}
+
+      </div>
+    </div>
+
+
+    <div class="header-content-left">
+      <h5 class="heading mt-2 text-center">Magatzem</h5>
+    </div>
+
+    <div class="row">
+      <a href="{% url 'manifests-ceo' %}" class="btn btn-lg btn-block mb-2 text-button">Manifests</a>
+
+    </div>
+
+    <div class="header-content-left">
+      <h5 class="heading mt-2 text-center">Administració</h5>
+    </div>
+
+    <div class="row">
+      <a class="btn btn-lg btn-block mb-2 text-button" href="{% url 'list_users' %}">Gestió usuaris</a>
+    </div>
+  </div>
+</div>
