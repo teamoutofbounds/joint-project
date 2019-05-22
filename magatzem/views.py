@@ -153,6 +153,7 @@ class ConfirmNotification(UpdateView):
     def get_success_url(self):
         return reverse_lazy('operaris-notificacions')
 
+
 class ConfirmNotificationTecnics(UpdateView):
     model = TaskTecnic
     template_name = 'magatzem/confirm-notification-tecnics.html'
