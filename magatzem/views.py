@@ -2,8 +2,9 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, TemplateView
 from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 
-from magatzem.models import TaskTecnic, ManifestEntrance, ManifestDeparture, ContainerGroup
+from magatzem.models import TaskTecnic, ManifestEntrance, ManifestDeparture, ContainerGroup, Manifest
 
 from magatzem.models.room import Room
 from magatzem.models.task_operari import TaskOperari
@@ -350,6 +351,7 @@ def manifest_sortida_form(request):
 #TODO
 # Solucionar el error si entres dos vegades el mateix
 # Ficar un missatge en plan "ja las descarregat"
+@csrf_exempt
 def entrada_producte(request):
     # if 'ref' in request.POST:
     entry_handler = EntryHandler()
@@ -359,10 +361,42 @@ def entrada_producte(request):
     # _generar_manifest_entrada(transports)
     for transport in transports:
         if transport['ref'] == request.POST['ref']:
+            if _check_already_in_system_manifest(transport):
+                context['ref'] = transport['ref']
+                return render(request, 'magatzem/product-entry-existent.html', context)
             _generar_manifest_entrada(transport)
             context['container'] = transport
     return render(request, 'magatzem/product-entry.html', context)
+    """
+    model = TaskOperari
+    template_name = 'magatzem/product-entry.html'
+    fields = {}
 
+
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        entry_handler = EntryHandler()
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Entrada Productes'
+        transports = entry_handler.generate_entry()
+        print(self.request.POST)
+        # _generar_manifest_entrada(transports)
+        for transport in transports:
+            if transport['ref'] == self.request.POST['ref']:
+                _generar_manifest_entrada(transport)
+                context['container'] = transport
+        return render(request, 'magatzem/product-entry.html', context)
+
+        def form_valid(self, form):
+            print(self.request.POST)
+            return HttpResponseRedirect(reverse_lazy('entrada-manifest'))
+            """
+
+def _check_already_in_system_manifest(transport):
+    if Manifest.objects.filter(ref=transport['ref']):
+        return True
+    return False
 
 def _generar_manifest_entrada(transport):
     #for transport in transports:
@@ -391,6 +425,9 @@ def sortida_producte(request):
         # mostrar només el que s'ha de treure
         for transport in transports:
             if transport['ref'] == request.GET['ref']:
+                if _check_already_in_system_manifest(transport):
+                    context['ref'] = transport['ref']
+                    return render(request, 'magatzem/product-entry-existent.html', context)
                 context['is_valid_ref'] = True
                 containers = _generar_manifest_sortida(transport)
                 context['containers'] = containers

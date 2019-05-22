@@ -1,0 +1,17 @@
+{% extends 'magatzem/base-gestor.html' %}
+{% load static from staticfiles %}
+
+{% block header %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/operari-center.css' %}">
+{% endblock header %}
+
+{% block content %}
+
+<div class="container">
+    <div class="center">
+        <p><h5>Ja existeix un manifest amb referència: {{ ref }} en el sistema.</h5></p>
+    </div>
+</div>
+
+
+{% endblock %}
