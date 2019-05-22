@@ -15,13 +15,11 @@ from users.forms import SignUpForm
 # Create your views here.
 
 
-class HomeCEO(ListView, LoginRequiredMixin, UserPassesTestMixin):
+class HomeCEO(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
     """ THIS IS A TEMPORARY IMPLEMENTATION:
         Needed to check if all works properly in the front end,
         until the real implementation could be done.
     """
-    model = Room
-    context_object_name = 'rooms'
     template_name = 'oficina/home-ceo.html'
     # permission variable
     roles = ('CEO',)
@@ -36,8 +34,11 @@ class HomeCEO(ListView, LoginRequiredMixin, UserPassesTestMixin):
         context['last_tasks'] = self.get_last_tasks()
         # get room capacity
         context['capacities'] = {}
-        for item in context['object_list']:
+        context['rooms']= Room.objects.all()
+        for item in context['rooms']:
             context['capacities'][item.name] = item.quantity * 100 / item.limit
+        today = date.today()
+        context['slas']= SLA.objects.filter(limit=str(today))
 
         return context
 
