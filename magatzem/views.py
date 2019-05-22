@@ -346,7 +346,7 @@ def _generar_manifest_entrada(transport):
 
 def _generar_manifest_sortida(transport):
     # for transport in transports:
-    creator = ApiManifestCreator(transport, transport['fromLocation'], transport['toLocation'])
+    creator = ApiManifestCreator(transport['ref'], transport['fromLocation'], transport['toLocation'])
     for product in transport['Products']:
         creator._create_departure_manifest(product)
     return creator.container_list

@@ -7,10 +7,12 @@ class ApiManifestCreator(object):
     def __init__(self, ref, producer_id, toLocation):
         if not toLocation: # Cas entrada
             ManifestEntrance.objects.get_or_create(ref=ref, origin=producer_id)
+            self.manifest = ManifestEntrance.objects.get(ref=ref)
+
         else:   # Cas sortida
             ManifestDeparture.objects.get_or_create(ref=ref, destination=toLocation)
-            self.container_list=[]
-        self.manifest = Manifest.objects.get(ref=ref)
+            self.manifest = ManifestDeparture.objects.get(ref=ref)
+        self.container_list = []
         self.producer_id = producer_id
         self.toLocation = toLocation
 
