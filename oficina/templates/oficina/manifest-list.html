@@ -2,6 +2,7 @@
 {% load static from staticfiles %}
 {% block content %}
 <div class="col">
+    {% if manifestentry %}
     <div class="card-header mt-4">
         <h2>Manifests d'entrada</h2>
     </div>
@@ -43,6 +44,12 @@
             </div>
         </div>
         {% endfor %}
+        {% endif%}
+        {% if not manifestentry %}
+        <div class="alert alert-secondary" role="alert">
+            <a href="#" class="alert-link">No hi ha manifests d'entrada</a>
+        </div>
+        {% endif %}
     </div>
     <div class="card-header mt-4">
         <h2>Manifests de sortida</h2>
@@ -52,6 +59,7 @@
                                       height: calc(100vh - 575px);
                                       min-height: 165px;
                                       overflow-y: scroll;">
+        {% if manifestexit %}
         {% for exit in manifestexit %}
         <div class="card-body">
             <div class="row">
@@ -85,6 +93,12 @@
             </div>
         </div>
         {% endfor %}
+        {% endif %}
+        {% if not manifestexit %}
+        <div class="alert alert-secondary" role="alert">
+            <a href="#" class="alert-link">No hi ha manifests d'entrada</a>
+        </div>
+        {% endif %}
     </div>
 </div>
 
