@@ -361,6 +361,7 @@ def entrada_producte(request):
         if transport['ref'] == request.POST['ref']:
             if _check_already_in_system_manifest(transport):
                 context['ref'] = transport['ref']
+                context['entrada'] = True
                 return render(request, 'magatzem/product-entry-existent.html', context)
             _generar_manifest_entrada(transport)
             context['container'] = transport
@@ -423,6 +424,7 @@ def sortida_producte(request):
             if transport['ref'] == request.POST['ref']:
                 if _check_already_in_system_manifest(transport):
                     context['ref'] = transport['ref']
+                    context['entrada'] = False
                     return render(request, 'magatzem/product-entry-existent.html', context)
                 context['is_valid_ref'] = True
                 containers = _generar_manifest_sortida(transport)

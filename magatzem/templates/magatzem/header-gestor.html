@@ -40,11 +40,11 @@
       <!-- Delete tabindex and aria when implemented-->
       {% if "/tasques_tecnics/" in request.path %}
         <li class="nav-item mr-2 active">
-          <a class="nav-link active" href="{% url 'tasques-tecnics-mock' %}" aria-disabled="true">Tasques Tècnics</a>
+          <a class="nav-link active" href="{% url 'panel-tecnics' %}" aria-disabled="true">Tasques Tècnics</a>
         </li>
       {% else %}
         <li class="nav-item mr-2">
-          <a class="nav-link" href="{% url 'tasques-tecnics-mock' %}" aria-disabled="true">Tasques Tècnics</a>
+          <a class="nav-link" href="{% url 'panel-tecnics' %}" aria-disabled="true">Tasques Tècnics</a>
         </li>
       {% endif %}
     </ul>
