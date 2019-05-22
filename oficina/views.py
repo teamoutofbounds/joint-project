@@ -14,7 +14,10 @@ from users.forms import SignUpForm
 
 # Create your views here.
 
-
+#TODO
+# Funciona els SLA que expiren avui, però s'hauria de mostrar el nom del producte i productor en comptes
+# del pk que hi ha. També se pot treure la temperatura i humitat i tal, no ens interessa saber-ho aqui
+# Nomes PRODUCTE I PRODUCTOR. I fer la finestra mes gran
 class HomeCEO(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
     """ THIS IS A TEMPORARY IMPLEMENTATION:
         Needed to check if all works properly in the front end,
@@ -46,6 +49,10 @@ class HomeCEO(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
         tasks = TaskOperari.objects.order_by('-date').filter(date=date.today())
         return tasks
 
+
+#TODO
+# Hauria de mostrar coses i no ho fa
+# Ha de ser una class
 def controlSla(request):
     context ={}
     context['title'] = 'Sla Control'
@@ -56,7 +63,6 @@ def getContainersExpiringSLA(date):
 
     # get all possible slas
     slas = SLA.objects.filter(limit=date)
-    print('Hola' + str(slas))
     containers = []
     for sla in slas:
         queryset = ContainerGroup.objects.filter(sla=sla)
@@ -65,7 +71,9 @@ def getContainersExpiringSLA(date):
                 containers.append(container)
     return containers
 
-
+#TODO
+# Canviar a classe PERO FUNCIONA
+# Hauria d'haver doble check al botó borrar
 def list_users(request):
     all_users = User.objects.all()
     return render(request, 'users/list_users-ceo.html', {'all_users': all_users})
@@ -102,6 +110,10 @@ def create_user_as_ceo(request):
         form = SignUpForm()
     return render(request, 'users/usercreate-ceo.html', {'form': form})
 
+
+#TODO
+# Arreglar el bugaso dels de sortida
+# Separar en dos templates o fer que apretant un botó te surtin els d'entrada i un altre els de sortida
 class ManifestList(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
 
     template_name = 'oficina/manifest-list.html'
@@ -114,6 +126,10 @@ class ManifestList(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
         context['manifestexit'] = ManifestDeparture.objects.all()
         return context
 
+
+#TODO
+# Fer que el producte surti com a entrada nova a la taula i afegir el nom del productor
+# que ara surt l'altre producte a la dreta de la taula
 class ManifestDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
     model = Manifest
     template_name = 'oficina/manifest-detail.html'
@@ -128,6 +144,7 @@ class ManifestDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
         context = super().get_context_data(**kwargs)
         context['manifestcontainers'] = ManifestContainer.objects.filter(~Q(id_manifest=context['manifest']))
         return context
+
 
 def delete_user_as_ceo(request, pk):
     u = User.objects.get(pk=pk)
