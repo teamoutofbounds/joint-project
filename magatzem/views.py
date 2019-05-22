@@ -23,10 +23,11 @@ from datetime import date
 # Security related functions
 ##############################################################################
 
-#TODO
-# Afegir comprovació de si està connectat
+
 def is_allowed(user, roles):
-    return user.groups.filter(name__in=roles).exists()
+        var = user.groups.filter(name__in=roles).exists()
+        print(var)
+        return var
 
 
 # Rooms related functions
@@ -34,14 +35,17 @@ def is_allowed(user, roles):
 
 #TODO
 # Canviar el mostrar sala per obrir sala si està tancada (HTML)
-class RoomList(ListView, LoginRequiredMixin, UserPassesTestMixin):
+class RoomList(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    # permission variable
+    roles = ('Gestor', 'CEO',)
+    raise_exception = True
+
     model = Room
     context_object_name = 'room_list'
     template_name = 'magatzem/room-list.html'
-    # permission variable
-    roles = ('Gestor', 'CEO',)
 
     def test_func(self):
+        self.queryset = self.get_queryset()
         return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
@@ -53,7 +57,7 @@ class RoomList(ListView, LoginRequiredMixin, UserPassesTestMixin):
 # Afegir margin top al breadcrum (HTML)
 # Afegir botó per canviar la temperatura de la sala i humitat quan està oberta
 # Quan està tancada no pot haver el boto de modificar ni obrir (tot i que no hauries de poder entrar)
-class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
+class RoomDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Room
     template_name = 'magatzem/room-detail.html'
     context_object_name = 'room'
@@ -61,6 +65,7 @@ class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
     roles = ('Gestor',)
 
     def test_func(self):
+        self.object = self.get_object()
         return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):

@@ -16,8 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from django.utils.functional import curry
+from django.views.defaults import permission_denied
+
+handler403 = curry(permission_denied, template_name='403.html')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
+
 ]
