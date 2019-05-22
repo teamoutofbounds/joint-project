@@ -342,15 +342,13 @@ class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
 # S'han d'unificar i utilitzar el bonito
 # Centrar el missatge d'error si no existeix per a millorar la USER EXPERIENCE
 def manifest_form(request):
-    return render(request, 'magatzem/manifest-form.html', {'title': 'Entrada Productes'})
+    return render(request, 'magatzem/manifest-form.html', {'title': 'Entrada Productes', 'entrada': True})
 
 
 def manifest_sortida_form(request):
-    return render(request, 'magatzem/manifest-leave-form.html', {'title': 'Sortida Productes'})
+    return render(request, 'magatzem/manifest-form.html', {'title': 'Sortida Productes', 'entrada': False})
 
-#TODO
-# Solucionar el error si entres dos vegades el mateix
-# Ficar un missatge en plan "ja las descarregat"
+
 @csrf_exempt
 def entrada_producte(request):
     # if 'ref' in request.POST:
@@ -412,11 +410,9 @@ def _generar_manifest_sortida(transport):
         creator._create_departure_manifest(product)
     return creator.container_list
 
-#TODO
-# Solucionar el error si entres dos vegades el mateix
-# Ficar un missatge en plan "ja las descarregat"
+
 def sortida_producte(request):
-    if 'ref' in request.GET:
+    if 'ref' in request.POST:
         entry_handler = EntryHandler()
         context = {}
         context['title'] = 'Sortida Productes'
@@ -424,7 +420,7 @@ def sortida_producte(request):
         transports = entry_handler.generate_entry()
         # mostrar només el que s'ha de treure
         for transport in transports:
-            if transport['ref'] == request.GET['ref']:
+            if transport['ref'] == request.POST['ref']:
                 if _check_already_in_system_manifest(transport):
                     context['ref'] = transport['ref']
                     return render(request, 'magatzem/product-entry-existent.html', context)
