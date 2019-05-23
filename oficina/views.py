@@ -110,7 +110,11 @@ def create_user_as_ceo(request):
         form = SignUpForm()
     return render(request, 'users/usercreate-ceo.html', {'form': form})
 
+def delete_user_as_ceo(request, pk):
+    u = User.objects.get(pk=pk)
+    u.delete()
 
+    return redirect('list_users')
 #TODO
 # Arreglar el bugaso dels de sortida
 # Separar en dos templates o fer que apretant un botó te surtin els d'entrada i un altre els de sortida
@@ -146,8 +150,3 @@ class ManifestDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
         return context
 
 
-def delete_user_as_ceo(request, pk):
-    u = User.objects.get(pk=pk)
-    u.delete()
-
-    return redirect('list_users')
