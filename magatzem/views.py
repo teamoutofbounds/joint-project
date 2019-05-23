@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView, UpdateView, DeleteView, T
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 
-from magatzem.models import TaskTecnic, ManifestEntrance, ManifestDeparture, ContainerGroup, Manifest
+from magatzem.models import TaskTecnic, ManifestEntrance, ManifestDeparture, ContainerGroup, Manifest, ManifestContainer, SLA
 
 from magatzem.models.room import Room
 from magatzem.models.task_operari import TaskOperari
@@ -406,15 +406,67 @@ class ContainerSelectionList(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
 # Entry/Exit Manifesto functions
 ##############################################################################
-#TODO
-# S'han d'unificar i utilitzar el bonito
-# Centrar el missatge d'error si no existeix per a millorar la USER EXPERIENCE
+
 def manifest_form(request):
     return render(request, 'magatzem/manifest-form.html', {'title': 'Entrada Productes', 'entrada': True})
 
 
 def manifest_sortida_form(request):
     return render(request, 'magatzem/manifest-form.html', {'title': 'Sortida Productes', 'entrada': False})
+
+
+
+class EntradaProducte(TemplateView):
+    roles = ('Gestor', 'CEO')
+    template_name = 'magatzem/product-entry.html'
+
+    def post(self, request):
+        if 'register' in request.POST: # generates tasks if "register" is pressed
+            _generate_optimized_tasks(self, request)
+        else: # shows the manifest, first time entering the view
+            _render_show_manifest_view(self, request)
+
+
+    def _generate_optimized_tasks(self, request):
+        ####################################################
+        # Obtains the containers from the manifest
+        ###################################################
+        manifest = Manifest.objects.get(ref=request.POST['register'])
+        m_containers = ManifestContainer.objects.filter(id_manifest=manifest)
+        moll = Room.objects.get(name='Moll')
+        container_groups_list= []
+        for m_container in m_containers:
+            container_groups_list.append(ContainerGroup.objects.get(sla_id=m_container.id_SLA,
+                                                                    id_product=m_container.id_product,
+                                                                    id_room = moll))
+        #####################################################
+        # Generate variables for the optimizer
+        #####################################################
+        rooms = Room.objects.all()
+        optimizer_rooms = []
+        # TODO
+        # Falta afegir en un dictionary les sales que compleixen les condicions de temperatura i pasar productes 1 a 1
+        # aixo implica mirarse tots els sla de cada producte i tal i fer-ho
+        # almost there lmao
+
+
+
+    def _render_show_manifest_view(self, request):
+        entry_handler = EntryHandler()
+        context = {}
+        context['title'] = 'Entrada Productes'
+        transports = entry_handler.generate_entry()
+        # _generar_manifest_entrada(transports)
+        for transport in transports:
+            if transport['ref'] == request.POST['ref']:
+                if _check_already_in_system_manifest(transport):
+                    context['ref'] = transport['ref']
+                    context['entrada'] = True
+                    return render(request, 'magatzem/product-entry-existent.html', context)
+                _generar_manifest_entrada(transport)
+                context['container'] = transport
+        return render(request, 'magatzem/product-entry.html', context)
+
 
 
 def entrada_producte(request):

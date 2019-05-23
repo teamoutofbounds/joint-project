@@ -3,7 +3,7 @@
 from django.urls import path
 from magatzem.views import RoomList, RoomDetail, NotificationsOperarisListView, HomeGestor, TaskPanelOperaris, \
     ContainerSelectionList, ConfirmNotification, TaskPanelTecnics, EditTecnicTask, DeleteTecnicTask, \
-    NotificationsTecnicsListView, ConfirmNotificationTecnics, UpdateClimaRoom, OpenRoom
+    NotificationsTecnicsListView, ConfirmNotificationTecnics, UpdateClimaRoom, OpenRoom, EntradaProducte
 from . import views
 
 urlpatterns = [
@@ -23,7 +23,7 @@ urlpatterns = [
     # urls gestor tasques magatzem
     path('gestor/entrada/', views.manifest_form, name='entrada-producte'),
     path('gestor/sortida/', views.manifest_sortida_form, name='sortida-producte'),
-    path('gestor/entrada/manifest/', views.entrada_producte, name='entrada-manifest'),  # hauria de ser /new
+    path('gestor/entrada/manifest/', EntradaProducte.as_view(), name='entrada-manifest'),  # hauria de ser /new
     path('gestor/sortida/manifest/', views.sortida_producte, name='sortida-manifest'),  # hauria de ser /new
     # urls operari
     path('operaris/notificacions/', NotificationsOperarisListView.as_view(), name='operaris-notificacions'),
