@@ -26,9 +26,7 @@ from datetime import date
 
 
 def is_allowed(user, roles):
-        var = user.groups.filter(name__in=roles).exists()
-        print(var)
-        return var
+    return user.groups.filter(name__in=roles).exists()
 
 
 # Rooms related functions
@@ -154,7 +152,7 @@ class NotificationsTecnicsListView(LoginRequiredMixin, UserPassesTestMixin, List
 
     def get_queryset(self):
         queryset = TaskTecnic.objects.filter(Q(task_status=1) | Q(task_status=2) |
-                                              Q(task_status=3))
+                                             Q(task_status=3))
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -267,15 +265,17 @@ class TaskPanelTecnics(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
 #TODO
 # Falta linkejar el boto a aquesta vista
-class EditTecnicTask(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+class EditTecnicTask(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskTecnic
     fields = ['task_type', 'room', 'task_type', 'detail']
     template_name = 'magatzem/tasks-tecnic-edit.html'
 
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
+        self.object = self.get_object()
         return is_allowed(self.request.user, self.roles)
 
     def get_task_info(self):
@@ -283,7 +283,7 @@ class EditTecnicTask(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
 
 #TODO
 # Falta linkejar el boto a aquesta vista
-class EditOperariTask(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+class EditOperariTask(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskTecnic
     fields = ['user']
     template_name = 'magatzem/tasks-list-tecnic.html'
@@ -291,38 +291,45 @@ class EditOperariTask(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
 
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
+        self.object = self.get_object()
         return is_allowed(self.request.user, self.roles)
 
     def get_task_info(self):
         return self.object
 
+
 #TODO
 # Falta linkejar el boto a aquesta vista
-class DeleteTecnicTask(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
+class DeleteTecnicTask(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = TaskTecnic
     template_name = 'magatzem/tasks-tecnic-confirm-delete.html'
     success_url = reverse_lazy('panel-tecnics')
 
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
+        self.object = self.get_object()
         return is_allowed(self.request.user, self.roles)
 
 
 # Home Gestor
 ##############################################################################
 
-class HomeGestor(ListView, LoginRequiredMixin, UserPassesTestMixin):
+class HomeGestor(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Room
     context_object_name = 'rooms'
     template_name = 'magatzem/home-gestor.html'
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
+        self.queryset = self.get_queryset()
         return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
@@ -346,8 +353,8 @@ class HomeGestor(ListView, LoginRequiredMixin, UserPassesTestMixin):
 ##############################################################################
 
 # TODO
-#Mirar que collons fa aixo i perque el url es tal com es ?¿WTF?¿
-class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
+# Mirar que collons fa aixo i perque el url es tal com es ?¿WTF?¿
+class ContainerSelectionList(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Room
     context_object_name = 'container_list'
     slug_field = "room"
@@ -355,8 +362,10 @@ class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
     template_name = 'magatzem/select-container.html'
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
+        self.queryset = self.get_queryset()
         return is_allowed(self.request.user, self.roles)
 
     def get_queryset(self):
@@ -382,7 +391,6 @@ def manifest_sortida_form(request):
     return render(request, 'magatzem/manifest-form.html', {'title': 'Sortida Productes', 'entrada': False})
 
 
-@csrf_exempt
 def entrada_producte(request):
     # if 'ref' in request.POST:
     entry_handler = EntryHandler()
@@ -425,10 +433,12 @@ def entrada_producte(request):
             return HttpResponseRedirect(reverse_lazy('entrada-manifest'))
             """
 
+
 def _check_already_in_system_manifest(transport):
     if Manifest.objects.filter(ref=transport['ref']):
         return True
     return False
+
 
 def _generar_manifest_entrada(transport):
     #for transport in transports:
