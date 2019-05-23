@@ -83,7 +83,7 @@ class RoomDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 # arreglar el form
 class UpdateClimaRoom(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Room
-    fields = ['room_status', 'hum', 'temp']
+    fields = ['hum', 'temp']
     template_name = 'magatzem/task-tecnic-clima-room.html'
     context_object_name = 'room'
     # permission variable
@@ -95,13 +95,39 @@ class UpdateClimaRoom(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return is_allowed(self.request.user, self.roles)
 
     def form_valid(self, form):
-        TaskOperari.objects.create(room=self.object,
+        TaskTecnic.objects.create(room=self.object,
                                    description="Ajuste clima",
                                    task_status=1,
                                    task_type=2,
-                                   detail=str(form.instance.hum) + str(form.instance.temp))
+                                   detail='Humitat: ' + str(form.instance.hum) + ', Temperatura: ' + str(form.instance.temp))
         return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('list-room')
+
+class OpenRoom(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Room
+    fields = ['room_status', 'hum', 'temp']
+    template_name = 'magatzem/task-tecnic-open.html'
+    context_object_name = 'room'
+    # permission variable
+    roles = ('Gestor',)
+    raise_exception = True
+
+    def test_func(self):
+        self.object = self.get_object()
+        return is_allowed(self.request.user, self.roles)
+
+    def form_valid(self, form):
+        TaskTecnic.objects.create(room=self.object,
+                                   description="Obrir Sala",
+                                   task_status=1,
+                                   task_type=2,
+                                   detail='Obrir la sala amb : Humitat: ' + str(form.instance.hum) + ', Temperatura: ' + str(form.instance.temp))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('list-room')
 
 # Notification related functions
 ##############################################################################

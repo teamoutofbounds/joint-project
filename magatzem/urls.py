@@ -3,7 +3,7 @@
 from django.urls import path
 from magatzem.views import RoomList, RoomDetail, NotificationsOperarisListView, HomeGestor, TaskPanelOperaris, \
     ContainerSelectionList, ConfirmNotification, TaskPanelTecnics, EditTecnicTask, DeleteTecnicTask, \
-    NotificationsTecnicsListView, ConfirmNotificationTecnics, UpdateClimaRoom
+    NotificationsTecnicsListView, ConfirmNotificationTecnics, UpdateClimaRoom, OpenRoom
 from . import views
 
 urlpatterns = [
@@ -14,6 +14,7 @@ urlpatterns = [
     path('gestor/sales/<int:pk>/<room>/', ContainerSelectionList.as_view(), name='product-room'),
     # urls gestor tasques operaris
     path('gestor/tasques_operaris/', TaskPanelOperaris.as_view(), name='panel-operaris'),
+
     path('gestor/tasques_operaris/<int:pk>/edit/', EditTecnicTask.as_view(), name='task-tecnic-edit'),
     # urls gestor tasques tecnics
     path('gestor/tasques_tecnics/', TaskPanelTecnics.as_view(), name='panel-tecnics'),
@@ -35,6 +36,7 @@ urlpatterns = [
 
     #urls generar tasques
     path('gestor/sales/<int:pk>/clima', UpdateClimaRoom.as_view(), name='update-clima'),
+    path('gestor/sales/<int:pk>/obrir', OpenRoom.as_view(), name='open-room'),
 
     # urls mocks
     # path('gestor/entrades/new/', views.exemple_mock, name='new-arrival'),

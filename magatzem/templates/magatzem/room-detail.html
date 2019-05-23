@@ -118,14 +118,15 @@
         </div>
       </div>
 
+      {% if room.room_status == 1 %}
       <div class="accions mt-2">
         <a class="btn btn-primary d-flex justify-content-center" href="{% url 'product-room' room.pk room.name %}">Traslladar</a>
       </div>
       <div class="open mt-2">
-        {% if room.room_status == 0 %}
-            <a class="btn btn-primary d-flex justify-content-center" href="{% url 'update-clima' room.id %}">Obrir Sala</a>
-        {% endif %}
+            <a class="btn btn-primary d-flex justify-content-center" href="{% url 'update-clima' room.id %}">Cambiar temperatura</a>
+
       </div>
+      {% endif %}
       <!-- TASK LIST -->
       <div class="card-header mt-4">
         <h2>Tasques</h2>
