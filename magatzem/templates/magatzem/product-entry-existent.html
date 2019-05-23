@@ -1,0 +1,9 @@
+{% extends 'magatzem/manifest-form.html' %}
+{% load static from staticfiles %}
+
+
+{% block error %}
+      <div class ="alert alert-danger" role="alert" style="text-align: center;">
+        Error 001: Aquesta referència ja es troba introduïda en el sistema
+      </div>
+{% endblock error %}
