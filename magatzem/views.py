@@ -53,6 +53,7 @@ class RoomList(LoginRequiredMixin, UserPassesTestMixin, ListView):
         context['title'] = 'Sales'
         return context
 
+
 #TODO
 # Afegir margin top al breadcrum (HTML)
 # Afegir botó per canviar la temperatura de la sala i humitat quan està oberta
@@ -63,6 +64,7 @@ class RoomDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     context_object_name = 'room'
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
         self.object = self.get_object()
@@ -80,15 +82,17 @@ class RoomDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
 # TODO
 # arreglar el form
-class UpdateClimaRoom(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+class UpdateClimaRoom(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Room
     fields = ['room_status', 'hum', 'temp']
     template_name = 'magatzem/task-tecnic-clima-room.html'
     context_object_name = 'room'
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
+        self.object = self.get_object()
         return is_allowed(self.request.user, self.roles)
 
     def form_valid(self, form):
@@ -106,15 +110,17 @@ class UpdateClimaRoom(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
 #TODO
 # Falta boto X (Joan)
 # TaskOperari object is not iterable ARREGLAR
-class NotificationsOperarisListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
+class NotificationsOperarisListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = TaskOperari
     context_object_name = 'task_list'
     template_name = 'magatzem/notification-operari.html'
     new_task = False
     # permission variable
     roles = ('Operari',)
+    raise_exception = True
 
     def test_func(self):
+        self.queryset = self.get_queryset()
         return is_allowed(self.request.user, self.roles)
 
     def get_queryset(self):
@@ -133,14 +139,16 @@ class NotificationsOperarisListView(ListView, LoginRequiredMixin, UserPassesTest
         return context
 
 
-class NotificationsTecnicsListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
+class NotificationsTecnicsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = TaskTecnic
     context_object_name = 'task_list'
-    template_name = 'magatzem/notification- .html'
+    template_name = 'magatzem/notification-tecnic.html'
     # permission variable
     roles = ('Tecnic',)
+    raise_exception = True
 
     def test_func(self):
+        self.queryset = self.get_queryset()
         return is_allowed(self.request.user, self.roles)
 
     def get_queryset(self):
@@ -153,12 +161,20 @@ class NotificationsTecnicsListView(ListView, LoginRequiredMixin, UserPassesTestM
         context['title'] = 'Home'
         return context
 
+
 #TODO
 # Quan s'arregli l ode dalt comprovar si va (HAURIA DE FUNCIONAR)
-class ConfirmNotification(UpdateView):
+class ConfirmNotification(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskOperari
     template_name = 'magatzem/confirm-notification.html'
     fields = {}
+    # permission variable
+    roles = ('Operari',)
+    raise_exception = True
+
+    def test_func(self):
+        self.object = self.get_object()
+        return is_allowed(self.request.user, self.roles)
 
     def form_valid(self, form):
         if self.request.POST['confirm'] == "SI":
@@ -171,10 +187,17 @@ class ConfirmNotification(UpdateView):
         return reverse_lazy('operaris-notificacions')
 
 
-class ConfirmNotificationTecnics(UpdateView):
+class ConfirmNotificationTecnics(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskTecnic
     template_name = 'magatzem/confirm-notification-tecnics.html'
     fields = {}
+    # permission variable
+    roles = ('Tecnic',)
+    raise_exception = True
+
+    def test_func(self):
+        self.object = self.get_object()
+        return is_allowed(self.request.user, self.roles)
 
     def form_valid(self, form):
         if self.request.POST['confirm'] == "SI":
@@ -192,13 +215,15 @@ class ConfirmNotificationTecnics(UpdateView):
 
 #TODO
 
-class TaskPanelOperaris(ListView, LoginRequiredMixin, UserPassesTestMixin):
+class TaskPanelOperaris(LoginRequiredMixin, UserPassesTestMixin, ListView):
     queryset = TaskOperari.objects.filter(date=date.today())
     template_name = 'magatzem/tasks-list-operari.html'
     # permission variable
     roles = ('Gestor', 'CEO')
+    raise_exception = True
 
     def test_func(self):
+        self.queryset = self.get_queryset()
         return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
@@ -214,15 +239,18 @@ class TaskPanelOperaris(ListView, LoginRequiredMixin, UserPassesTestMixin):
         context['title'] = 'Tasques Operaris'
         return context
 
+
 #TODO
 # Canviar elbotó que et porta a aquesta vista perque porta al mock en comptes de aqui
 # Arreglar per a que surti el nom de sala
-class TaskPanelTecnics(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
+class TaskPanelTecnics(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = 'magatzem/tasks-list-tecnic.html'
     # permission variable
     roles = ('Gestor', 'CEO')
+    raise_exception = True
 
     def test_func(self):
+        self.object = self.get_object()     # TODO no s'ha comprovat si funciona això
         return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
