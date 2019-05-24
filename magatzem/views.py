@@ -29,6 +29,10 @@ def is_allowed(user, roles):
     return user.groups.filter(name__in=roles).exists()
 
 
+def error_403(request, exception):
+    return render(request, 'magatzem/403.html')
+
+
 # Rooms related functions
 ##############################################################################
 

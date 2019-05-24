@@ -15,14 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth import views as auth_views
-from django.utils.functional import curry
-from django.views.defaults import permission_denied
 
-handler403 = curry(permission_denied, template_name='403.html')
+from magatzem.views import error_403
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
 
 ]
+
+handler403 = error_403
