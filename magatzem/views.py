@@ -249,7 +249,6 @@ class TaskPanelTecnics(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     raise_exception = True
 
     def test_func(self):
-        self.object = self.get_object()     # TODO no s'ha comprovat si funciona això
         return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
@@ -267,8 +266,8 @@ class TaskPanelTecnics(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 # Falta linkejar el boto a aquesta vista
 class EditTecnicTask(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskTecnic
-    fields = ['task_type', 'room', 'task_type', 'detail']
-    template_name = 'magatzem/tasks-tecnic-edit.html'
+    fields = ['task_type', 'room', 'detail']
+    template_name = 'magatzem/task-tecnic-edit.html'
 
     # permission variable
     roles = ('Gestor',)
@@ -281,12 +280,13 @@ class EditTecnicTask(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_task_info(self):
         return self.object
 
+
 #TODO
 # Falta linkejar el boto a aquesta vista
 class EditOperariTask(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskTecnic
     fields = ['user']
-    template_name = 'magatzem/tasks-list-tecnic.html'
+    template_name = 'magatzem/task-operari-edit.html'
     success_url = reverse_lazy('panel-tecnics')
 
     # permission variable
@@ -305,7 +305,7 @@ class EditOperariTask(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 # Falta linkejar el boto a aquesta vista
 class DeleteTecnicTask(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = TaskTecnic
-    template_name = 'magatzem/tasks-tecnic-confirm-delete.html'
+    template_name = 'magatzem/task-tecnic-confirm-delete.html'
     success_url = reverse_lazy('panel-tecnics')
 
     # permission variable
