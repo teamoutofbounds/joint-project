@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, TemplateView
 from django.db.models import Q
 
-from magatzem.models import TaskTecnic, ContainerGroup, Manifest, ManifestContainer
+from magatzem.models import TaskTecnic, ContainerGroup, Manifest, ManifestContainer, ManifestEntrance
 
 from magatzem.models.room import Room
 from magatzem.models.task_operari import TaskOperari
@@ -12,7 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render
 
-
+from tools.algorithms.sala_selector import RoomHandler
 from tools.api.ManifestCreator import \
     ApiManifestEntraceCreator, \
     ApiManifestDepartureCreator
@@ -427,34 +427,10 @@ class EntradaProducte(TemplateView):
     template_name = 'magatzem/product-entry.html'
 
     def post(self, request):
-        if 'register' in request.POST: # generates tasks if "register" is pressed
-            self._generate_optimized_tasks(self, request)
-        else: # shows the manifest, first time entering the view
-            self._render_show_manifest_view(self, request)
+        return self._render_show_manifest_view(request)
 
-    def _generate_optimized_tasks(self, request):
-        ####################################################
-        # Obtains the containers from the manifest
-        ###################################################
-        manifest = Manifest.objects.get(ref=request.POST['register'])
-        m_containers = ManifestContainer.objects.filter(id_manifest=manifest)
-        moll = Room.objects.get(name='Moll')
-        container_groups_list= []
-        for m_container in m_containers:
-            container_groups_list.append(ContainerGroup.objects.get(sla_id=m_container.id_SLA,
-                                                                    id_product=m_container.id_product,
-                                                                    id_room = moll))
-        #####################################################
-        # Generate variables for the optimizer
-        #####################################################
-        rooms = Room.objects.all()
-        optimizer_rooms = []
-        # TODO
-        # Falta afegir en un dictionary les sales que compleixen les condicions de temperatura i pasar productes 1 a 1
-        # aixo implica mirarse tots els sla de cada producte i tal i fer-ho
-        # almost there lmao
-
-    def _render_show_manifest_view(self, request):
+    @staticmethod
+    def _render_show_manifest_view(request):
         entry_handler = EntryHandler()
         context = {}
         context['title'] = 'Entrada Productes'
@@ -469,6 +445,64 @@ class EntradaProducte(TemplateView):
                 _generar_manifest_entrada(transport)
                 context['container'] = transport
         return render(request, 'magatzem/product-entry.html', context)
+
+class CreateAutomatedTasks(DetailView):
+    roles = ('Gestor', 'CEO')
+    template_name = 'magatzem/automated-tasks.html'
+    model = ManifestEntrance
+    context_object_name = 'manifest'
+    # permission variable
+    raise_exception = True
+
+    def get_object(self):
+        object = get_object_or_404(Manifest, ref=self.kwargs['pk'])
+        return object
+
+    def get_context_data(self, **kwargs):
+        ####################################################
+        # Obtains the containers from the manifest
+        ###################################################
+        super().get_context_data()
+        m_containers = ManifestContainer.objects.filter(id_manifest=self.object)
+        moll = Room.objects.get(name='Moll')
+
+        container_groups_list = []
+        for m_container in m_containers:
+            container_groups_list.append(ContainerGroup.objects.get(sla_id=m_container.id_SLA,
+                                                                    id_product=m_container.id_product,
+                                                                    id_room=moll))
+        #####################################################
+        # Generate variables for the optimizer
+        #####################################################
+        rooms = Room.objects.all()
+        optimizer_rooms = []
+        container = {}
+        for c_group in container_groups_list:
+            container = {'qty': c_group.quantity,
+                         'id_product': c_group.id_product}
+            for room in rooms:
+                if _room_is_able(room, c_group.sla):
+                    able_room = {'name': room.name,
+                                 'left_stock': room.limit - room.quantity,
+                                 'new_containers': 0}
+                    optimizer_rooms.append(able_room)
+            optime_task_handler = RoomHandler(container, optimizer_rooms)
+            containers = optime_task_handler.select_containers()
+            print(containers)
+            for container in containers:
+                TaskOperari.objects.create(description="Traslladar",
+                                           task_status=0,
+                                           task_type=0,
+                                           origin_room=moll,
+                                           destination_room=Room.objects.get(name=container['name']),
+                                           containers=c_group)
+
+
+def _room_is_able(room, sla):
+    return sla.temp_min <= room.temp <= sla.temp_max \
+           and sla.hum_min <= room.hum <= sla.hum_max \
+           and room.room_status == 1 \
+           and room.name != "moll"
 
 
 def entrada_producte(request):
@@ -487,31 +521,6 @@ def entrada_producte(request):
             _generar_manifest_entrada(transport)
             context['container'] = transport
     return render(request, 'magatzem/product-entry.html', context)
-    """
-    model = TaskOperari
-    template_name = 'magatzem/product-entry.html'
-    fields = {}
-
-
-
-    def get_context_data(self, **kwargs):
-        context = {}
-        entry_handler = EntryHandler()
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Entrada Productes'
-        transports = entry_handler.generate_entry()
-        print(self.request.POST)
-        # _generar_manifest_entrada(transports)
-        for transport in transports:
-            if transport['ref'] == self.request.POST['ref']:
-                _generar_manifest_entrada(transport)
-                context['container'] = transport
-        return render(request, 'magatzem/product-entry.html', context)
-
-        def form_valid(self, form):
-            print(self.request.POST)
-            return HttpResponseRedirect(reverse_lazy('entrada-manifest'))
-            """
 
 
 def _check_already_in_system_manifest(transport):

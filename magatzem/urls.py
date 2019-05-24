@@ -3,7 +3,8 @@
 from django.urls import path
 from magatzem.views import RoomList, RoomDetail, NotificationsOperarisListView, HomeGestor, TaskPanelOperaris, \
     ContainerSelectionList, ConfirmNotification, TaskPanelTecnics, EditTecnicTask, DeleteTecnicTask, \
-    NotificationsTecnicsListView, ConfirmNotificationTecnics, UpdateClimaRoom, OpenRoom, EntradaProducte
+    NotificationsTecnicsListView, ConfirmNotificationTecnics, UpdateClimaRoom, OpenRoom, EntradaProducte, \
+    CreateAutomatedTasks
 from . import views
 
 urlpatterns = [
@@ -25,6 +26,7 @@ urlpatterns = [
     path('gestor/sortida/', views.manifest_sortida_form, name='sortida-producte'),
     path('gestor/entrada/manifest/', EntradaProducte.as_view(), name='entrada-manifest'),  # hauria de ser /new
     path('gestor/sortida/manifest/', views.sortida_producte, name='sortida-manifest'),  # hauria de ser /new
+    path('gestor/entrada/manifest/confirm/<int:pk>', CreateAutomatedTasks.as_view(), name='automated-tasks'),
     # urls operari
     path('operaris/notificacions/', NotificationsOperarisListView.as_view(), name='operaris-notificacions'),
     path('operaris/notificacions/confirm/<int:pk>/', ConfirmNotification.as_view(), name='confirm-notification'),
