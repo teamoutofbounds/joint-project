@@ -35,7 +35,14 @@
             </p>
           </div>
           <div class="col-sm-5 d-flex flex-column">
+            {% if room.room_status == 1 %}
+            <a href="{% url 'open-room' room.pk %}" class="btn btn-danger mt-auto">Tancar sala</a>
             <a href="{% url 'detail-room' room.pk %}" class="btn btn-primary mt-auto">Mostra sala</a>
+            {% endif %}
+            {% if room.room_status == 0 %}
+            <a href="{% url 'open-room' room.pk %}" class="btn btn-success mt-auto">Obrir sala</a>
+            {% endif %}
+
           </div>
         </div>
       </div>

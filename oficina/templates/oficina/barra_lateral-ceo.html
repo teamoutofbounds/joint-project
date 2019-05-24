@@ -9,20 +9,23 @@
     </div>
 
     <div class="mt-4 mb-5">
-      <div class="scroll-panel-ceo">
+      <div class="scroll-panel-ceo mt-2 mb-5">
         {% if slas %}
         <h6 style="font-weight: 600; color: red; margin-left: 2rem;">Expiren avui</h6>
 
-
         {% for sla in slas %}
         <div class="card border-info mb-2">
-          <div class="card-header bg-transparent border-info">SLA: {{ sla.SLA }}</div>
-          <div class="card-body text-info">
-            <h6 class="card-text mb-1">Data Limit: {{ sla.limit }}</h6>
-            <h6 class="card-text mb-1">Temp Min: {{ sla.temp_min }}</h6>
-            <h6 class="card-text mb-1">Temp Max: {{ sla.temp_max }}</h6>
-            <h6 class="card-text mb-1">Hum Min: {{ sla.hum_min }}</h6>
-            <h6 class="card-text mb-1">Hum Max: {{ sla.hum_max }}</h6>
+          <div class="card-header bg-transparent border-info">
+
+              <div class="row">
+                  <div class="col-md-6">
+                    <p style="text-align: left"><h7 class=" card-text">Producte:</h7> {{ container.product.product_id }}</p>
+                  </div>
+                  <div class="col-md-6">
+                    <p style="text-align: right"><h7 class="card-text">Productor:</h7> {{ container.product.producer_id }}</p>
+                  </div>
+              </div>
+
           </div>
         </div>
         {% endfor %}
