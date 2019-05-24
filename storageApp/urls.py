@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth import views as auth_views
+
+from magatzem.views import error_403
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
+
 ]
+
+handler403 = error_403

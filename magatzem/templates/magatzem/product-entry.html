@@ -7,8 +7,15 @@
 
 {% block content %}
   {% if not container %}
-    <h5 class="my-5">No hi cap comanda amb aquesta referència.</h5>
-    <a class="btn btn-success" href="{% url 'entrada-producte' %}" role="button">Tornar</a>
+    <div class="container" style="margin-top: 5rem">
+      <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6" style="text-align:center">
+          <h5 class="my-5">No hi cap comanda amb aquesta referència.</h5>
+          <a class="btn btn-success" href="{% url 'entrada-producte' %}" role="button">Tornar</a>
+        </div>
+      </div>
+    </div>
   {% else %}
 <div class="table-mrg">
   <div class="col-2"></div>
@@ -72,7 +79,11 @@
   </div>
 </div>
 <div class="float-right">
-  <a class="btn btn-success" href="{% url 'detail-room' 16 %}">Registrar</a>
+  <form action="" method="post">{% csrf_token %}
+    <a class="btn btn-success">
+      <input type="submit" name ="register" value="{{ container.ref }}">
+    </a>
+  </form>
   <a class="btn btn-warning" href="#">Incidència</a>
   <a class="btn btn-danger" href="{% url 'entrada-producte' %}">Cancelar</a>
 </div>

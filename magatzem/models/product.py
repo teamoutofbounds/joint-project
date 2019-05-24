@@ -14,7 +14,6 @@ def validate_name(value):
 
 class Product(models.Model):
     STR_PATTERN = "Producte={} | Productor={}"
-
     product_id = models.CharField(validators=[validate_name], max_length=64)
     producer_id = models.CharField(validators=[validate_name], max_length=64)
 
