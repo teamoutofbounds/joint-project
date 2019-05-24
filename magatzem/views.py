@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, TemplateView
 from django.db.models import Q
 
-from magatzem.models import TaskTecnic, ManifestEntrance, ManifestDeparture, ContainerGroup
+from magatzem.models import TaskTecnic
 
 from magatzem.models.room import Room
 from magatzem.models.task_operari import TaskOperari
@@ -14,7 +14,9 @@ from django.shortcuts import render
 
 
 from tools.algorithms.sala_selector import RoomHandler
-from tools.api.ManifestCreator import ApiManifestCreator
+from tools.api.ManifestCreator import ApiManifestCreator, \
+    ApiManifestEntraceCreator, \
+    ApiManifestDepartureCreator
 from tools.api.product_entry import EntryHandler
 
 from datetime import date
@@ -338,15 +340,17 @@ def entrada_producte(request):
 
 
 def _generar_manifest_entrada(transport):
-    #for transport in transports:
-    creator = ApiManifestCreator(transport['ref'], transport['fromLocation'], None)
+    # for transport in transports:
+    # creator = ApiManifestCreator(transport['ref'], transport['fromLocation'], None)
+    creator = ApiManifestEntraceCreator(transport['ref'], transport['fromLocation'], transport['toLocation'])
     for product in transport['Products']:
         creator._create_entry_manifest(product)
 
 
 def _generar_manifest_sortida(transport):
     # for transport in transports:
-    creator = ApiManifestCreator(transport['ref'], transport['fromLocation'], transport['toLocation'])
+    # creator = ApiManifestCreator(transport['ref'], transport['fromLocation'], transport['toLocation'])
+    creator = ApiManifestDepartureCreator(transport['ref'], transport['toLocation'], transport['toLocation'])
     for product in transport['Products']:
         creator._create_departure_manifest(product)
     return creator.container_list
