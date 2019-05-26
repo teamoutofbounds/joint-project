@@ -462,7 +462,7 @@ class CreateAutomatedTasks(DetailView):
         ####################################################
         # Obtains the containers from the manifest
         ###################################################
-        super().get_context_data()
+        context = super().get_context_data()
         m_containers = ManifestContainer.objects.filter(id_manifest=self.object)
         moll = Room.objects.get(name='Moll')
 
@@ -487,15 +487,18 @@ class CreateAutomatedTasks(DetailView):
                                  'new_containers': 0}
                     optimizer_rooms.append(able_room)
             optime_task_handler = RoomHandler(container, optimizer_rooms)
-            containers = optime_task_handler.select_containers()
-            print(containers)
-            for container in containers:
+            productes_assignats = optime_task_handler.select_containers()
+
+            for prod in productes_assignats:
                 TaskOperari.objects.create(description="Traslladar",
                                            task_status=0,
                                            task_type=0,
                                            origin_room=moll,
-                                           destination_room=Room.objects.get(name=container['name']),
+                                           destination_room=Room.objects.get(name=prod['name']),
                                            containers=c_group)
+
+            context['tasks'] = True if productes_assignats else False
+
 
 
 def _room_is_able(room, sla):

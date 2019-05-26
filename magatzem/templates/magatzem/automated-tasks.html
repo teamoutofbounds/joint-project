@@ -9,7 +9,11 @@
 
 <div class="container">
     <div class="center">
-        <p><h5>S'han generat tasques automàticament.</h5></p>
+        {% if tasks %}
+            <p><h5>S'han generat tasques automàticament.</h5></p>
+        {% else %}
+            <p><h5>No hi ha sales que compleixin les condicions per aquests productes.</h5></p>
+        {% endif %}
         <a class="btn-lg btn-success" href="{% url 'panel-operaris' %}">Veure tasques</a>
     </div>
 
