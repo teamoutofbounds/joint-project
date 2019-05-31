@@ -496,8 +496,8 @@ class CreateAutomatedTasks(DetailView):
                                            origin_room=moll,
                                            destination_room=Room.objects.get(name=prod['name']),
                                            containers=c_group)
-
-            context['tasks'] = True if productes_assignats else False
+            if productes_assignats:
+                context['tasks'] = True
 
 
 
