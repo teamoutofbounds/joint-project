@@ -21,9 +21,9 @@
         <h1>Manifest de Sortida</h1>
       {% endif %}
       {% if entrada %}
-        <form action="{% url 'entrada-manifest' %}" method="POST">
+        <form action="{% url 'entrada-manifest' %}" method="GET">
       {% else %}
-        <form action="{% url 'sortida-manifest' %}" method="POST">
+        <form action="{% url 'sortida-manifest' %}" method="GET">
       {% endif %}
         {% csrf_token %}
         <input type="text"

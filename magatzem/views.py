@@ -426,8 +426,39 @@ class EntradaProducte(TemplateView):
     roles = ('Gestor', 'CEO')
     template_name = 'magatzem/product-entry.html'
 
-    def post(self, request):
-        return self._render_show_manifest_view(request)
+    def get(self, request, *args, **kwargs):
+        context = {}
+        context['title'] = 'Entrada Productes'
+
+        entry_handler = EntryHandler()
+        transports = entry_handler.generate_entry()
+
+        for transport in transports:
+            if transport['ref'] == request.GET['ref']:
+                if _check_already_in_system_manifest(transport):
+                    context['ref'] = transport['ref']
+                    context['entrada'] = True
+                    return render(request, 'magatzem/product-entry-existent.html', context)
+                context['container'] = transport
+        return render(request, 'magatzem/product-entry.html', context)
+
+    def post(self, request, *args, **kwargs):
+        context = {}
+        context['title'] = 'Entrada Productes'
+
+        entry_handler = EntryHandler()
+        transports = entry_handler.generate_entry()
+
+        for transport in transports:
+            if transport['ref'] == request.POST['ref']:
+                if _check_already_in_system_manifest(transport):
+                    context['ref'] = transport['ref']
+                    context['entrada'] = True
+                    return render(request, 'magatzem/product-entry-existent.html', context)
+                _generar_manifest_entrada(transport)
+                context['container'] = transport
+        return render(request, 'magatzem/product-entry.html', context)
+
 
     @staticmethod
     def _render_show_manifest_view(request):

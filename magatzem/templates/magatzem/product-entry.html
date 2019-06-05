@@ -79,10 +79,28 @@
   </div>
 </div>
 <div class="float-right">
+  <form action="{% url 'entrada-manifest' %}" method="POST">
+  {% csrf_token %}
+    <input type="text"
+           name="ref"
+           placeholder="Num. referència"
+           value="{{ container.ref }}"
+           style="margin-top: 2rem; display: none">
+    <div class="row">
+      <button class="btn btn-success"
+            type="submit"
+            style="margin-top: 2rem">Registrar</button>
+      <a class="btn btn-warning" href="#">Incidència</a>
+      <a class="btn btn-danger" href="{% url 'entrada-producte' %}">Cancelar</a>
+    </div>
+  </form>
+  <!--
   <a class="btn btn-success" href="{% url 'automated-tasks' container.ref %}">Registrar</a>
-  <a class="btn btn-warning" href="#">Incidència</a>
-  <a class="btn btn-danger" href="{% url 'entrada-producte' %}">Cancelar</a>
+  -->
+
 </div>
+
+
   {% endif %}
 
 {% endblock content %}
