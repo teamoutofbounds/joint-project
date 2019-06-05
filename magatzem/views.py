@@ -502,7 +502,50 @@ def sortida_producte(request):
                 context['containers'] = containers
                 context['ref'] = transport['ref']
                 context['toLocation'] = transport['toLocation']
-    return render(request, 'magatzem/product-leave.html', context)
+        return render(request, 'magatzem/product-leave.html', context)
+
+
+class SortidaProducte(TemplateView):
+    roles = ('Gestor', 'CEO')
+    template_name = 'magatzem/product-leave.html'
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        context['title'] = 'Sortida Productes'
+        context['is_valid_ref'] = False
+
+        entry_handler = EntryHandler()
+        transports = entry_handler.generate_entry()
+
+        for transport in transports:
+            if transport['ref'] == request.GET['ref']:
+                if _check_already_in_system_manifest(transport):
+                    context['ref'] = transport['ref']
+                    context['entrada'] = False
+                    return render(request, 'magatzem/product-entry-existent.html', context)
+                context['container'] = transport
+                context['is_valid_ref'] = True
+        return render(request, 'magatzem/product-leave.html', context)
+
+    def post(self, request, *args, **kwargs):
+        context = {}
+        context['title'] = 'Sortida Productes'
+        context['is_valid_ref'] = False
+
+        entry_handler = EntryHandler()
+        transports = entry_handler.generate_entry()
+
+        for transport in transports:
+            if transport['ref'] == request.POST['ref']:
+                if _check_already_in_system_manifest(transport):
+                    context['ref'] = transport['ref']
+                    context['entrada'] = False
+                    return render(request, 'magatzem/product-entry-existent.html', context)
+                context['container'] = transport
+                context['is_valid_ref'] = True
+                containers = _generar_manifest_sortida(transport)
+                context['containers'] = containers
+        return render(request, 'magatzem/product-leave.html', context)
 
 
 # Generar tasques
