@@ -460,24 +460,6 @@ class EntradaProducte(TemplateView):
         return redirect('automated-tasks', request.POST['ref'])
 
 
-def entrada_producte(request):
-    # if 'ref' in request.POST:
-    entry_handler = EntryHandler()
-    context = {}
-    context['title'] = 'Entrada Productes'
-    transports = entry_handler.generate_entry()
-    # _generar_manifest_entrada(transports)
-    for transport in transports:
-        if transport['ref'] == request.POST['ref']:
-            if _check_already_in_system_manifest(transport):
-                context['ref'] = transport['ref']
-                context['entrada'] = True
-                return render(request, 'magatzem/product-entry-existent.html', context)
-            _generar_manifest_entrada(transport)
-            context['container'] = transport
-    return render(request, 'magatzem/product-entry.html', context)
-
-
 def _check_already_in_system_manifest(transport):
     if Manifest.objects.filter(ref=transport['ref']):
         return True
