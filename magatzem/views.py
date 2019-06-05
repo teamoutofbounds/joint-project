@@ -446,67 +446,6 @@ class EntradaProducte(TemplateView):
                 context['container'] = transport
         return render(request, 'magatzem/product-entry.html', context)
 
-class CreateAutomatedTasks(DetailView):
-    roles = ('Gestor', 'CEO')
-    template_name = 'magatzem/automated-tasks.html'
-    model = ManifestEntrance
-    context_object_name = 'manifest'
-    # permission variable
-    raise_exception = True
-
-    def get_object(self):
-        object = get_object_or_404(Manifest, ref=self.kwargs['pk'])
-        return object
-
-    def get_context_data(self, **kwargs):
-        ####################################################
-        # Obtains the containers from the manifest
-        ###################################################
-        context = super().get_context_data()
-        m_containers = ManifestContainer.objects.filter(id_manifest=self.object)
-        moll = Room.objects.get(name='Moll')
-
-        container_groups_list = []
-        for m_container in m_containers:
-            container_groups_list.append(ContainerGroup.objects.get(sla_id=m_container.id_SLA,
-                                                                    id_product=m_container.id_product,
-                                                                    id_room=moll))
-        #####################################################
-        # Generate variables for the optimizer
-        #####################################################
-        rooms = Room.objects.all()
-        optimizer_rooms = []
-        container = {}
-        for c_group in container_groups_list:
-            container = {'qty': c_group.quantity,
-                         'id_product': c_group.id_product}
-            for room in rooms:
-                if _room_is_able(room, c_group.sla):
-                    able_room = {'name': room.name,
-                                 'left_stock': room.limit - room.quantity,
-                                 'new_containers': 0}
-                    optimizer_rooms.append(able_room)
-            optime_task_handler = RoomHandler(container, optimizer_rooms)
-            productes_assignats = optime_task_handler.select_containers()
-
-            for prod in productes_assignats:
-                TaskOperari.objects.create(description="Traslladar",
-                                           task_status=0,
-                                           task_type=0,
-                                           origin_room=moll,
-                                           destination_room=Room.objects.get(name=prod['name']),
-                                           containers=c_group)
-            if productes_assignats:
-                context['tasks'] = True
-
-
-
-def _room_is_able(room, sla):
-    return sla.temp_min <= room.temp <= sla.temp_max \
-           and sla.hum_min <= room.hum <= sla.hum_max \
-           and room.room_status == 1 \
-           and room.name != "Moll"
-
 
 def entrada_producte(request):
     # if 'ref' in request.POST:
@@ -569,6 +508,69 @@ def sortida_producte(request):
                 context['ref'] = transport['ref']
                 context['toLocation'] = transport['toLocation']
     return render(request, 'magatzem/product-leave.html', context)
+
+
+# Generar tasques
+##############################################################################
+class CreateAutomatedTasks(DetailView):
+    roles = ('Gestor', 'CEO')
+    template_name = 'magatzem/automated-tasks.html'
+    model = ManifestEntrance
+    context_object_name = 'manifest'
+    # permission variable
+    raise_exception = True
+
+    def get_object(self):
+        object = get_object_or_404(Manifest, ref=self.kwargs['pk'])
+        return object
+
+    def get_context_data(self, **kwargs):
+        ####################################################
+        # Obtains the containers from the manifest
+        ###################################################
+        context = super().get_context_data()
+        m_containers = ManifestContainer.objects.filter(id_manifest=self.object)
+        moll = Room.objects.get(name='Moll')
+
+        container_groups_list = []
+        for m_container in m_containers:
+            container_groups_list.append(ContainerGroup.objects.get(sla_id=m_container.id_SLA,
+                                                                    id_product=m_container.id_product,
+                                                                    id_room=moll))
+        #####################################################
+        # Generate variables for the optimizer
+        #####################################################
+        rooms = Room.objects.all()
+        optimizer_rooms = []
+        container = {}
+        for c_group in container_groups_list:
+            container = {'qty': c_group.quantity,
+                         'id_product': c_group.id_product}
+            for room in rooms:
+                if _room_is_able(room, c_group.sla):
+                    able_room = {'name': room.name,
+                                 'left_stock': room.limit - room.quantity,
+                                 'new_containers': 0}
+                    optimizer_rooms.append(able_room)
+            optime_task_handler = RoomHandler(container, optimizer_rooms)
+            productes_assignats = optime_task_handler.select_containers()
+
+            for prod in productes_assignats:
+                TaskOperari.objects.create(description="Traslladar",
+                                           task_status=0,
+                                           task_type=0,
+                                           origin_room=moll,
+                                           destination_room=Room.objects.get(name=prod['name']),
+                                           containers=c_group)
+            if productes_assignats:
+                context['tasks'] = True
+
+
+def _room_is_able(room, sla):
+    return sla.temp_min <= room.temp <= sla.temp_max \
+           and sla.hum_min <= room.hum <= sla.hum_max \
+           and room.room_status == 1 \
+           and room.name != "Moll"
 
 
 # Mock functions
