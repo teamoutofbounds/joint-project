@@ -446,6 +446,7 @@ class EntradaProducte(TemplateView):
                 context['container'] = transport
         return render(request, 'magatzem/product-entry.html', context)
 
+
 class CreateAutomatedTasks(DetailView):
     roles = ('Gestor', 'CEO')
     template_name = 'magatzem/automated-tasks.html'
@@ -498,7 +499,6 @@ class CreateAutomatedTasks(DetailView):
                                            containers=c_group)
             if productes_assignats:
                 context['tasks'] = True
-
 
 
 def _room_is_able(room, sla):
