@@ -6,7 +6,7 @@ from tools.algorithms.sala_selector import RoomHandler
 class TestSalaSelector(TestCase):
 
 	def setUp(self):
-		self.container = {'temp_min': 15, 'temp_max': 25, 'humidity_max': 10, 'humidity_min': 60, 'quantity': 20}
+		self.container = {'temp_min': 15, 'temp_max': 25, 'humidity_max': 10, 'humidity_min': 60, 'qty': 20}
 
 	def test_unique_room(self):
 		sales = [{'stock_maxim': 100, 'left_stock': 5, 'temperatura': 20, 'humidity': 40},
