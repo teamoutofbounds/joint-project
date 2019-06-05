@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, TemplateView
 from django.db.models import Q
@@ -457,25 +457,7 @@ class EntradaProducte(TemplateView):
                     return render(request, 'magatzem/product-entry-existent.html', context)
                 _generar_manifest_entrada(transport)
                 context['container'] = transport
-        return render(request, 'magatzem/product-entry.html', context)
-
-
-    @staticmethod
-    def _render_show_manifest_view(request):
-        entry_handler = EntryHandler()
-        context = {}
-        context['title'] = 'Entrada Productes'
-        transports = entry_handler.generate_entry()
-        # _generar_manifest_entrada(transports)
-        for transport in transports:
-            if transport['ref'] == request.POST['ref']:
-                if _check_already_in_system_manifest(transport):
-                    context['ref'] = transport['ref']
-                    context['entrada'] = True
-                    return render(request, 'magatzem/product-entry-existent.html', context)
-                _generar_manifest_entrada(transport)
-                context['container'] = transport
-        return render(request, 'magatzem/product-entry.html', context)
+        return redirect('automated-tasks', request.POST['ref'])
 
 
 def entrada_producte(request):
