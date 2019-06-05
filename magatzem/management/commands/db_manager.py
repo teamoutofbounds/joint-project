@@ -3,7 +3,7 @@ import re
 from django.core.management.base import BaseCommand
 # from magatzem.models import Container, Room, Task
 from magatzem.models import Room, Product, SLA, ContainerGroup
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 
 container_id = 0
 
@@ -13,6 +13,11 @@ class Command(BaseCommand):
         make_database()
         Group.objects.get_or_create(name='Gestor')
         Group.objects.get_or_create(name='Operari')
+        Group.objects.get_or_create(name='Tecnic')
+        Group.objects.get_or_create(name='CEO')
+        group = Group.objects.get(name='Gestor')
+        user = User.objects.get(username='admin')
+        user.groups.add(group)
 
 
 def make_database():
