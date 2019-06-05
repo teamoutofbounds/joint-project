@@ -56,8 +56,9 @@ class ApiManifestCreator(object):
 
         self.select_departure_containers(container_group, _product, product['qty'])
 
+
     def select_departure_containers(self, container_group, prod_obj, qty):
-        print(container_group)
+
         for container in container_group:
             if container.state == 1:
                 continue
@@ -95,3 +96,64 @@ class ApiManifestDepartureCreator(ApiManifestCreator):
         ApiManifestCreator.__init__(self, producer_id, location)
         ManifestDeparture.objects.get_or_create(ref=ref, destination=location)
         self.manifest = ManifestDeparture.objects.get(ref=ref)
+
+
+class CheckProducts:
+
+    def __init__(self, producer_id):
+        self.producer_id = producer_id
+        self.container_list = []
+
+    def check_departure_manifest(self, product):
+        _product = Product.objects.get(product_id=product['name'],
+                                       producer_id=self.producer_id)
+
+        container_group = \
+            ContainerGroup.objects.filter(id_product=_product) \
+                .exclude(state=1) \
+                .order_by('sla_id', 'quantity')
+
+        self.check_departure_containers(container_group, product['qty'])
+
+    def check_departure_containers(self, container_group, qty):
+
+        for container in container_group:
+            if container.state == 1:
+                continue
+            if container.quantity < qty:
+                qty -= container.quantity
+                self.container_list.append(
+                    [
+                        container.id_product.product_id,
+                        container.quatity,
+                        container.sla.temp_min,
+                        container.sla.temp_max,
+                        container.sla.hum_min,
+                        container.sla.hum_max
+                    ]
+                )
+
+            elif container.quantity > qty:
+                container.quantity -= qty
+                self.container_list.append(
+                    [
+                        container.id_product.product_id,
+                        container.quatity,
+                        container.sla.temp_min,
+                        container.sla.temp_max,
+                        container.sla.hum_min,
+                        container.sla.hum_max
+                    ]
+                )
+            else:
+                self.container_list.append(
+                    [
+                        container.id_product.product_id,
+                        container.quantity,
+                        container.sla.temp_min,
+                        container.sla.temp_max,
+                        container.sla.hum_min,
+                        container.sla.hum_max
+                    ]
+                )
+                break

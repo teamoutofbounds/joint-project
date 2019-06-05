@@ -483,6 +483,14 @@ def _generar_manifest_sortida(transport):
     return creator.container_list
 
 
+def _check_for_manifest_sortida(transport):
+    from tools.api.ManifestCreator import CheckProducts
+    checker = CheckProducts(transport['toLocation'])
+    for product in transport['Products']:
+        checker.check_departure_manifest(product)
+    return checker.container_list
+
+
 def sortida_producte(request):
     if 'ref' in request.POST:
         entry_handler = EntryHandler()
@@ -525,6 +533,8 @@ class SortidaProducte(TemplateView):
                     return render(request, 'magatzem/product-entry-existent.html', context)
                 context['container'] = transport
                 context['is_valid_ref'] = True
+                containers = _check_for_manifest_sortida(transport)
+                context['containers'] = containers
         return render(request, 'magatzem/product-leave.html', context)
 
     def post(self, request, *args, **kwargs):
