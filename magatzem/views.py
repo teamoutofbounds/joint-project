@@ -505,7 +505,7 @@ def _room_is_able(room, sla):
     return sla.temp_min <= room.temp <= sla.temp_max \
            and sla.hum_min <= room.hum <= sla.hum_max \
            and room.room_status == 1 \
-           and room.name != "moll"
+           and room.name != "Moll"
 
 
 def entrada_producte(request):
