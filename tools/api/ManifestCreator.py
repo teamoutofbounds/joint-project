@@ -103,10 +103,14 @@ class CheckProducts:
     def __init__(self, producer_id):
         self.producer_id = producer_id
         self.container_list = []
+        self.tmp_containers = []
+        self.completed = True
 
     def check_departure_manifest(self, product):
         _product = Product.objects.get(product_id=product['name'],
                                        producer_id=self.producer_id)
+        if not self.completed:
+            return
 
         container_group = \
             ContainerGroup.objects.filter(id_product=_product) \
@@ -122,38 +126,55 @@ class CheckProducts:
                 continue
             if container.quantity < qty:
                 qty -= container.quantity
-                self.container_list.append(
-                    [
-                        container.id_product.product_id,
-                        container.quatity,
-                        container.sla.temp_min,
-                        container.sla.temp_max,
-                        container.sla.hum_min,
-                        container.sla.hum_max
-                    ]
-                )
-
+                self.add_container(container, container.quantity)
             elif container.quantity > qty:
                 container.quantity -= qty
-                self.container_list.append(
-                    [
-                        container.id_product.product_id,
-                        container.quatity,
-                        container.sla.temp_min,
-                        container.sla.temp_max,
-                        container.sla.hum_min,
-                        container.sla.hum_max
-                    ]
-                )
+                self.add_container(container, qty)
+                qty = 0
             else:
-                self.container_list.append(
-                    [
-                        container.id_product.product_id,
-                        container.quantity,
-                        container.sla.temp_min,
-                        container.sla.temp_max,
-                        container.sla.hum_min,
-                        container.sla.hum_max
-                    ]
-                )
+                qty = 0
+                self.add_container(container, container.quantity)
                 break
+
+        self.check_completed(qty)
+
+    def check_completed(self, qty):
+        if qty != 0:
+            self.completed = False
+            self.container_list = []
+        else:
+            self.merge_containers()
+
+    def merge_containers(self):
+        if not self.tmp_containers:
+            return
+        new_quantity = 0
+        for cont in self.tmp_containers:
+            new_quantity += cont[1]
+
+        self.add_regrouped_container(new_quantity)
+        self.tmp_containers = []
+
+    def add_container(self, container, quantity):
+        self.container_list.append(
+            [
+                container.id_product.product_id,
+                quantity,
+                container.sla.temp_min,
+                container.sla.temp_max,
+                container.sla.hum_min,
+                container.sla.hum_max
+            ]
+        )
+
+    def add_regrouped_container(self, quantity):
+        self.container_list.append(
+            [
+                self.tmp_containers[0][0],
+                quantity,
+                self.tmp_containers[0][2],
+                self.tmp_containers[0][3],
+                self.tmp_containers[0][4],
+                self.tmp_containers[0][5]
+            ]
+        )
