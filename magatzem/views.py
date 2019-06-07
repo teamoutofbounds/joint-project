@@ -36,8 +36,6 @@ def error_403(request, exception):
 # Rooms related functions
 ##############################################################################
 
-#TODO
-# Canviar el mostrar sala per obrir sala si està tancada (HTML)
 class RoomList(LoginRequiredMixin, UserPassesTestMixin, ListView):
     # permission variable
     roles = ('Gestor', 'CEO',)
@@ -57,10 +55,6 @@ class RoomList(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return context
 
 
-#TODO
-# Afegir margin top al breadcrum (HTML)
-# Afegir botó per canviar la temperatura de la sala i humitat quan està oberta
-# Quan està tancada no pot haver el boto de modificar ni obrir (tot i que no hauries de poder entrar)
 class RoomDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Room
     template_name = 'magatzem/room-detail.html'
@@ -83,8 +77,6 @@ class RoomDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
         return context
 
 
-# TODO
-# arreglar el form
 class UpdateClimaRoom(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Room
     fields = ['hum', 'temp']
@@ -136,10 +128,6 @@ class OpenRoom(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 # Notification related functions
 ##############################################################################
-
-#TODO
-# Falta boto X (Joan)
-# TaskOperari object is not iterable ARREGLAR
 
 
 class NotificationsOperarisListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -194,8 +182,6 @@ class NotificationsTecnicsListView(LoginRequiredMixin, UserPassesTestMixin, List
         return context
 
 
-#TODO
-# Quan s'arregli l ode dalt comprovar si va (HAURIA DE FUNCIONAR)
 class ConfirmNotification(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskOperari
     template_name = 'magatzem/confirm-notification.html'
@@ -245,7 +231,6 @@ class ConfirmNotificationTecnics(LoginRequiredMixin, UserPassesTestMixin, Update
 # Task Panels related functions
 ##############################################################################
 
-#TODO
 
 class TaskPanelOperaris(LoginRequiredMixin, UserPassesTestMixin, ListView):
     queryset = TaskOperari.objects.filter(date=date.today())
@@ -272,9 +257,6 @@ class TaskPanelOperaris(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return context
 
 
-#TODO
-# Canviar elbotó que et porta a aquesta vista perque porta al mock en comptes de aqui
-# Arreglar per a que surti el nom de sala
 class TaskPanelTecnics(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = 'magatzem/tasks-list-tecnic.html'
     # permission variable
@@ -295,8 +277,7 @@ class TaskPanelTecnics(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
         return context
 
 
-#TODO
-# Falta linkejar el boto a aquesta vista
+
 class EditTecnicTask(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskTecnic
     fields = ['task_type', 'room', 'detail']
@@ -314,8 +295,7 @@ class EditTecnicTask(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.object
 
 
-#TODO
-# Falta linkejar el boto a aquesta vista
+
 class EditOperariTask(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskTecnic
     fields = ['user']
@@ -334,8 +314,6 @@ class EditOperariTask(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.object
 
 
-#TODO
-# Falta linkejar el boto a aquesta vista
 class DeleteTecnicTask(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = TaskTecnic
     template_name = 'magatzem/task-tecnic-confirm-delete.html'
@@ -385,8 +363,6 @@ class HomeGestor(LoginRequiredMixin, UserPassesTestMixin, ListView):
 # Container Movement functions
 ##############################################################################
 
-# TODO
-# Mirar que collons fa aixo i perque el url es tal com es ?¿WTF?¿
 class ContainerSelectionList(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Room
     context_object_name = 'container_list'
