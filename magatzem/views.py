@@ -197,12 +197,33 @@ class ConfirmNotification(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         if self.request.POST['confirm'] == "SI":
             form.instance.task_status = 4
+            self.update_rooms()
             return super().form_valid(form)
         else:
             return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('operaris-notificacions')
+
+    def update_rooms(self):
+        dest_room = self.object.destination_room
+        container_group = self.object.containers
+        origin_room = self.object.origin_room
+
+        update_container_group(container_group, dest_room)
+        update_rooms(dest_room, origin_room, container_group.quantity)
+
+
+def update_container_group(container_group, dest_room):
+    container_group.id_room = dest_room
+    container_group.save()
+
+
+def update_rooms(dest_room, origin_room, quantity):
+    dest_room.quantity = dest_room.quantity + quantity
+    origin_room.quantity = origin_room.quantity - quantity
+    dest_room.save()
+    origin_room.save()
 
 
 class ConfirmNotificationTecnics(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
