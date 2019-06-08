@@ -3,7 +3,8 @@
 from django.urls import path
 from magatzem.views import RoomList, RoomDetail, NotificationsOperarisListView, HomeGestor, TaskPanelOperaris, \
     ContainerSelectionList, ConfirmNotification, TaskPanelTecnics, EditTecnicTask, DeleteTecnicTask, \
-    NotificationsTecnicsListView, ConfirmNotificationTecnics, UpdateClimaRoom, OpenRoom, EntradaProducte
+    NotificationsTecnicsListView, ConfirmNotificationTecnics, UpdateClimaRoom, OpenRoom, EntradaProducte, \
+    CreateAutomatedTasks
 from . import views
 
 urlpatterns = [
@@ -32,6 +33,7 @@ urlpatterns = [
     path('tecnic/notificacions/', NotificationsTecnicsListView.as_view(), name='tecnics-notificacions'),
     path('tecnics/notificacions/confirm/<int:pk>/', ConfirmNotificationTecnics.as_view(),
          name='confirm-notification-tecnics'),
+    path('gestor/entrada/automated-task/<int:pk>/', CreateAutomatedTasks.as_view(), name='automated-tasks'),
     # path('tecnic/', , name='tecnic-home'),
 
     #urls generar tasques
