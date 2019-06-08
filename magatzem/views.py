@@ -609,6 +609,7 @@ class CreateAutomatedTasks(DetailView):
                                            containers=c_group)
             if productes_assignats:
                 context['tasks'] = True
+            return context
 
 
 def _room_is_able(room, sla):
