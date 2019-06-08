@@ -56,8 +56,9 @@ class ApiManifestCreator(object):
 
         self.select_departure_containers(container_group, _product, product['qty'])
 
+
     def select_departure_containers(self, container_group, prod_obj, qty):
-        print(container_group)
+
         for container in container_group:
             if container.state == 1:
                 continue
@@ -95,3 +96,85 @@ class ApiManifestDepartureCreator(ApiManifestCreator):
         ApiManifestCreator.__init__(self, producer_id, location)
         ManifestDeparture.objects.get_or_create(ref=ref, destination=location)
         self.manifest = ManifestDeparture.objects.get(ref=ref)
+
+
+class CheckProducts:
+
+    def __init__(self, producer_id):
+        self.producer_id = producer_id
+        self.container_list = []
+        self.tmp_containers = []
+        self.completed = True
+
+    def check_departure_manifest(self, product):
+        _product = Product.objects.get(product_id=product['name'],
+                                       producer_id=self.producer_id)
+        if not self.completed:
+            return
+
+        container_group = \
+            ContainerGroup.objects.filter(id_product=_product) \
+                .exclude(state=1) \
+                .order_by('sla_id', 'quantity')
+
+        self.check_departure_containers(container_group, product['qty'])
+
+    def check_departure_containers(self, container_group, qty):
+
+        for container in container_group:
+            if container.state == 1:
+                continue
+            if container.quantity < qty:
+                qty -= container.quantity
+                self.add_container(container, container.quantity)
+            elif container.quantity > qty:
+                container.quantity -= qty
+                self.add_container(container, qty)
+                qty = 0
+            else:
+                qty = 0
+                self.add_container(container, container.quantity)
+                break
+
+        self.check_completed(qty)
+
+    def check_completed(self, qty):
+        if qty != 0:
+            self.completed = False
+            self.container_list = []
+        else:
+            self.merge_containers()
+
+    def merge_containers(self):
+        if not self.tmp_containers:
+            return
+        new_quantity = 0
+        for cont in self.tmp_containers:
+            new_quantity += cont[1]
+
+        self.add_regrouped_container(new_quantity)
+        self.tmp_containers = []
+
+    def add_container(self, container, quantity):
+        self.container_list.append(
+            [
+                container.id_product.product_id,
+                quantity,
+                container.sla.temp_min,
+                container.sla.temp_max,
+                container.sla.hum_min,
+                container.sla.hum_max
+            ]
+        )
+
+    def add_regrouped_container(self, quantity):
+        self.container_list.append(
+            [
+                self.tmp_containers[0][0],
+                quantity,
+                self.tmp_containers[0][2],
+                self.tmp_containers[0][3],
+                self.tmp_containers[0][4],
+                self.tmp_containers[0][5]
+            ]
+        )

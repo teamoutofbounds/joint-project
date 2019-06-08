@@ -1,10 +1,23 @@
-{% extends 'magatzem/base-gestor.html' %}
+{% extends 'magatzem/base-operaris.html' %}
 {% load static from staticfiles %}
 
 {% block header %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/product-entry.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/operari-center.css' %}">
 {% endblock header %}
 
 {% block content %}
-    HOLA ESTIC FUNCIONANT
+
+<div class="container">
+    <div class="center">
+        {% if tasks %}
+            <p><h5>S'han generat tasques automàticament.</h5></p>
+        {% else %}
+            <p><h5>No hi ha sales que compleixin les condicions per aquests productes.</h5></p>
+        {% endif %}
+        <a class="btn-lg btn-success" href="{% url 'panel-operaris' %}">Veure tasques</a>
+    </div>
+
+</div>
+
+
 {% endblock %}
