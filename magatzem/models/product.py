@@ -18,5 +18,4 @@ class Product(models.Model):
     producer_id = models.CharField(validators=[validate_name], max_length=64)
 
     def __str__(self):
-        return Product.STR_PATTERN.format(
-            self.product_id, self.producer_id)
+        return self.product_id
