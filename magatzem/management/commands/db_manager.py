@@ -2,7 +2,7 @@ import os
 import re
 from django.core.management.base import BaseCommand
 # from magatzem.models import Container, Room, Task
-from magatzem.models import Room, Product, SLA, ContainerGroup
+from magatzem.models import Room, Product, SLA, ContainerGroup, ManifestDeparture, ManifestEntrance
 from django.contrib.auth.models import Group, User
 
 container_id = 0
@@ -23,11 +23,13 @@ class Command(BaseCommand):
 def make_database():
     path = os.getcwd()
     add_item(add_room, path + '/data/rooms.data')
-    #add_item(add_product, path + '/data/product.data')
-    #add_item(add_sla, path + '/data/sla.data')
-    #add_item(add_containers_groups, path + '/data/containers.data')
+    add_item(add_product, path + '/data/product.data')
+    add_item(add_sla, path + '/data/sla.data')
+    add_item(add_containers_groups, path + '/data/container_group.data')
+    add_item(add_manifest_entrance, path + '/data/manifest_entrance.data')
+    add_item(add_manifest_departure, path + '/data/manifest_departure.data')
     # add_item(add_container, path + '/data/containers.data')
-    # add_item(add_task, path + '/data/tasks.data')
+    #add_item(add_task, path + '/data/tasks.data')
 
 
 def add_item(func, filename):
@@ -37,6 +39,17 @@ def add_item(func, filename):
             #    continue
             params = line.split('|')
             func(params)
+
+def add_manifest_departure(params):
+    manifest_departure = ManifestDeparture(pk=params[0], ref=params[1],
+                                           date=params[2])
+    manifest_departure.save()
+
+
+def add_manifest_entrance(params):
+    manifest_entrance = ManifestEntrance(pk=params[0], ref=params[1],
+                                           date=params[2])
+    manifest_entrance.save()
 
 
 def add_room(params):
@@ -57,19 +70,19 @@ def add_product(params):
 def add_sla(params):
     sla = SLA(pk=params[0], limit=params[1],
               temp_min=params[2], temp_max=params[3],
-              hum_min=params[3], hum_max=params[4])
+              hum_min=params[4], hum_max=params[5])
     sla.save()
 
 
 def add_containers_groups(params):
     # product|sla|room|quantity
-    product = Product.objects.get(pk=params[0])
-    sla = SLA.objects.get(pk=params[1])
+    product = Product.objects.get(pk=params[3])
+    sla = SLA.objects.get(pk=params[4])
     room = Room.objects.get(pk=params[2])
     container_group = ContainerGroup(id_product=product,
                                      id_room=room,
                                      sla=sla,
-                                     quantity=params[3])
+                                     quantity=params[1])
     container_group.save()
 
 
