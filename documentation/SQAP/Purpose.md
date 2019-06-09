@@ -29,4 +29,14 @@ This document follows the SQAP stations defined in the [IEEE Standard for Softwa
 | Glossary | This section contains all technical terms used throughout the documents, to enable easy look-up of word definitions. |
 | SQAP change procedure and summary | This section defines the procedure and steps needed to commit major changes to the SQAP, as well as summary of the document.|
 
+The goals of the SQAP are:
+
+ * Keep a score above 3 out of 4 in CodeBeat.
+ * All documentation complies with the Standards described in this document.
+ * No Requirements are added without approval.
+ * Comply with all the Requirements set for the project.
+ * Serve as a guide for the new members of the different teams.
+ * Test at minimum 70 % of the code.
+ 
+
 [Back to Index](./index.md)
