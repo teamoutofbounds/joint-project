@@ -37,6 +37,9 @@ Actually, the metrics of this project are not defined at all, because it's a par
 The metrics that we have defined are:
 
  * The quantity of code that must be tested is between the 70-80%.
+ * The aproved tool to recolect metrics is CodeBeat.
+ 
+Each quality report must be named after the commit hash of the project. This will serve in order to keep track of the evolution of the quality during the implementation of the product.
 
 ##### 5.2.2.4 Conventions:
 During the development of the project, there has been defined some conventions/basic rules in order to make clear the way of working of the team project. Also there has been provided some guides for the Development Team (DT).
