@@ -7,7 +7,7 @@ from magatzem.models import Room
 class RoomHandler:
 	def __init__(self, container, sales):
 		self.container = container
-		self.sales = sales
+		self.sales = sorted(sales, key=lambda k: k['left_stock'])
 		self.quantity = container['qty']
 
 	def select_containers(self):

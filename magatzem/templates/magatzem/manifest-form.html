@@ -11,8 +11,20 @@
   <div class="row">
     <div class="col-3"></div>
     <div class="col-6" style="text-align:center">
-      <h1>Recepció manifest</h1>
-      <form action="{% url 'entrada-manifest' %}" method="POST">
+
+      {% block error%}
+      {% endblock error %}
+
+      {% if entrada %}
+        <h1>Manifest d'entrada</h1>
+      {% else %}
+        <h1>Manifest de Sortida</h1>
+      {% endif %}
+      {% if entrada %}
+        <form action="{% url 'entrada-manifest' %}" method="GET">
+      {% else %}
+        <form action="{% url 'sortida-manifest' %}" method="GET">
+      {% endif %}
         {% csrf_token %}
         <input type="text"
                name="ref"

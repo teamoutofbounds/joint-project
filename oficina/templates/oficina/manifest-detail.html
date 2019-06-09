@@ -12,16 +12,18 @@
       <th scope="col"><h5><b> Temp Max </b></h5></th>
       <th scope="col"><h5><b> Hum Min </b></h5></th>
       <th scope="col"><h5><b> Hum Max  </b></h5></th>
-    <tr>
+
       {% for container in manifestcontainers %}
+        <tr>
       <td>{{ container.id_product.product_id }}</td>
       <td>{{ container.id_SLA.limit }}</td>
       <td> {{ container.id_SLA.temp_min }}ºC</td>
       <td> {{ container.id_SLA.temp_max }}ºC</td>
       <td> {{ container.id_SLA.hum_min }}</td>
       <td> {{ container.id_SLA.hum_max }}</td>
+        </tr>
       {% endfor %}
-    </tr>
+
   </table>
 {% endif %}
 

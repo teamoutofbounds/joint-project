@@ -3,7 +3,8 @@
 from django.urls import path
 from magatzem.views import RoomList, RoomDetail, NotificationsOperarisListView, HomeGestor, TaskPanelOperaris, \
     ContainerSelectionList, ConfirmNotification, TaskPanelTecnics, EditTecnicTask, DeleteTecnicTask, \
-    NotificationsTecnicsListView, ConfirmNotificationTecnics, UpdateClimaRoom
+    NotificationsTecnicsListView, ConfirmNotificationTecnics, UpdateClimaRoom, OpenRoom, EntradaProducte, \
+    CreateAutomatedTasks, SortidaProducte
 from . import views
 
 urlpatterns = [
@@ -14,6 +15,7 @@ urlpatterns = [
     path('gestor/sales/<int:pk>/<room>/', ContainerSelectionList.as_view(), name='product-room'),
     # urls gestor tasques operaris
     path('gestor/tasques_operaris/', TaskPanelOperaris.as_view(), name='panel-operaris'),
+
     path('gestor/tasques_operaris/<int:pk>/edit/', EditTecnicTask.as_view(), name='task-tecnic-edit'),
     # urls gestor tasques tecnics
     path('gestor/tasques_tecnics/', TaskPanelTecnics.as_view(), name='panel-tecnics'),
@@ -22,8 +24,9 @@ urlpatterns = [
     # urls gestor tasques magatzem
     path('gestor/entrada/', views.manifest_form, name='entrada-producte'),
     path('gestor/sortida/', views.manifest_sortida_form, name='sortida-producte'),
-    path('gestor/entrada/manifest/', views.entrada_producte, name='entrada-manifest'),  # hauria de ser /new
-    path('gestor/sortida/manifest/', views.sortida_producte, name='sortida-manifest'),  # hauria de ser /new
+    path('gestor/entrada/manifest/', EntradaProducte.as_view(), name='entrada-manifest'),  # hauria de ser /new
+    path('gestor/sortida/manifest/', SortidaProducte.as_view(), name='sortida-manifest'),  # hauria de ser /new
+    path('gestor/entrada/manifest/confirm/<int:pk>', CreateAutomatedTasks.as_view(), name='automated-tasks'),
     # urls operari
     path('operaris/notificacions/', NotificationsOperarisListView.as_view(), name='operaris-notificacions'),
     path('operaris/notificacions/confirm/<int:pk>/', ConfirmNotification.as_view(), name='confirm-notification'),
@@ -35,6 +38,7 @@ urlpatterns = [
 
     #urls generar tasques
     path('gestor/sales/<int:pk>/clima', UpdateClimaRoom.as_view(), name='update-clima'),
+    path('gestor/sales/<int:pk>/obrir', OpenRoom.as_view(), name='open-room'),
 
     # urls mocks
     # path('gestor/entrades/new/', views.exemple_mock, name='new-arrival'),

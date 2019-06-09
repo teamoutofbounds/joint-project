@@ -1,7 +1,7 @@
-from django.contrib.auth import login
-from django.http import Http404, HttpResponseRedirect
 
-from django.shortcuts import redirect, render
+from django.core.exceptions import PermissionDenied
+
+from django.shortcuts import redirect
 
 '''
 from django.contrib.auth.models import User
@@ -23,5 +23,5 @@ def redirect_view(request):
     elif request.user.groups.filter(name='Ceo').exists():
         response = redirect('ceo-home')
     else:
-        raise Http404
+        raise PermissionDenied()
     return response

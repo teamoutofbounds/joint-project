@@ -29,7 +29,8 @@ class Room(models.Model):
         validators=[MaxValueValidator(100)], verbose_name='Humitat (%)')
     quantity = models.PositiveIntegerField(
         validators=[MaxValueValidator(MAX_VALUE)], default=0, verbose_name='Espai ocupat')
-    limit = models.PositiveIntegerField(verbose_name='Capacitat màxima')
+    limit = models.PositiveIntegerField(validators=[MaxValueValidator(MAX_VALUE)],
+                                        verbose_name='Capacitat màxima')
     room_status = models.PositiveSmallIntegerField(
         choices=STATUS_CHOICES, default=0,
         validators=[MaxValueValidator(1)],

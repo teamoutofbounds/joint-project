@@ -1,9 +1,9 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView, TemplateView
 from django.db.models import Q
 
-from magatzem.models import TaskTecnic, ManifestEntrance, ManifestDeparture, ContainerGroup
+from magatzem.models import TaskTecnic, ContainerGroup, Manifest, ManifestContainer, ManifestEntrance
 
 from magatzem.models.room import Room
 from magatzem.models.task_operari import TaskOperari
@@ -12,9 +12,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render
 
-
 from tools.algorithms.sala_selector import RoomHandler
-from tools.api.ManifestCreator import ApiManifestCreator
+from tools.api.ManifestCreator import \
+    ApiManifestEntraceCreator, \
+    ApiManifestDepartureCreator
 from tools.api.product_entry import EntryHandler
 
 from datetime import date
@@ -23,21 +24,31 @@ from datetime import date
 # Security related functions
 ##############################################################################
 
+
 def is_allowed(user, roles):
     return user.groups.filter(name__in=roles).exists()
+
+
+def error_403(request, exception):
+    return render(request, 'magatzem/403.html')
 
 
 # Rooms related functions
 ##############################################################################
 
-class RoomList(ListView, LoginRequiredMixin, UserPassesTestMixin):
+#TODO
+# Canviar el mostrar sala per obrir sala si està tancada (HTML)
+class RoomList(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    # permission variable
+    roles = ('Gestor', 'CEO',)
+    raise_exception = True
+
     model = Room
     context_object_name = 'room_list'
     template_name = 'magatzem/room-list.html'
-    # permission variable
-    roles = ('Gestor', 'CEO',)
 
     def test_func(self):
+        self.queryset = self.get_queryset()
         return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
@@ -46,14 +57,20 @@ class RoomList(ListView, LoginRequiredMixin, UserPassesTestMixin):
         return context
 
 
-class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
+#TODO
+# Afegir margin top al breadcrum (HTML)
+# Afegir botó per canviar la temperatura de la sala i humitat quan està oberta
+# Quan està tancada no pot haver el boto de modificar ni obrir (tot i que no hauries de poder entrar)
+class RoomDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Room
     template_name = 'magatzem/room-detail.html'
     context_object_name = 'room'
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
+        self.object = self.get_object()
         return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
@@ -62,43 +79,80 @@ class RoomDetail(DetailView, LoginRequiredMixin, UserPassesTestMixin):
                                                       Q(origin_room=context['room'])
                                                       | Q(destination_room=context['room']))
         context['containers'] = self.object.get_containers()
-        context['title'] = context['room'].name
+        context['title'] = "sala " + context['room'].name
         return context
 
 
 # TODO
-class UpdateClimaRoom(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+# arreglar el form
+class UpdateClimaRoom(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Room
-    fields = ['room_status', 'hum', 'temp']
+    fields = ['hum', 'temp']
     template_name = 'magatzem/task-tecnic-clima-room.html'
     context_object_name = 'room'
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
+        self.object = self.get_object()
         return is_allowed(self.request.user, self.roles)
 
     def form_valid(self, form):
-        TaskOperari.objects.create(room=self.object,
-                                   description="Ajuste clima",
-                                   task_status=1,
-                                   task_type=2,
-                                   detail=str(form.instance.hum) + str(form.instance.temp))
+        TaskTecnic.objects.create(room=self.object,
+                                  description="Ajuste clima",
+                                  task_status=1,
+                                  task_type=2,
+                                  detail='Humitat: ' + str(form.instance.hum) + ', Temperatura: ' + str(form.instance.temp))
         return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse_lazy('list-room')
+
+
+class OpenRoom(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Room
+    fields = ['room_status', 'hum', 'temp']
+    template_name = 'magatzem/task-tecnic-open.html'
+    context_object_name = 'room'
+    # permission variable
+    roles = ('Gestor',)
+    raise_exception = True
+
+    def test_func(self):
+        self.object = self.get_object()
+        return is_allowed(self.request.user, self.roles)
+
+    def form_valid(self, form):
+        TaskTecnic.objects.create(room=self.object,
+                                  description="Obrir Sala",
+                                  task_status=1,
+                                  task_type=2,
+                                  detail='Obrir la sala amb : Humitat: ' + str(form.instance.hum) + ', Temperatura: ' + str(form.instance.temp))
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('list-room')
 
 # Notification related functions
 ##############################################################################
 
-class NotificationsOperarisListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
+#TODO
+# Falta boto X (Joan)
+# TaskOperari object is not iterable ARREGLAR
+
+
+class NotificationsOperarisListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = TaskOperari
     context_object_name = 'task_list'
     template_name = 'magatzem/notification-operari.html'
     new_task = False
     # permission variable
     roles = ('Operari',)
+    raise_exception = True
 
     def test_func(self):
+        self.queryset = self.get_queryset()
         return is_allowed(self.request.user, self.roles)
 
     def get_queryset(self):
@@ -117,19 +171,21 @@ class NotificationsOperarisListView(ListView, LoginRequiredMixin, UserPassesTest
         return context
 
 
-class NotificationsTecnicsListView(ListView, LoginRequiredMixin, UserPassesTestMixin):
+class NotificationsTecnicsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = TaskTecnic
     context_object_name = 'task_list'
     template_name = 'magatzem/notification-tecnic.html'
     # permission variable
     roles = ('Tecnic',)
+    raise_exception = True
 
     def test_func(self):
+        self.queryset = self.get_queryset()
         return is_allowed(self.request.user, self.roles)
 
     def get_queryset(self):
         queryset = TaskTecnic.objects.filter(Q(task_status=1) | Q(task_status=2) |
-                                              Q(task_status=3))
+                                             Q(task_status=3))
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -138,10 +194,19 @@ class NotificationsTecnicsListView(ListView, LoginRequiredMixin, UserPassesTestM
         return context
 
 
-class ConfirmNotification(UpdateView):
+#TODO
+# Quan s'arregli l ode dalt comprovar si va (HAURIA DE FUNCIONAR)
+class ConfirmNotification(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskOperari
     template_name = 'magatzem/confirm-notification.html'
     fields = {}
+    # permission variable
+    roles = ('Operari',)
+    raise_exception = True
+
+    def test_func(self):
+        self.object = self.get_object()
+        return is_allowed(self.request.user, self.roles)
 
     def form_valid(self, form):
         if self.request.POST['confirm'] == "SI":
@@ -153,10 +218,18 @@ class ConfirmNotification(UpdateView):
     def get_success_url(self):
         return reverse_lazy('operaris-notificacions')
 
-class ConfirmNotificationTecnics(UpdateView):
+
+class ConfirmNotificationTecnics(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskTecnic
     template_name = 'magatzem/confirm-notification-tecnics.html'
     fields = {}
+    # permission variable
+    roles = ('Tecnic',)
+    raise_exception = True
+
+    def test_func(self):
+        self.object = self.get_object()
+        return is_allowed(self.request.user, self.roles)
 
     def form_valid(self, form):
         if self.request.POST['confirm'] == "SI":
@@ -172,13 +245,17 @@ class ConfirmNotificationTecnics(UpdateView):
 # Task Panels related functions
 ##############################################################################
 
-class TaskPanelOperaris(ListView, LoginRequiredMixin, UserPassesTestMixin):
+#TODO
+
+class TaskPanelOperaris(LoginRequiredMixin, UserPassesTestMixin, ListView):
     queryset = TaskOperari.objects.filter(date=date.today())
     template_name = 'magatzem/tasks-list-operari.html'
     # permission variable
     roles = ('Gestor', 'CEO')
+    raise_exception = True
 
     def test_func(self):
+        self.queryset = self.get_queryset()
         return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
@@ -195,10 +272,14 @@ class TaskPanelOperaris(ListView, LoginRequiredMixin, UserPassesTestMixin):
         return context
 
 
-class TaskPanelTecnics(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
+#TODO
+# Canviar elbotó que et porta a aquesta vista perque porta al mock en comptes de aqui
+# Arreglar per a que surti el nom de sala
+class TaskPanelTecnics(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = 'magatzem/tasks-list-tecnic.html'
     # permission variable
     roles = ('Gestor', 'CEO')
+    raise_exception = True
 
     def test_func(self):
         return is_allowed(self.request.user, self.roles)
@@ -214,60 +295,74 @@ class TaskPanelTecnics(TemplateView, LoginRequiredMixin, UserPassesTestMixin):
         return context
 
 
-class EditTecnicTask(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+#TODO
+# Falta linkejar el boto a aquesta vista
+class EditTecnicTask(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskTecnic
-    fields = ['task_type', 'room', 'task_type', 'detail']
-    template_name = 'magatzem/tasks-tecnic-edit.html'
+    fields = ['task_type', 'room', 'detail']
+    template_name = 'magatzem/task-tecnic-edit.html'
 
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
+        self.object = self.get_object()
         return is_allowed(self.request.user, self.roles)
 
     def get_task_info(self):
         return self.object
 
 
-class EditOperariTask(UpdateView, LoginRequiredMixin, UserPassesTestMixin):
+#TODO
+# Falta linkejar el boto a aquesta vista
+class EditOperariTask(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = TaskTecnic
     fields = ['user']
-    template_name = 'magatzem/tasks-list-tecnic.html'
+    template_name = 'magatzem/task-operari-edit.html'
     success_url = reverse_lazy('panel-tecnics')
 
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
+        self.object = self.get_object()
         return is_allowed(self.request.user, self.roles)
 
     def get_task_info(self):
         return self.object
 
 
-class DeleteTecnicTask(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
+#TODO
+# Falta linkejar el boto a aquesta vista
+class DeleteTecnicTask(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = TaskTecnic
-    template_name = 'magatzem/tasks-tecnic-confirm-delete.html'
+    template_name = 'magatzem/task-tecnic-confirm-delete.html'
     success_url = reverse_lazy('panel-tecnics')
 
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
+        self.object = self.get_object()
         return is_allowed(self.request.user, self.roles)
 
 
 # Home Gestor
 ##############################################################################
 
-class HomeGestor(ListView, LoginRequiredMixin, UserPassesTestMixin):
+class HomeGestor(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Room
     context_object_name = 'rooms'
     template_name = 'magatzem/home-gestor.html'
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
+        self.queryset = self.get_queryset()
         return is_allowed(self.request.user, self.roles)
 
     def get_context_data(self, **kwargs):
@@ -290,7 +385,9 @@ class HomeGestor(ListView, LoginRequiredMixin, UserPassesTestMixin):
 # Container Movement functions
 ##############################################################################
 
-class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
+# TODO
+# Mirar que collons fa aixo i perque el url es tal com es ?¿WTF?¿
+class ContainerSelectionList(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Room
     context_object_name = 'container_list'
     slug_field = "room"
@@ -298,8 +395,10 @@ class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
     template_name = 'magatzem/select-container.html'
     # permission variable
     roles = ('Gestor',)
+    raise_exception = True
 
     def test_func(self):
+        self.queryset = self.get_queryset()
         return is_allowed(self.request.user, self.roles)
 
     def get_queryset(self):
@@ -316,44 +415,84 @@ class ContainerSelectionList(ListView, LoginRequiredMixin, UserPassesTestMixin):
 ##############################################################################
 
 def manifest_form(request):
-    return render(request, 'magatzem/manifest-form.html', {'title': 'Entrada Productes'})
+    return render(request, 'magatzem/manifest-form.html', {'title': 'Entrada Productes', 'entrada': True})
 
 
 def manifest_sortida_form(request):
-    return render(request, 'magatzem/manifest-leave-form.html', {'title': 'Sortida Productes'})
+    return render(request, 'magatzem/manifest-form.html', {'title': 'Sortida Productes', 'entrada': False})
 
 
-def entrada_producte(request):
-    # if 'ref' in request.POST:
-    entry_handler = EntryHandler()
-    context = {}
-    context['title'] = 'Entrada Productes'
-    transports = entry_handler.generate_entry()
-    # _generar_manifest_entrada(transports)
-    for transport in transports:
-        if transport['ref'] == request.POST['ref']:
-            _generar_manifest_entrada(transport)
-            context['container'] = transport
-    return render(request, 'magatzem/product-entry.html', context)
+class EntradaProducte(TemplateView):
+    roles = ('Gestor', 'CEO')
+    template_name = 'magatzem/product-entry.html'
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        context['title'] = 'Entrada Productes'
+
+        entry_handler = EntryHandler()
+        transports = entry_handler.generate_entry()
+
+        for transport in transports:
+            if transport['ref'] == request.GET['ref']:
+                if _check_already_in_system_manifest(transport):
+                    context['ref'] = transport['ref']
+                    context['entrada'] = True
+                    return render(request, 'magatzem/product-entry-existent.html', context)
+                context['container'] = transport
+        return render(request, 'magatzem/product-entry.html', context)
+
+    def post(self, request, *args, **kwargs):
+        context = {}
+        context['title'] = 'Entrada Productes'
+
+        entry_handler = EntryHandler()
+        transports = entry_handler.generate_entry()
+
+        for transport in transports:
+            if transport['ref'] == request.POST['ref']:
+                if _check_already_in_system_manifest(transport):
+                    context['ref'] = transport['ref']
+                    context['entrada'] = True
+                    return render(request, 'magatzem/product-entry-existent.html', context)
+                _generar_manifest_entrada(transport)
+                context['container'] = transport
+        return redirect('automated-tasks', request.POST['ref'])
+
+
+def _check_already_in_system_manifest(transport):
+    if Manifest.objects.filter(ref=transport['ref']):
+        return True
+    return False
 
 
 def _generar_manifest_entrada(transport):
-    #for transport in transports:
-    creator = ApiManifestCreator(transport['ref'], transport['fromLocation'], None)
+    # for transport in transports:
+    # creator = ApiManifestCreator(transport['ref'], transport['fromLocation'], None)
+    creator = ApiManifestEntraceCreator(transport['ref'], transport['fromLocation'], transport['toLocation'])
     for product in transport['Products']:
         creator._create_entry_manifest(product)
 
 
 def _generar_manifest_sortida(transport):
     # for transport in transports:
-    creator = ApiManifestCreator(transport, transport['fromLocation'], transport['toLocation'])
+    # creator = ApiManifestCreator(transport['ref'], transport['fromLocation'], transport['toLocation'])
+    creator = ApiManifestDepartureCreator(transport['ref'], transport['toLocation'], transport['toLocation'])
     for product in transport['Products']:
         creator._create_departure_manifest(product)
     return creator.container_list
 
 
+def _check_for_manifest_sortida(transport):
+    from tools.api.ManifestCreator import CheckProducts
+    checker = CheckProducts(transport['toLocation'])
+    for product in transport['Products']:
+        checker.check_departure_manifest(product)
+    return checker.container_list
+
+
 def sortida_producte(request):
-    if 'ref' in request.GET:
+    if 'ref' in request.POST:
         entry_handler = EntryHandler()
         context = {}
         context['title'] = 'Sortida Productes'
@@ -361,13 +500,125 @@ def sortida_producte(request):
         transports = entry_handler.generate_entry()
         # mostrar només el que s'ha de treure
         for transport in transports:
-            if transport['ref'] == request.GET['ref']:
+            if transport['ref'] == request.POST['ref']:
+                if _check_already_in_system_manifest(transport):
+                    context['ref'] = transport['ref']
+                    context['entrada'] = False
+                    return render(request, 'magatzem/product-entry-existent.html', context)
                 context['is_valid_ref'] = True
                 containers = _generar_manifest_sortida(transport)
                 context['containers'] = containers
                 context['ref'] = transport['ref']
                 context['toLocation'] = transport['toLocation']
-    return render(request, 'magatzem/product-leave.html', context)
+        return render(request, 'magatzem/product-leave.html', context)
+
+
+class SortidaProducte(TemplateView):
+    roles = ('Gestor', 'CEO')
+    template_name = 'magatzem/product-leave.html'
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        context['title'] = 'Sortida Productes'
+        context['is_valid_ref'] = False
+
+        entry_handler = EntryHandler()
+        transports = entry_handler.generate_entry()
+
+        for transport in transports:
+            if transport['ref'] == request.GET['ref']:
+                if _check_already_in_system_manifest(transport):
+                    context['ref'] = transport['ref']
+                    context['entrada'] = False
+                    return render(request, 'magatzem/product-entry-existent.html', context)
+                context['container'] = transport
+                context['is_valid_ref'] = True
+                containers = _check_for_manifest_sortida(transport)
+                context['containers'] = containers
+        return render(request, 'magatzem/product-leave.html', context)
+
+    def post(self, request, *args, **kwargs):
+        context = {}
+        context['title'] = 'Sortida Productes'
+        context['is_valid_ref'] = False
+
+        entry_handler = EntryHandler()
+        transports = entry_handler.generate_entry()
+
+        for transport in transports:
+            if transport['ref'] == request.POST['ref']:
+                if _check_already_in_system_manifest(transport):
+                    context['ref'] = transport['ref']
+                    context['entrada'] = False
+                    return render(request, 'magatzem/product-entry-existent.html', context)
+                context['container'] = transport
+                context['is_valid_ref'] = True
+                containers = _generar_manifest_sortida(transport)
+                context['containers'] = containers
+        return render(request, 'magatzem/product-leave.html', context)
+
+
+# Generar tasques
+##############################################################################
+class CreateAutomatedTasks(DetailView):
+    roles = ('Gestor', 'CEO')
+    template_name = 'magatzem/automated-tasks.html'
+    model = ManifestEntrance
+    context_object_name = 'manifest'
+    # permission variable
+    raise_exception = True
+
+    def get_object(self):
+        object = get_object_or_404(Manifest, ref=self.kwargs['pk'])
+        return object
+
+    def get_context_data(self, **kwargs):
+        ####################################################
+        # Obtains the containers from the manifest
+        ###################################################
+        context = super().get_context_data()
+        m_containers = ManifestContainer.objects.filter(id_manifest=self.object)
+        moll = Room.objects.get(name='Moll')
+
+        container_groups_list = []
+        for m_container in m_containers:
+            container_groups_list.append(ContainerGroup.objects.get(sla_id=m_container.id_SLA,
+                                                                    id_product=m_container.id_product,
+                                                                    id_room=moll))
+        #####################################################
+        # Generate variables for the optimizer
+        #####################################################
+        rooms = Room.objects.all()
+        optimizer_rooms = []
+        container = {}
+        for c_group in container_groups_list:
+            container = {'qty': c_group.quantity,
+                         'id_product': c_group.id_product}
+            for room in rooms:
+                if _room_is_able(room, c_group.sla):
+                    able_room = {'name': room.name,
+                                 'left_stock': room.limit - room.quantity,
+                                 'new_containers': 0}
+                    optimizer_rooms.append(able_room)
+            optime_task_handler = RoomHandler(container, optimizer_rooms)
+            productes_assignats = optime_task_handler.select_containers()
+
+            for prod in productes_assignats:
+                TaskOperari.objects.create(description="Traslladar",
+                                           task_status=0,
+                                           task_type=0,
+                                           origin_room=moll,
+                                           destination_room=Room.objects.get(name=prod['name']),
+                                           containers=c_group)
+            if productes_assignats:
+                context['tasks'] = True
+
+
+def _room_is_able(room, sla):
+    return sla.temp_min <= room.temp <= sla.temp_max \
+           and sla.hum_min <= room.hum <= sla.hum_max \
+           and room.room_status == 1 \
+           and room.name != "Moll"
 
 
 # Mock functions

@@ -23,4 +23,5 @@ class EntryHandler:
             soup = BeautifulSoup(u.read(), 'html.parser')
             list_dic = json.loads(soup.decode('utf-8'))
 
+        opener.close()
         return list_dic
