@@ -10,7 +10,7 @@
               {{ form|crispy }}
           </fieldset>
           <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Confirmar</button>
+            <a class="btn btn-outline-info" href="{% url 'panel-tecnics' %}" type="submit">Confirmar</a>
             <a class="btn btn-outline-secondary" href="{% url 'panel-tecnics' %}">Cancelar</a>
           </div>
         </form>
