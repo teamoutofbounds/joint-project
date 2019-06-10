@@ -644,8 +644,7 @@ class CreateAutomatedDepartureTasks(DetailView):
         container_groups_list = []
         for m_container in m_containers:
             container_groups_list.append(ContainerGroup.objects.get(sla_id=m_container.id_SLA,
-                                                                    id_product=m_container.id_product,
-                                                                    id_room=moll))
+                                                                    id_product=m_container.id_product))
         #####################################################
         # Generate variables for the optimizer
         #####################################################
