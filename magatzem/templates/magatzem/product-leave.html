@@ -28,7 +28,7 @@
       <div class="col-12">
         <div class="row">
           <div class="col-6" style="background-color: khaki;">
-            {{ containers.creationDate }}
+            {{ container.creationDate }}
           </div>
           <div class="col-6" style="background-color: khaki">
             From: C/Cabanes (Sant Esteve de Les Roures)
@@ -36,10 +36,10 @@
         </div>
         <div class="row">
           <div class="col-6" style="background-color: khaki">
-            REF: {{ ref }}
+            REF: {{ container.ref }}
           </div>
           <div class="col-6" style="background-color: khaki">
-            Productor: {{ toLocation }}
+            Productor: {{ container.toLocation }}
           </div>
         </div>
       </div>
@@ -63,24 +63,15 @@
                   <th scope="col"> <b>Hum Max</b></th>
                 </tr>
               </thead>
-              {% for container in containers %}
+              {% for producte in container.Products %}
                 <tr>
-                <!--
-                  <td>{{ container.id_product.product_id }}</td>
-                  <td>{{ container.quatity }}</td>
-                  <td>{{ container.sla.limit }}</td>
-                  <td>{{ container.sla.temp_min }} ºC</td>
-                  <td>{{ container.sla.temp_max }} ºC </td>
-                  <td>{{ container.sla.hum_min }} %</td>
-                  <td>{{ container.sla.hum_max }} %</td>
-                  -->
-                  <td>{{ container.0 }}</td>
-                  <td>{{ container.1 }}</td>
-                  <td>{{ container.2 }}</td>
-                  <td>{{ container.3 }} ºC</td>
-                  <td>{{ container.4 }} ºC </td>
-                  <td>{{ container.5 }} %</td>
-                  <td>{{ container.6 }} %</td>
+                  <td>{{ producte.name }}</td>
+                  <td>{{ producte.qty }}</td>
+                  <td>{{ producte.sla }}</td>
+                  <td>{{ producte.tempMinDegree }} ºC</td>
+                  <td>{{ producte.tempMaxDegree }} ºC </td>
+                  <td>{{ producte.humidMin }} %</td>
+                  <td>{{ producte.humidMax }} %</td>
                 </tr>
               {% endfor %}
             </table>
@@ -90,10 +81,23 @@
     </div>
   </div>
 </div>
-<div class="float-right">
-  <a class="btn btn-success" href="{% url 'gestor-home' %}" role="button">Confirmar</a>
-  <a class="btn btn-warning" href="#" role="button">Incidencia</a>
-  <a class="btn btn-danger" href="{% url 'sortida-producte' %}" role="button">Cancelar</a>
+  <form action="{% url 'sortida-manifest' %}" method="POST">
+  {% csrf_token %}
+    <input type="text"
+           name="ref"
+           placeholder="Num. referència"
+           value="{{ container.ref }}"
+           style="margin-top: 2rem; display: none">
+    <!--<div class="row">-->
+      <button class="btn btn-success"
+            type="submit"
+            style="margin-top: 2rem">Registrar</button>
+    <a class="btn btn-danger" style="margin-top: 2rem" href="{% url 'sortida-producte' %}">Cancelar</a>
+    <!--</div>-->
+  </form>
+  <!--
+  <a class="btn btn-success" href="{% url 'automated-tasks' container.ref %}">Registrar</a>
+  -->
 </div>
   {% endif %}
 
